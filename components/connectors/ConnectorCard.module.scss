@@ -1,0 +1,36 @@
+.card {
+  width: 392px;
+  height: 144px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 8px;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px 0 rgba(49, 58, 85, 0.1);
+  background-color: #262c47;
+  &__header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    &__icon {
+      width: 36.6px;
+      height: 36px;
+    }
+    &__name {
+      flex-grow: 1;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 1.4;
+      letter-spacing: -0.2px;
+    }
+  }
+  &__description {
+    margin-top: 16px;
+    align-self: stretch;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.38;
+  }
+}
