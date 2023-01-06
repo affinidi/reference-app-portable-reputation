@@ -1,14 +1,20 @@
+import { GetServerSideProps } from "next";
 import { FC } from "react";
-import RoundButton from "../components/buttons/RoundButton";
+import { getProviders, signIn } from "next-auth/react";
 
+import RoundButton from "../components/buttons/RoundButton";
 import GithubConnectorCard from "../components/connectors/GithubConnectorCard";
 import { FullLogoIcon } from "../components/icons";
 
 import styles from "../styles/ProfileSetup.module.scss";
 
-const ProfileSetup: FC = () => {
-  const connectToGithub = () => {
-    alert("to be implemented");
+type ProfileSetupProps = {
+  providers: ReturnType<typeof getProviders>;
+};
+
+const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
+  const connectToGithub = async (id: string) => {
+    await signIn(id);
   };
 
   return (
@@ -24,13 +30,26 @@ const ProfileSetup: FC = () => {
         <GithubConnectorCard />
       </div>
       <div className={styles.main__actions}>
-        <RoundButton
-          handleClick={connectToGithub}
-          text="Connect to my profile"
-        />
+        {!!providers &&
+          Object.values(providers).map((provider) => {
+            return (
+              <RoundButton
+                key={provider.name}
+                handleClick={() => connectToGithub(provider.id)}
+                text="Connect to my profile"
+              />
+            );
+          })}
       </div>
     </main>
   );
 };
 
 export default ProfileSetup;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const providers = await getProviders();
+  return {
+    props: { providers },
+  };
+};
