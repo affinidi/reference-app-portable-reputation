@@ -71,7 +71,7 @@ const handler = async (
   const user = await GithubService.getUserData(kit);
   const repos = await GithubService.getUserRepos(kit);
   const languages = await GithubService.getUserProgrammingLanguages(kit);
-
+  const prs = await GithubService.getPullRequests(kit);
   try {
     const issuerDid = process.env.AFFINIDI_PROJECT_DID || "";
     const projectId = process.env.AFFINIDI_PROJECT_ID || "";
@@ -86,9 +86,9 @@ const handler = async (
         schema: {
           type: SCHEMA_NAME,
           jsonLdContextUrl:
-            "https://schema.stg.affinidi.com/DeveloperReputationV1-2.jsonld",
+            "https://schema.stg.affinidi.com/DeveloperReputationV1-3.jsonld",
           jsonSchemaUrl:
-            "https://schema.stg.affinidi.com/DeveloperReputationV1-2.json",
+            "https://schema.stg.affinidi.com/DeveloperReputationV1-3.json",
         },
         issuerDid,
       },
@@ -99,6 +99,9 @@ const handler = async (
       username: user.login,
       repos: repos.map((repo) => repo.name).join(", "),
       languages: languages.join(", "),
+      pullRequests: prs.length,
+      commits: 0,
+      solvedIssues: 0
     };
 
     const offerInput: CreateIssuanceOfferInput = {
