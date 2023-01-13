@@ -52,7 +52,7 @@ const handler = async (
   }
 
   const session = await getSession({ req });
-  if (!session || session.accessToken) {
+  if (!session || !session.accessToken) {
     res.status(400).json({ error: "No access token" });
     return;
   }

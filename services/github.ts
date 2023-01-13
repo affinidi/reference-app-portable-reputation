@@ -1,5 +1,5 @@
 import { Octokit } from "@octokit/rest";
-import { GithubRepo, GithubUser } from "../types/github";
+import { GithubRepo, GithubUser, GithubPullRequest } from "../types/github";
 
 const GithubService = {
   getUserData: async (kit: Octokit): Promise<GithubUser> => {
@@ -19,11 +19,16 @@ const GithubService = {
       (
         await Promise.all(
           repos.map(async (repo) => {
-            const r = await kit.repos.listLanguages({
-              owner: user.login,
-              repo: repo.name,
-            });
-            return Object.keys(r.data);
+            try {
+              const r = await kit.repos.listLanguages({
+                owner: user.login,
+                repo: repo.name,
+              });
+              return Object.keys(r.data);
+            } catch (e) {
+              console.log('error while fetching languages for repo: ', e)
+              return []
+            }
           })
         )
       )
@@ -34,6 +39,35 @@ const GithubService = {
         }, new Set<string>())
     );
   },
+  getPullRequests: async function (
+    kit: Octokit
+  ) {
+    const user = await this.getUserData(kit);
+    const repos = await this.getUserRepos(kit);
+    return Array.from(
+      (
+        await Promise.all(   
+          repos.map(async (repo) => {
+            try {
+              const r = await kit.rest.pulls.list({
+                owner: user.login,
+                repo: repo.name,
+              });
+              return Object.keys(r.data);
+            } catch (e) {
+              console.log('error while fetching pull requests for repo: ', e)
+              return []
+            }
+          })
+        )
+      )
+        .flat()
+        .reduce((acc, curr) => {
+          acc.add(curr);
+          return acc;
+        }, new Set<string>())
+    );
+  }
 };
 
 export default GithubService;
