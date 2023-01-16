@@ -223,6 +223,7 @@ export interface UserInfoOutput {
 export interface LoginOutput {
   accessToken: string;
   refreshToken: string;
+  idToken: string;
   did: string;
 }
 
@@ -243,6 +244,7 @@ export interface LoginInput {
 export interface ArbitraryUsernameSignUpOutput {
   accessToken: string;
   refreshToken: string;
+  idToken: string;
   did: string;
 }
 
@@ -331,7 +333,7 @@ export interface SignInInput {
 
 export interface SignInWithTruecallerOutput {
   accessToken: string;
-  idToken: string;
+  idToken?: string;
   refreshToken: string;
   did: string;
 }
@@ -406,6 +408,7 @@ export interface ConfirmPasswordlessLoginInput {
 /** From T, pick a set of properties whose keys are in the union K */
 export interface PickLoginOutputExcludeKeysRefreshToken {
   accessToken: string;
+  idToken: string;
   did: string;
 }
 
@@ -649,7 +652,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title cloud-wallet-api
- * @version 1.69.1
+ * @version 1.73.0
  * @license ISC
  * @baseUrl /api/v1
  * @contact The Engineering Team <nucleus.team@affinidi.com>
@@ -1010,7 +1013,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Signs up a new user. [Generate your API key and API Key Hash.](https://build.affinidi.com/register) Use the API Key Hash as the 'Api-Key' parameter in the header for api calls. As an `username` **arbitrary username** OR **email** OR **phone number** can be used. Note: Phone number have to start from countrycode `+${countryCode}${phoneNumber}` e.g. +1234567890 (Only international format acceptable) Returns an object with a `token` for the **confirmSignUp** endpoint OR an object with an `accessToken`, `refreshToken` and `did` IF **arbitrary username** was provided. Use the `accessToken` received in the response of above API as the Authorization parameter in the header and use the did as holderDid attribute for further API calls. `refreshToken` can be used to login an existing user with refresh token authentication. Note: didMethod jolo is deprecated. Use elem as your didMethod in the payload. Note: If you use arbitrary username you won't be able to use Signup confirm, do the following steps to get `accessToken`: forgot password, change username and passwordless login APIs.
+     * @description Signs up a new user. [Generate your API key and API Key Hash.](https://build.affinidi.com/register) Use the API Key Hash as the 'Api-Key' parameter in the header for api calls. As an `username` **arbitrary username** OR **email** OR **phone number** can be used. Note: Phone number have to start from countrycode `+${countryCode}${phoneNumber}` e.g. +1234567890 (Only international format acceptable) Returns an object with a `token` for the **confirmSignUp** endpoint OR an object with an `accessToken`, `refreshToken`, `idToken` and `did` IF **arbitrary username** was provided. Use the `accessToken` received in the response of above API as the Authorization parameter in the header and use the did as holderDid attribute for further API calls. `refreshToken` can be used to login an existing user with refresh token authentication. Note: didMethod jolo is deprecated. Use elem as your didMethod in the payload. Note: If you use arbitrary username you won't be able to use Signup confirm, do the following steps to get `accessToken`: forgot password, change username and passwordless login APIs.
      *
      * @tags User
      * @name SignUp

@@ -7,8 +7,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
     const { username } = req.body as SignInInput
     const result = await cloudWalletService.signInPasswordless({ username })
     res.status(200).json(result)
-  } catch (error) {
-    throw error
+  } catch (error: any) {
+    throw new Error('something went wrong')
   }
 }
 

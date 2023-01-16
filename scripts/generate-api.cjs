@@ -1,10 +1,16 @@
 const { generateApi } = require('swagger-typescript-api')
 const path = require('path')
-
-CLOUD_WALLET_URL = 'https://cloud-wallet-api.prod.affinity-project.org'
+require('dotenv').config()
 
 generateApi({
   name: 'cloud-wallet.api.ts',
   output: path.resolve(process.cwd(), './services/cloud-wallet'),
-  url: `${CLOUD_WALLET_URL}/api/swagger`,
+  url: `${process.env.AFFINIDI_CLOUD_WALLET_URL}/api/swagger`,
+}).catch(console.error)
+
+generateApi({
+  name: 'issuance.api.ts',
+  output: path.resolve(process.cwd(), './services/issuance'),
+  url: `${process.env.AFFINIDI_ISSUANCE_URL}/api/swagger`,
+  httpClientType: "axios",
 }).catch(console.error)
