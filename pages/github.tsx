@@ -7,6 +7,7 @@ import { RiBracesFill, RiUser5Line } from "react-icons/ri";
 import { getSession, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Spinner } from "../components";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { GithubUser } from "../types/github";
@@ -80,13 +81,13 @@ const Github: FC<GithubProps> = (props) => {
   };
 
   if (status === "loading") {
-    return null;
+    return (<Spinner />);
   }
   if (status === "unauthenticated" || !session) {
-    return router.replace("/");
+    router.replace("/sign-in");
   }
 
-  const { user } = session;
+  const user = session?.user;
 
   return (
     <main className="text-gray-600 body-font">
@@ -94,14 +95,14 @@ const Github: FC<GithubProps> = (props) => {
         <div className="text-center mb-20">
           <div className="flex flex-col items-center gap-6">
             <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">
-              Welcome <span className="italic">{user.name}</span>
+              Welcome <span className="italic">{user?.name || "unknown developer"}</span>
             </h1>
             <img
-              src={user.image}
+              src={user?.image || ""}
               className="object-cover"
               // height={64}
               // width={64}
-              alt={user.name}
+              alt={user?.name || ""}
             />
           </div>
           <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">

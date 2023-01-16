@@ -9,11 +9,7 @@ import {
 class IssuanceService {
   constructor(
     private readonly client = new IssuanceAPI({
-      baseURL: `${process.env.AFFINIDI_ISSUANCE_URL}/api/v1`,
-      withCredentials: true,
-      headers: {
-        "Accept-Encoding": "application/json",
-      },
+      baseUrl: `${process.env.AFFINIDI_ISSUANCE_URL}/api/v1`,
     })
   ) {}
 

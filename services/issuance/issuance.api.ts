@@ -9,98 +9,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface BatchIssuanceOutput {
-  /** Id of the batch Issuance */
-  id: string;
-}
-
-export interface OperationErrorType {
-  code: string;
-  message: string;
-}
-
-export interface BatchIssuanceCreateInput {
-  /**
-   * Id of the Data Source
-   * @pattern ^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$
-   */
-  dataSourceId: string;
-  /**
-   * Any Schema Manager URL is supported, for example:<br>
-   * https://ui.schema.affinidi.com/schemas/MySchemaV1-0<br>
-   * https://schema.affinidi.com/MySchemaV1-0.json<br>
-   * https://schema.affinidi.com/MySchemaV1-0.jsonld<br>
-   */
-  schemaURL: string;
-  /** Id of the project */
-  projectId: string;
-  /** information of the person who issue the Vcs */
-  issuer: {
-    accessToken: string;
-    did: string;
-  };
-}
-
-export interface BatchIssuanceListingItem {
-  /** VC type. */
-  schemaType: string;
-  /**
-   * Any Schema Manager URL is supported, for example:<br>
-   * https://ui.schema.affinidi.com/schemas/MySchemaV1-0<br>
-   * https://schema.affinidi.com/MySchemaV1-0.json<br>
-   * https://schema.affinidi.com/MySchemaV1-0.jsonld<br>
-   */
-  schemaURL: string;
-  /** Creation date of the bulk Issuance. */
-  createdAt: string;
-  /** Date of the bulk issuance after changing the status from Pending to Issued. */
-  updatedAt: string;
-  /**
-   * Number of the VCs that are issued.
-   * @format double
-   */
-  issued: number;
-  /** Issuing progress of the Bulk Issuance. */
-  status: "PENDING" | "ISSUED";
-}
-
-export interface BatchIssuanceRowItem {
-  /**
-   * Id of a VC
-   * @format double
-   */
-  rowId: number;
-  /** Did of ther person who own the VC */
-  holderDid: string;
-  /** Issuing progress of the single VC Issuance. */
-  status: "PENDING" | "SUCCESS" | "ERROR";
-  /** Error information if the status is Error */
-  error?: string;
-  /** Creation date of the bulk Issuance. */
-  createdAt: string;
-  /** Update date of the VC when its status is changed */
-  updatedAt: string;
-}
-
-export interface BatchIssuanceDetailOutput {
-  /** Id of the batch Issuance */
-  id: string;
-  batchIssuance: BatchIssuanceListingItem;
-  batchIssuanceRows: BatchIssuanceRowItem[];
-}
-
-export interface BatchIssuanceListingOutput {
-  results: BatchIssuanceListingItem[];
-}
-
-export type AnyObject = Record<string, any>;
-
-/** Result of the upload operation which contains the information to reference the data source in later operations. */
-export interface UploadFileResponse {
-  /** Id of the Data Source that can be used as a reference to start Batch Issuance operations. */
-  id: string;
-}
-
 export enum OfferStatus {
   CREATED = "CREATED",
   CLAIMED = "CLAIMED",
@@ -133,6 +41,8 @@ export interface OfferDto {
   status: "CREATED" | "CLAIMED";
   id: string;
 }
+
+export type AnyObject = Record<string, any>;
 
 export interface CreateIssuanceOfferInput {
   verification: {
@@ -190,11 +100,10 @@ export interface AffinidiClaimInput {
   credentialOfferResponseToken: string;
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
-
 export type QueryParamsType = Record<string | number, any>;
+export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
-export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
+export interface FullRequestParams extends Omit<RequestInit, "body"> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -204,20 +113,30 @@ export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "pa
   /** query params */
   query?: QueryParamsType;
   /** format of response (i.e. response.json() -> format: "json") */
-  format?: ResponseType;
+  format?: ResponseFormat;
   /** request body */
   body?: unknown;
+  /** base url */
+  baseUrl?: string;
+  /** request cancellation token */
+  cancelToken?: CancelToken;
 }
 
 export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
 
-export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
-  securityWorker?: (
-    securityData: SecurityDataType | null,
-  ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
-  secure?: boolean;
-  format?: ResponseType;
+export interface ApiConfig<SecurityDataType = unknown> {
+  baseUrl?: string;
+  baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
+  securityWorker?: (securityData: SecurityDataType | null) => Promise<RequestParams | void> | RequestParams | void;
+  customFetch?: typeof fetch;
 }
+
+export interface HttpResponse<D extends unknown, E extends unknown = unknown> extends Response {
+  data: D;
+  error: E;
+}
+
+type CancelToken = Symbol | string | number;
 
 export enum ContentType {
   Json = "application/json",
@@ -227,102 +146,173 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public instance: AxiosInstance;
+  public baseUrl: string = "/api/v1";
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
-  private secure?: boolean;
-  private format?: ResponseType;
+  private abortControllers = new Map<CancelToken, AbortController>();
+  private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams);
 
-  constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "/api/v1" });
-    this.secure = secure;
-    this.format = format;
-    this.securityWorker = securityWorker;
+  private baseApiParams: RequestParams = {
+    credentials: "same-origin",
+    headers: {},
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  };
+
+  constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
+    Object.assign(this, apiConfig);
   }
 
   public setSecurityData = (data: SecurityDataType | null) => {
     this.securityData = data;
   };
 
-  protected mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
-    const method = params1.method || (params2 && params2.method);
+  protected encodeQueryParam(key: string, value: any) {
+    const encodedKey = encodeURIComponent(key);
+    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
+  }
 
+  protected addQueryParam(query: QueryParamsType, key: string) {
+    return this.encodeQueryParam(key, query[key]);
+  }
+
+  protected addArrayQueryParam(query: QueryParamsType, key: string) {
+    const value = query[key];
+    return value.map((v: any) => this.encodeQueryParam(key, v)).join("&");
+  }
+
+  protected toQueryString(rawQuery?: QueryParamsType): string {
+    const query = rawQuery || {};
+    const keys = Object.keys(query).filter((key) => "undefined" !== typeof query[key]);
+    return keys
+      .map((key) => (Array.isArray(query[key]) ? this.addArrayQueryParam(query, key) : this.addQueryParam(query, key)))
+      .join("&");
+  }
+
+  protected addQueryParams(rawQuery?: QueryParamsType): string {
+    const queryString = this.toQueryString(rawQuery);
+    return queryString ? `?${queryString}` : "";
+  }
+
+  private contentFormatters: Record<ContentType, (input: any) => any> = {
+    [ContentType.Json]: (input: any) =>
+      input !== null && (typeof input === "object" || typeof input === "string") ? JSON.stringify(input) : input,
+    [ContentType.Text]: (input: any) => (input !== null && typeof input !== "string" ? JSON.stringify(input) : input),
+    [ContentType.FormData]: (input: any) =>
+      Object.keys(input || {}).reduce((formData, key) => {
+        const property = input[key];
+        formData.append(
+          key,
+          property instanceof Blob
+            ? property
+            : typeof property === "object" && property !== null
+            ? JSON.stringify(property)
+            : `${property}`,
+        );
+        return formData;
+      }, new FormData()),
+    [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
+  };
+
+  protected mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
     return {
-      ...this.instance.defaults,
+      ...this.baseApiParams,
       ...params1,
       ...(params2 || {}),
       headers: {
-        ...((method && this.instance.defaults.headers[method.toLowerCase() as keyof HeadersDefaults]) || {}),
+        ...(this.baseApiParams.headers || {}),
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
       },
     };
   }
 
-  protected stringifyFormItem(formItem: unknown) {
-    if (typeof formItem === "object" && formItem !== null) {
-      return JSON.stringify(formItem);
-    } else {
-      return `${formItem}`;
-    }
-  }
-
-  protected createFormData(input: Record<string, unknown>): FormData {
-    return Object.keys(input || {}).reduce((formData, key) => {
-      const property = input[key];
-      const propertyContent: any[] = property instanceof Array ? property : [property];
-
-      for (const formItem of propertyContent) {
-        const isFileType = formItem instanceof Blob || formItem instanceof File;
-        formData.append(key, isFileType ? formItem : this.stringifyFormItem(formItem));
+  protected createAbortSignal = (cancelToken: CancelToken): AbortSignal | undefined => {
+    if (this.abortControllers.has(cancelToken)) {
+      const abortController = this.abortControllers.get(cancelToken);
+      if (abortController) {
+        return abortController.signal;
       }
+      return void 0;
+    }
 
-      return formData;
-    }, new FormData());
-  }
+    const abortController = new AbortController();
+    this.abortControllers.set(cancelToken, abortController);
+    return abortController.signal;
+  };
 
-  public request = async <T = any, _E = any>({
+  public abortRequest = (cancelToken: CancelToken) => {
+    const abortController = this.abortControllers.get(cancelToken);
+
+    if (abortController) {
+      abortController.abort();
+      this.abortControllers.delete(cancelToken);
+    }
+  };
+
+  public request = async <T = any, E = any>({
+    body,
     secure,
     path,
     type,
     query,
     format,
-    body,
+    baseUrl,
+    cancelToken,
     ...params
-  }: FullRequestParams): Promise<AxiosResponse<T>> => {
+  }: FullRequestParams): Promise<HttpResponse<T, E>> => {
     const secureParams =
-      ((typeof secure === "boolean" ? secure : this.secure) &&
+      ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
         this.securityWorker &&
         (await this.securityWorker(this.securityData))) ||
       {};
     const requestParams = this.mergeRequestParams(params, secureParams);
-    const responseFormat = format || this.format || undefined;
+    const queryString = query && this.toQueryString(query);
+    const payloadFormatter = this.contentFormatters[type || ContentType.Json];
+    const responseFormat = format || requestParams.format;
 
-    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
-      body = this.createFormData(body as Record<string, unknown>);
-    }
-
-    if (type === ContentType.Text && body && body !== null && typeof body !== "string") {
-      body = JSON.stringify(body);
-    }
-
-    return this.instance.request({
+    return this.customFetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`, {
       ...requestParams,
       headers: {
         ...(requestParams.headers || {}),
         ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
       },
-      params: query,
-      responseType: responseFormat,
-      data: body,
-      url: path,
+      signal: cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal,
+      body: typeof body === "undefined" || body === null ? null : payloadFormatter(body),
+    }).then(async (response) => {
+      const r = response as HttpResponse<T, E>;
+      r.data = null as unknown as T;
+      r.error = null as unknown as E;
+
+      const data = !responseFormat
+        ? r
+        : await response[responseFormat]()
+            .then((data) => {
+              if (r.ok) {
+                r.data = data;
+              } else {
+                r.error = data;
+              }
+              return r;
+            })
+            .catch((e) => {
+              r.error = e;
+              return r;
+            });
+
+      if (cancelToken) {
+        this.abortControllers.delete(cancelToken);
+      }
+
+      if (!response.ok) throw data;
+      return data;
     });
   };
 }
 
 /**
  * @title console-vc-issuance
- * @version 1.54.2
+ * @version 1.59.0
  * @license ISC
  * @baseUrl /api/v1
  * @contact Yiğitcan UÇUM yigitcan.u@affinidi.com
@@ -330,109 +320,6 @@ export class HttpClient<SecurityDataType = unknown> {
  * Console VC issuance operations
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  batchIssuance = {
-    /**
-     * @description Issue VCs in a batch
-     *
-     * @tags batch-issuance
-     * @name Create
-     * @request POST:/batch-issuance
-     * @secure
-     */
-    create: (data: BatchIssuanceCreateInput, params: RequestParams = {}) =>
-      this.request<BatchIssuanceOutput, OperationErrorType>({
-        path: `/batch-issuance`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Get all Batch Issuances started in the Project scope
-     *
-     * @tags batch-issuance
-     * @name GetByProjectId
-     * @request GET:/batch-issuance
-     * @secure
-     */
-    getByProjectId: (
-      query: {
-        projectId: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<BatchIssuanceListingOutput, any>({
-        path: `/batch-issuance`,
-        method: "GET",
-        query: query,
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Get details of a specific batch issuance records and its progress
-     *
-     * @tags batch-issuance
-     * @name Get
-     * @request GET:/batch-issuance/{batchIssuanceId}
-     * @secure
-     */
-    get: (batchIssuanceId: string, params: RequestParams = {}) =>
-      this.request<BatchIssuanceDetailOutput, OperationErrorType>({
-        path: `/batch-issuance/${batchIssuanceId}`,
-        method: "GET",
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Get the VC issued as part of the Batch Issuance progress, using the corresponding rowId of the Issuance operation
-     *
-     * @tags batch-issuance
-     * @name GetRow
-     * @request GET:/batch-issuance/{batchIssuanceId}/row/{rowId}
-     * @secure
-     */
-    getRow: (batchIssuanceId: string, rowId: string, params: RequestParams = {}) =>
-      this.request<AnyObject, OperationErrorType>({
-        path: `/batch-issuance/${batchIssuanceId}/row/${rowId}`,
-        method: "GET",
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags data-source
-     * @name UploadFile
-     * @request POST:/batch-issuance/data-source
-     * @secure
-     */
-    uploadFile: (
-      data: {
-        projectId: string;
-        /** @format binary */
-        file: File;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<UploadFileResponse, OperationErrorType>({
-        path: `/batch-issuance/data-source`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.FormData,
-        format: "json",
-        ...params,
-      }),
-  };
   issuances = {
     /**
      * No description

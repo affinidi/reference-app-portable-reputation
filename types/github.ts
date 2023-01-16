@@ -163,3 +163,5 @@ export type GithubRepo = {
 };
 
 export type GithubReposLanguages = {};
+
+export type GithubPullRequest = {};
