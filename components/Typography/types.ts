@@ -1,0 +1,18 @@
+export type Variant =
+  | 'p1'
+  | 'p2'
+  | 'p3'
+  | 'p4'
+  | 'h1'
+  | 'h5'
+  | 'h6'
+  | 'h7'
+  | 'c1'
+  | 's2'
+  | 's3'
+  | 'e1'
+  | 'b1'
+  | 'b2'
+  | 'b3'
+
+export type AlignText = 'left' | 'center' | 'right'
