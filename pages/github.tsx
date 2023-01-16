@@ -28,13 +28,6 @@ const Github: FC<GithubProps> = (props) => {
   const [languages, setLanguages] = useState(null);
   const [prs, setPRs] = useState(null);
 
-  // if (!data) {
-  //   router.replace("/");
-  // }
-  // console.log("data:", data);
-
-  // console.log("user:", user);
-
   const handleGetUserData = async () => {
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_HOST}/api/github/user?access_token=${storedToken}`

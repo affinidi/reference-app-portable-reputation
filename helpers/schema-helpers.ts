@@ -116,8 +116,3 @@ type Schema = {
 };
 
 export const SCHEMA_MANAGER_URL = "https://schema.stg.affinidi.com";
-
-// const getSchema = async (name: string): Promise<Schema> => {
-//   const resp = await fetch(`${SCHEMA_MANAGER_URL}/schemas/${name}`);
-//   return resp.json();
-// };

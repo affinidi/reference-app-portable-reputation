@@ -22,5 +22,5 @@ export default function handler(
   }
 
   authWithCode(code).hook(request, "GET user");
-  res.status(200).json({ name: "Atch" });
+  res.status(200).json({ name: 'Unknown Dev'});
 }
