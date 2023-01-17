@@ -1,22 +1,22 @@
-import { GetServerSideProps } from 'next'
-import { FC } from 'react'
-import { getProviders, signIn } from 'next-auth/react'
+import { GetServerSideProps } from "next";
+import { FC } from "react";
+import { getProviders, signIn } from "next-auth/react";
 
-import RoundButton from '../components/buttons/RoundButton'
-import GithubConnectorCard from '../components/connectors/GithubConnectorCard'
-import { FullLogoIcon } from '../components/icons'
+import RoundButton from "../components/buttons/RoundButton";
+import GithubConnectorCard from "../components/connectors/GithubConnectorCard";
+import { FullLogoIcon } from "../components/icons";
 
-import styles from '../styles/ProfileSetup.module.scss'
-import { Container, Header } from '../components'
+import styles from "../styles/ProfileSetup.module.scss";
+import { Container, Header } from "../components";
 
 type ProfileSetupProps = {
-  providers: ReturnType<typeof getProviders>
-}
+  providers: ReturnType<typeof getProviders>;
+};
 
 const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
   const connectToGithub = async (id: string) => {
-    await signIn(id)
-  }
+    await signIn(id, { callbackUrl: "/github" });
+  };
 
   return (
     <>
@@ -37,20 +37,20 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
                     handleClick={() => connectToGithub(provider.id)}
                     text="Connect to my profile"
                   />
-                )
+                );
               })}
           </div>
         </main>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default ProfileSetup
+export default ProfileSetup;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const providers = await getProviders()
+  const providers = await getProviders();
   return {
     props: { providers },
-  }
-}
+  };
+};
