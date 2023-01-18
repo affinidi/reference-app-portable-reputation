@@ -1,6 +1,7 @@
 import { FC, SVGAttributes } from 'react'
 
 import * as S from './Header.styled'
+import { Container } from 'components'
 
 export type HeaderProps = {
   title: string
@@ -8,15 +9,13 @@ export type HeaderProps = {
   path?: string
 }
 
-const Header: FC<HeaderProps> = ({ title, icon, path }) => {
-  return (
-    <S.Container>
+const Header: FC<HeaderProps> = ({ title, icon, path }) => (
+  <S.Container>
+    <Container>
       {/* <S.IconWrapper>{icon}</S.IconWrapper> */}
       <S.Title variant="h1">{title}</S.Title>
-    </S.Container>
-  )
-}
+    </Container>
+  </S.Container>
+)
 
 export default Header
-
-//  onClick={() => (path ? navigate(path) : icon ? navigate(-1) : null)}>
