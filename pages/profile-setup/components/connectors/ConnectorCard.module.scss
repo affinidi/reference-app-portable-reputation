@@ -1,6 +1,4 @@
 .card {
-  width: 392px;
-  height: 144px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -10,6 +8,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 20px 0 rgba(49, 58, 85, 0.1);
   background-color: #262c47;
+
   &__header {
     display: flex;
     gap: 16px;
