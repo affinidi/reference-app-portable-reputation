@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { GithubIcon } from "../icons";
+
+import { GithubIcon } from "components/icons";
 
 import ConnectorCard from "./ConnectorCard";
 
