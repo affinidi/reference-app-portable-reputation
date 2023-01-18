@@ -4,7 +4,6 @@ import { getProviders, signIn } from "next-auth/react";
 
 import RoundButton from "../components/buttons/RoundButton";
 import GithubConnectorCard from "../components/connectors/GithubConnectorCard";
-import { FullLogoIcon } from "../components/icons";
 
 import styles from "../styles/ProfileSetup.module.scss";
 import { Container, Header } from "../components";

@@ -1,58 +1,83 @@
-import { SyntheticEvent, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { SyntheticEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-import { useSessionStorage } from '../../hooks/useSessionStorage'
-import { useConfirmSignInForm } from './ConfirmSignInForm/useConfirmSignInForm'
-import { useConfirmSignInMutation, useSignInMutation } from '../../hooks/useAuthentication'
-import { useAuthContext } from '../../hooks/useAuthContext'
+import { useSessionStorage } from "../../hooks/useSessionStorage";
+import { useConfirmSignInForm } from "./ConfirmSignInForm/useConfirmSignInForm";
+import {
+  useConfirmSignInMutation,
+  useSignInMutation,
+} from "../../hooks/useAuthentication";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { cloudWalletService } from "../../services/cloud-wallet";
 
 export const useConfirmSignIn = () => {
-  const storage = useSessionStorage()
-  const navigate = useRouter()
-  const { authState, updateAuthState } = useAuthContext()
-  const { data, error, mutateAsync } = useConfirmSignInMutation()
-  const { data: signInData, mutateAsync: signInMutateAsync } = useSignInMutation()
-  const { computedCode, inputs, isButtonDisabled } = useConfirmSignInForm(error?.message)
+  const storage = useSessionStorage();
+  const navigate = useRouter();
+  const router = useRouter();
+  const { authState, updateAuthState } = useAuthContext();
+  const { data, error, mutateAsync } = useConfirmSignInMutation();
+  const { data: signInData, mutateAsync: signInMutateAsync } =
+    useSignInMutation();
+  const { computedCode, inputs, isButtonDisabled } = useConfirmSignInForm(
+    error?.message
+  );
+  const [isConnected, setIsConnected] = useState<boolean>(false);
 
   const handleResendCode = async () => {
     if (!authState.username) {
-      navigate.push('/sign-in')
-      return
+      navigate.push("/sign-in");
+      return;
     }
-    await signInMutateAsync({ username: authState.username })
-  }
+    await signInMutateAsync({ username: authState.username });
+  };
 
   const onSubmit = async (e?: SyntheticEvent) => {
-    e?.preventDefault()
+    e?.preventDefault();
     await mutateAsync({
-      token: storage.getItem('signUpToken') || '',
+      token: storage.getItem("signUpToken") || "",
       confirmationCode: computedCode,
-    })
-  }
+    });
+  };
+
   useEffect(() => {
-    if (authState.username === '') {
-      navigate.push('/sign-in')
+    const checkCredentials = async () => {
+      const githubConnected = await cloudWalletService.getAllCredentials();
+      if (githubConnected.length > 0) {
+        setIsConnected(true);
+      }
+    };
+
+    checkCredentials();
+  }, []);
+
+  useEffect(() => {
+    if (authState.username === "") {
+      navigate.push("/sign-in");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authState, updateAuthState])
+  }, [authState, updateAuthState]);
 
   useEffect(() => {
     if (data) {
-      storage.setItem('accessToken', data.accessToken)
+      storage.setItem("accessToken", data.accessToken);
       updateAuthState({
         ...authState,
         loading: false,
         authorized: true,
-      })
-      if (!error) navigate.push('/profile-setup')
+      });
+      if (!error && !isConnected) {
+        navigate.push("/profile-setup");
+      } else if (!error && isConnected) {
+        router.push("/github");
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error])
+  }, [data, error, isConnected, router]);
 
   useEffect(() => {
     if (signInData) {
-      storage.setItem('signUpToken', signInData)
+      storage.setItem("signUpToken", signInData);
     }
-  }, [signInData, storage])
-  return { error, onSubmit, inputs, isButtonDisabled, handleResendCode }
-}
+  }, [signInData, storage]);
+  return { error, onSubmit, inputs, isButtonDisabled, handleResendCode };
+};
