@@ -10,7 +10,8 @@
     "id": "fake-id",
     "username": "fake-user",
     "company": null,
-    "location": "Nowhere",
+    "location": "Ukraine",
+    "profilePictureUrl": "https://avatars.githubusercontent.com/u/1491646?u=12c196756d6173ef0333efe10302480aa7ef2b5f&v=4",
     "ownedRepositoriesList": {
       "count": 28,
       "items": [

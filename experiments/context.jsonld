@@ -7,6 +7,10 @@
         "@protected": true
       }
     },
+    "userId": {
+      "@id": "schema-id:userId",
+      "@type": "https://schema.org/Text"
+    },
     "username": {
       "@id": "schema-id:username",
       "@type": "https://schema.org/Text"
@@ -18,6 +22,10 @@
     "location": {
       "@id": "schema-id:location",
       "@type": "https://schema.org/Text"
+    },
+    "profilePictureUrl": {
+      "@id": "schema-id:profilePictureUrl",
+      "@type": "https://schema.org/URL"
     },
     "ownedRepositoriesList": {
       "@id": "schema-id:ownedRepositoriesList",

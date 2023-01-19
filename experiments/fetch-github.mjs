@@ -94,11 +94,11 @@ async function fetch() {
     }))
 
   return {
-    id: viewer.id,
+    userId: viewer.id,
     username: viewer.login,
     company: viewer.company,
     location: viewer.location,
-    profilePictureUrl: viewer.avatar_url,
+    profilePictureUrl: viewer.avatarUrl,
     ownedRepositoriesList: {
       count: viewer.repositories.totalCount,
       items: viewer.repositories.nodes

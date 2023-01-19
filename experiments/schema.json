@@ -56,8 +56,8 @@
     "credentialSubject": {
       "type": "object",
       "properties": {
-        "id": {
-          "title": "id",
+        "userId": {
+          "title": "userId",
           "type": "string"
         },
         "username": {
@@ -71,6 +71,11 @@
         "location": {
           "title": "location",
           "type": ["string", "null"]
+        },
+        "profilePictureUrl": {
+          "title": "profilePictureUrl",
+          "type": ["string", "null"],
+          "format": "uri"
         },
         "ownedRepositoriesList": {
           "title": "ownedRepositoriesList",
