@@ -9,6 +9,7 @@ import {
 } from "../../hooks/useAuthentication";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { cloudWalletService } from "../../services/cloud-wallet";
+import { StoredW3CCredential } from "services/cloud-wallet/cloud-wallet.api";
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
@@ -41,8 +42,13 @@ export const useConfirmSignIn = () => {
 
   useEffect(() => {
     const checkCredentials = async () => {
-      const githubConnected = await cloudWalletService.getAllCredentials();
-      if (githubConnected.length > 0) {
+      const vcs = await cloudWalletService.getAllCredentials();
+
+      const reputationVcs = vcs.filter((vc) =>
+        (vc as StoredW3CCredential).type?.includes("PortableReputation")
+      ) as StoredW3CCredential[];
+
+      if (reputationVcs) {
         setIsConnected(true);
       }
     };
