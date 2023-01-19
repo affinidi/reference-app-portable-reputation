@@ -20,7 +20,7 @@ const handler = async (
     return;
   }
 
-  const params = `client_id=${process.env.GITHUB_APP_CLIENT_ID}&client_secret=${process.env.GITHUB_APP_CLIENT_SECRET}&code=${code}`;
+  const params = `client_id=${process.env.NEXT_PUBLIC_GITHUB_APP_CLIENT_ID}&client_secret=${process.env.NEXT_PUBLIC_GITHUB_APP_CLIENT_SECRET}&code=${code}`;
   const resp = await fetch(
     `https://github.com/login/oauth/access_token?${params}`,
     {

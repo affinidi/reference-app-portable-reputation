@@ -73,8 +73,8 @@ const handler = async (
   const languages = await GithubService.getUserProgrammingLanguages(kit);
   const prs = await GithubService.getPullRequests(kit);
   try {
-    const issuerDid = process.env.AFFINIDI_PROJECT_DID || "";
-    const projectId = process.env.AFFINIDI_PROJECT_ID || "";
+    const issuerDid = process.env.NEXT_PUBLIC_AFFINIDI_PROJECT_DID || "";
+    const projectId = process.env.NEXT_PUBLIC_AFFINIDI_PROJECT_ID || "";
 
     const walletUrl = `https://holder-reference-app.stg.affinidi.com/holder/claim`;
     const issuanceJson: CreateIssuanceInput = {
@@ -111,7 +111,7 @@ const handler = async (
       credentialSubject,
     };
 
-    const apiKeyHash = process.env.AFFINIDI_API_KEY_HASH || "";
+    const apiKeyHash = process.env.NEXT_PUBLIC_AFFINIDI_API_KEY_HASH || "";
 
     const issuance = await issuanceService.createIssuance(
       apiKeyHash,

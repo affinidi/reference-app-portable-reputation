@@ -1,12 +1,12 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
-const clientId = process.env.GITHUB_APP_CLIENT_ID || "";
-const clientSecret = process.env.GITHUB_APP_CLIENT_SECRET || "";
+const clientId = process.env.NEXT_PUBLIC_GITHUB_APP_CLIENT_ID || "";
+const clientSecret = process.env.NEXT_PUBLIC_GITHUB_APP_CLIENT_SECRET || "";
 
 export const authOptions: NextAuthOptions = {
   providers: [GithubProvider({ clientId, clientSecret })],
-  secret: process.env.JWT_SECRET,
+  secret: process.env.NEXT_PUBLIC_JWT_SECRET,
   callbacks: {
     async signIn({ user, account }) {
       if (account && account.provider === "github" && account.access_token) {

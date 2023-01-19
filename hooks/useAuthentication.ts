@@ -1,110 +1,120 @@
-import { useMutation } from '@tanstack/react-query'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useMutation } from "@tanstack/react-query";
+import { Dispatch, SetStateAction, useState } from "react";
 
-import { cloudWalletService } from '../services/cloud-wallet'
+import { cloudWalletService } from "../services/cloud-wallet";
 import {
   ConfirmSignInInput,
   ConfirmSignInOutput,
   SignInInput,
-} from '../services/cloud-wallet/cloud-wallet.api'
+} from "../services/cloud-wallet/cloud-wallet.api";
 
 export type ErrorResponse = {
-  name: string
-  traceId: string
-  message: string
+  name: string;
+  traceId: string;
+  message: string;
   details: {
-    field: string
-    issue: string
-    location: string
-  }
-}
+    field: string;
+    issue: string;
+    location: string;
+  };
+};
 
 export const signIn = async ({ username }: SignInInput): Promise<string> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/affinidi/sign-in`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      username,
-    }),
-  })
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_HOST}/api/affinidi/sign-in`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+      }),
+    }
+  );
   if (![200, 201].includes(response.status)) {
-    throw Error()
+    throw Error();
   }
-  return response.json()
-}
+  return response.json();
+};
 
 export const confirmSignIn = async ({
   token,
   confirmationCode,
 }: ConfirmSignInInput): Promise<ConfirmSignInOutput> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/affinidi/confirm-sign-in`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      token,
-      confirmationCode,
-    }),
-  })
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_HOST}/api/affinidi/confirm-sign-in`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token,
+        confirmationCode,
+      }),
+    }
+  );
 
-  return response.json()
-}
+  return response.json();
+};
 
 export const logout = async (authState: UserState) => {
   if (authState.authorized) {
     try {
-      await cloudWalletService.logOut()
+      await cloudWalletService.logOut();
     } catch (e) {}
   }
-}
+};
 
 export const useSignInMutation = () => {
-  return useMutation<string, ErrorResponse, SignInInput, () => void>((data: SignInInput) =>
-    signIn(data),
-  )
-}
+  return useMutation<string, ErrorResponse, SignInInput, () => void>(
+    (data: SignInInput) => signIn(data)
+  );
+};
 
 export const useConfirmSignInMutation = () => {
-  return useMutation<ConfirmSignInOutput, ErrorResponse, ConfirmSignInInput, () => void>(
-    (data: ConfirmSignInInput) => confirmSignIn(data),
-  )
-}
+  return useMutation<
+    ConfirmSignInOutput,
+    ErrorResponse,
+    ConfirmSignInInput,
+    () => void
+  >((data: ConfirmSignInInput) => confirmSignIn(data));
+};
 
 export type UserState = {
-  username: string
-  authorized: boolean
-  loading: boolean
-}
+  username: string;
+  authorized: boolean;
+  loading: boolean;
+};
 
 const BASIC_STATE: UserState = {
-  username: '',
+  username: "",
   authorized: false,
   loading: true,
-}
+};
 
 export const useAuthentication = () => {
-  const [authState, setAuthState] = useState<UserState>(BASIC_STATE)
+  const [authState, setAuthState] = useState<UserState>(BASIC_STATE);
 
   const updatePartiallyState =
     <T>(updateFunction: Dispatch<SetStateAction<T>>) =>
     (newState: Partial<T>) => {
-      updateFunction((prev) => ({ ...prev, ...newState }))
-    }
-  const updateAuthState = updatePartiallyState<typeof authState>(setAuthState)
+      updateFunction((prev) => ({ ...prev, ...newState }));
+    };
+  const updateAuthState = updatePartiallyState<typeof authState>(setAuthState);
 
   const authenticate = async () => {
     try {
-      const response = await cloudWalletService.getDid()
+      const response = await cloudWalletService.getDid();
       if (response) {
-        updateAuthState({ loading: false, authorized: true })
+        updateAuthState({ loading: false, authorized: true });
       }
     } catch (error) {
-      updateAuthState({ loading: false, authorized: false })
+      updateAuthState({ loading: false, authorized: false });
     }
-  }
+  };
 
-  return { authState, setAuthState, updateAuthState, authenticate }
-}
+  return { authState, setAuthState, updateAuthState, authenticate };
+};

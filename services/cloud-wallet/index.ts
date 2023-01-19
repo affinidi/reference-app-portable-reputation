@@ -18,10 +18,10 @@ export const isHttpError = (
 class CloudWalletService {
   constructor(
     private readonly client = new CloudWalletApi({
-      baseUrl: `${process.env.AFFINIDI_CLOUD_WALLET_URL}/api/v1`,
+      baseUrl: `${process.env.NEXT_PUBLIC_AFFINIDI_CLOUD_WALLET_URL}/api/v1`,
       baseApiParams: {
         headers: {
-          'Api-Key': `${process.env.AFFINIDI_API_KEY_HASH}`,
+          'Api-Key': `${process.env.NEXT_PUBLIC_AFFINIDI_API_KEY_HASH}`,
           'Content-Type': 'application/json',
         },
       },
