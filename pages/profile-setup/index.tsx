@@ -1,25 +1,25 @@
-import { GetServerSideProps } from 'next'
-import { FC } from 'react'
-import { getProviders, signIn } from 'next-auth/react'
+import { GetServerSideProps } from "next";
+import { FC } from "react";
+import { getProviders, signIn } from "next-auth/react";
 
-import RoundButton from 'components/buttons/RoundButton'
-import { Container, Grid, Header } from 'components'
+import RoundButton from "components/buttons/RoundButton";
+import { Container, Grid, Header } from "components";
 
-import GithubConnectorCard from './components/connectors/GithubConnectorCard'
-import styles from './ProfileSetup.module.scss'
+import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
+import styles from "./ProfileSetup.module.scss";
 
 type ProfileSetupProps = {
-  providers: ReturnType<typeof getProviders>
-}
+  providers: ReturnType<typeof getProviders>;
+};
 
 const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
   const connectToGithub = async (id: string) => {
-    await signIn(id)
-  }
+    await signIn(id, { callbackUrl: "/github" });
+  };
 
   return (
     <>
-      <Header title="Setup your profile"/>
+      <Header title="Setup your profile" />
 
       <Container>
         <main className={styles.main}>
@@ -28,7 +28,7 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
           </div>
 
           <Grid columnsWidth={[4, 4, 4]}>
-            <GithubConnectorCard/>
+            <GithubConnectorCard />
           </Grid>
 
           <div className={styles.main__actions}>
@@ -40,21 +40,21 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
                     handleClick={() => connectToGithub(provider.id)}
                     text="Connect to my profile"
                   />
-                )
+                );
               })}
           </div>
         </main>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default ProfileSetup
+export default ProfileSetup;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const providers = await getProviders()
+  const providers = await getProviders();
 
   return {
     props: { providers },
-  }
-}
+  };
+};
