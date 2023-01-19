@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-1.json",
+  "$id": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-2.json",
   "$metadata": {
     "version": 1,
-    "revision": 1,
+    "revision": 2,
     "discoverable": true,
     "uris": {
-      "jsonLdContext": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-1.jsonld",
-      "jsonSchema": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-1.json"
+      "jsonLdContext": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-2.jsonld",
+      "jsonSchema": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-2.json"
     }
   },
   "title": "GithubProfile",

@@ -59,12 +59,12 @@ async function fetch() {
           }
           totalCommitContributions
         }
-        repositories(last: 100) {
+        repositories(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
           totalCount
           nodes {
             name
             isPrivate
-            languages(last: 10) {
+            languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
               nodes {
                 name
               }

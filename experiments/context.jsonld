@@ -1,7 +1,7 @@
 {
   "@context": {
     "GithubProfile": {
-      "@id": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-1.jsonld",
+      "@id": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-2.jsonld",
       "@context": {
         "@version": 1.1,
         "@protected": true
