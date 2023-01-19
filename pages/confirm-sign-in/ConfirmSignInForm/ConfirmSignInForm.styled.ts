@@ -44,7 +44,7 @@ export const VerificationField = styled(Input)<InputProps>`
   }
 `;
 
-export const CenterDiv = styled.div`
+export const CenterDiv = styled(Box)`
   max-width: ${pxToRem(392)};
   margin: auto;
 `;

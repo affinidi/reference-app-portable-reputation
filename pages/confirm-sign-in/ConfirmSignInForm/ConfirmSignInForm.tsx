@@ -1,10 +1,6 @@
 import { FC, ReactNode } from "react";
 
-import {
-  Container,
-  Header,
-  Typography,
-} from "../../../components";
+import { Container, Header, Typography } from "../../../components";
 
 import * as S from "./ConfirmSignInForm.styled";
 
@@ -52,8 +48,8 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
           <S.Message variant="p2">
             Didn’t receive a code? Click{" "}
             <span
-              onClick={() => handleResendCode()}
-              onKeyPress={() => handleResendCode()}
+              onClick={handleResendCode}
+              onKeyPress={handleResendCode}
               role="button"
               tabIndex={0}
             >

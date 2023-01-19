@@ -53,7 +53,7 @@ export const SignInForm: FC<SignInFormProps> = ({
                 setSignInInput({ username: e.target.value });
               }}
               error={inputError || error?.message}
-            ></Input>
+            />
             <Button disabled={disabled} type="submit">
               send verification code
             </Button>
