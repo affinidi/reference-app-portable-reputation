@@ -47,6 +47,12 @@ async function fetch() {
         pullRequests {
           totalCount
         }
+        organizations(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+          totalCount
+          nodes {
+            name
+          }
+        }
         contributionsLastYear: contributionsCollection(from: $yearAgo) {
           contributionCalendar {
             totalContributions
@@ -122,6 +128,11 @@ async function fetch() {
     contributions: {
       lastWeek: viewer.contributionsLastWeek.contributionCalendar.totalContributions,
       lastYear: viewer.contributionsLastYear.contributionCalendar.totalContributions,
+    },
+    organizationsList: {
+      count: viewer.organizations.totalCount,
+      items: viewer.organizations.nodes
+        .map(node => ({ name: node.name }))
     },
     pullRequests: viewer.pullRequests.totalCount,
   }

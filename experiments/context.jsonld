@@ -1,7 +1,7 @@
 {
   "@context": {
     "GithubProfile": {
-      "@id": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-2.jsonld",
+      "@id": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-5.jsonld",
       "@context": {
         "@version": 1.1,
         "@protected": true
@@ -29,6 +29,24 @@
     },
     "ownedRepositoriesList": {
       "@id": "schema-id:ownedRepositoriesList",
+      "@context": {
+        "count": {
+          "@id": "schema-id:count",
+          "@type": "https://schema.org/Number"
+        },
+        "items": {
+          "@id": "schema-id:items",
+          "@context": {
+            "name": {
+              "@id": "schema-id:name",
+              "@type": "https://schema.org/Text"
+            }
+          }
+        }
+      }
+    },
+    "organizationsList": {
+      "@id": "schema-id:organizationsList",
       "@context": {
         "count": {
           "@id": "schema-id:count",

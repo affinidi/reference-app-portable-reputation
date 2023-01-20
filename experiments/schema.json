@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-2.json",
+  "$id": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-5.json",
   "$metadata": {
     "version": 1,
-    "revision": 2,
+    "revision": 5,
     "discoverable": true,
     "uris": {
-      "jsonLdContext": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-2.jsonld",
-      "jsonSchema": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-2.json"
+      "jsonLdContext": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-5.jsonld",
+      "jsonSchema": "https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-5.json"
     }
   },
   "title": "GithubProfile",
@@ -66,15 +66,15 @@
         },
         "company": {
           "title": "company",
-          "type": ["string", "null"]
+          "type": "string"
         },
         "location": {
           "title": "location",
-          "type": ["string", "null"]
+          "type": "string"
         },
         "profilePictureUrl": {
           "title": "profilePictureUrl",
-          "type": ["string", "null"],
+          "type": "string",
           "format": "uri"
         },
         "ownedRepositoriesList": {
@@ -95,11 +95,37 @@
                     "title": "name",
                     "type": "string"
                   }
-                }
+                },
+                "required": ["name"]
               }
             }
           },
-          "required": ["count"]
+          "required": ["count", "items"]
+        },
+        "organizationsList": {
+          "title": "organizationsList",
+          "type": "object",
+          "properties": {
+            "count": {
+              "title": "count",
+              "type": "number"
+            },
+            "items": {
+              "title": "items",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "title": "name",
+                    "type": "string"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          },
+          "required": ["count", "items"]
         },
         "languagesList": {
           "title": "languagesList",
@@ -124,7 +150,7 @@
                     "type": "number"
                   }
                 },
-                "required": ["language"]
+                "required": ["language", "repositories"]
               }
             }
           },
@@ -146,7 +172,8 @@
               "title": "lastYear",
               "type": "number"
             }
-          }
+          },
+          "required": ["total", "lastWeek", "lastYear"]
         },
         "solvedIssues": {
           "title": "solvedIssues",
@@ -180,14 +207,29 @@
               "title": "lastYear",
               "type": "number"
             }
-          }
+          },
+          "required": ["lastWeek", "lastYear"]
         },
         "pullRequests": {
           "title": "pullRequests",
           "type": "number"
         }
       },
-      "required": ["id", "username"]
+      "required": [
+        "userId",
+        "username",
+        "organizationsList",
+        "ownedRepositoriesList",
+        "languagesList",
+        "commits",
+        "contributions",
+        "pullRequests",
+        "solvedIssues",
+        "followers",
+        "following",
+        "starredRepositories",
+        "watchedRepositories"
+      ]
     },
     "credentialSchema": {
       "type": "object",
