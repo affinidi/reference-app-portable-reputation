@@ -35,7 +35,6 @@ export interface GithubProfileCredentialSubject {
   watchedRepositories: number
 }
 
-
 export async function gatherGithubProfile(accessToken: string): Promise<GithubProfileCredentialSubject> {
   const octokit = new Octokit({ auth: accessToken })
 
