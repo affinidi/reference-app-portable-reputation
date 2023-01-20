@@ -1,18 +1,15 @@
-import { FC, HTMLAttributes, ReactNode } from 'react'
+import { FC, HTMLAttributes, ReactNode } from "react";
 
-import { Typography } from 'components'
+import { Typography } from "components";
 
-import * as S from './Container.styled'
+import * as S from "./Container.styled";
 
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode
-  title?: string
+  children: ReactNode;
+  title?: string;
 }
 
-const Container: FC<ContainerProps> = ({
-  children,
-  title,
-}) => {
+const Container: FC<ContainerProps> = ({ children, title }) => {
   return (
     <>
       {title && (
@@ -20,11 +17,9 @@ const Container: FC<ContainerProps> = ({
           <Typography variant="p1">{title}</Typography>
         </S.Title>
       )}
-      <S.Container>
-        {children}
-      </S.Container>
+      <S.Container>{children}</S.Container>
     </>
-  )
-}
+  );
+};
 
-export default Container
+export default Container;

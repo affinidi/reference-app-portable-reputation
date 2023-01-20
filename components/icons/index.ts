@@ -1,3 +1,6 @@
-export { FullLogoIcon } from "./FullLogoIcon";
-export { GithubIcon } from "./GithubIcon";
-export { LogoIcon } from "./LogoIcon";
+export { FullLogoIcon } from './FullLogoIcon'
+export { GithubIcon } from './GithubIcon'
+export { LogoIcon } from './LogoIcon'
+export { default as InfoOutlinedIcon } from './info-outlined'
+export { default as OfficeIcon } from './office'
+export { default as MapOutlinedIcon } from './map-outlined'
