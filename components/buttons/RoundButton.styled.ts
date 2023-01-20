@@ -15,6 +15,10 @@ export const RoundButton = styled(Button)`
     color: #feffff;
     pointer-events: none;
   }
+
+  @media (max-width: ${pxToRem(392)}) {
+    width: ${pxToRem(342)};
+  }
 `;
 
 export const ButtonText = styled(Typography)`

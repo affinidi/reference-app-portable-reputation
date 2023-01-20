@@ -10,7 +10,7 @@ export const Card = styled(Box)`
   background-color: #262c47;
 
   @media (max-width: ${pxToRem(392)}) {
-    width: ${pxToRem(328)};
+    width: ${pxToRem(342)};
   }
 `;
 
