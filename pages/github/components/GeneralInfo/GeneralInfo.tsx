@@ -17,25 +17,25 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
         <S.UserInfoContainer direction="row" gap={40}>
           <Image
             src={info.profilePictureUrl || ""}
-            alt={info?.username || ""}
+            alt={info.username || ""}
             width={72}
             height={72}
           />
 
           <Box justifyContent="space-between">
-            <Typography variant="h7">{info?.username}</Typography>
+            <Typography variant="h7">{info.username}</Typography>
 
-            {info?.company && (
+            {info.company && (
               <Box direction="row" gap={8}>
                 <OfficeIcon />
-                <S.GrayText variant="p2">{info?.company}</S.GrayText>
+                <S.GrayText variant="p2">{info.company}</S.GrayText>
               </Box>
             )}
 
-            {info?.location && (
+            {info.location && (
               <Box direction="row" gap={8}>
                 <MapOutlinedIcon />
-                <S.GrayText variant="p2">{info?.location}</S.GrayText>
+                <S.GrayText variant="p2">{info.location}</S.GrayText>
               </Box>
             )}
           </Box>
@@ -47,7 +47,7 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Pull requests total</S.GrayText>
 
           <Typography variant="h3" tag="div">
-            {info?.pullRequests}
+            {info.pullRequests}
           </Typography>
         </S.Card>
       </div>
@@ -57,7 +57,7 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Contributions last year</S.GrayText>
 
           <Typography variant="h3" tag="div">
-            {info?.contributions?.lastYear}
+            {info.contributions.lastYear}
           </Typography>
         </S.Card>
       </div>
@@ -67,7 +67,7 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Commits last week</S.GrayText>
 
           <Typography variant="h3" tag="div">
-            {info?.commits?.lastWeek}
+            {info.commits.lastWeek}
           </Typography>
         </S.Card>
       </div>
@@ -77,7 +77,7 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Commits last year</S.GrayText>
 
           <Typography variant="h3" tag="div">
-            {info?.commits?.lastYear}
+            {info.commits.lastYear}
           </Typography>
         </S.Card>
       </div>

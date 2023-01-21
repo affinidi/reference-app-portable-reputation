@@ -14,21 +14,21 @@ export const ListInfo: FC<ListInfoProps> = ({ info }) => (
     <div className="row">
       <div className="col-4">
         <S.Title variant="h7">
-          Top programming languages ({info?.languagesList?.count})
+          Top programming languages ({info.languagesList.count})
         </S.Title>
 
         <Box gap={8}>
-          {info?.languagesList?.items.map(
+          {info.languagesList.items.map(
             (item: { language: string; repositories: number }) => (
               <Card
-                key={item?.language}
+                key={item.language}
                 direction="row"
                 justifyContent="space-between"
               >
-                <S.GrayText variant="p1">{item?.language}</S.GrayText>
+                <S.GrayText variant="p1">{item.language}</S.GrayText>
 
                 <S.GrayText variant="p1">
-                  {item?.repositories} projects
+                  {item.repositories} projects
                 </S.GrayText>
               </Card>
             )
@@ -38,13 +38,13 @@ export const ListInfo: FC<ListInfoProps> = ({ info }) => (
 
       <div className="col-4">
         <S.Title variant="h7">
-          User repositories ({info?.ownedRepositoriesList?.count})
+          User repositories ({info.ownedRepositoriesList.count})
         </S.Title>
 
         <Box gap={8}>
-          {info?.ownedRepositoriesList?.items.map((item: { name: string }) => (
-            <Card key={item?.name}>
-              <S.GrayText variant="p1">{item?.name}</S.GrayText>
+          {info.ownedRepositoriesList.items.map((item: { name: string }) => (
+            <Card key={item.name}>
+              <S.GrayText variant="p1">{item.name}</S.GrayText>
             </Card>
           ))}
         </Box>
@@ -52,13 +52,13 @@ export const ListInfo: FC<ListInfoProps> = ({ info }) => (
 
       <div className="col-4">
         <S.Title variant="h7">
-          Organisations ({info?.organizationsList?.count})
+          Organisations ({info.organizationsList.count})
         </S.Title>
 
         <Box gap={8}>
-          {info?.organizationsList?.items.map((item: { name: string }) => (
-            <Card key={item?.name}>
-              <S.GrayText variant="p1">{item?.name}</S.GrayText>
+          {info.organizationsList.items.map((item: { name: string }) => (
+            <Card key={item.name}>
+              <S.GrayText variant="p1">{item.name}</S.GrayText>
             </Card>
           ))}
         </Box>
