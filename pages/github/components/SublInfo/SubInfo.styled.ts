@@ -8,7 +8,7 @@ export const GrayText = styled(Typography)`
 `;
 
 export const Row = styled.div`
-  @media (max-width: 576px) {
+  @media (max-width: 1024px) {
     row-gap: ${pxToRem(16)};
   }
 `;

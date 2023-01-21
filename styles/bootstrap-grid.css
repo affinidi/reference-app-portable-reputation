@@ -6,12 +6,12 @@
  */
 
 :root {
-  --bs-gutter-x: 4rem;
+  --bs-gutter-x: 2rem;
 }
 
-@media (max-width: 576px) {
+@media (min-width: 1024px) {
   :root {
-    --bs-gutter-x: 2rem;
+    --bs-gutter-x: 4rem;
   }
 }
 
@@ -252,7 +252,7 @@
   --bs-gutter-y: 3rem;
 }
 
-@media (max-width: 576px) {
+@media (min-width: 1024px) {
   .col-sm {
     flex: 1 0 0%;
   }

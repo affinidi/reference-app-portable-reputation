@@ -12,7 +12,7 @@ type ListInfoProps = {
 export const ListInfo: FC<ListInfoProps> = ({ info }) => (
   <div className="container">
     <S.Row className="row">
-      <div className="col-4 col-sm-12">
+      <div className="col-12 col-sm-4">
         <S.Title variant="h7">
           Top programming languages ({info.languagesList.count})
         </S.Title>
@@ -21,12 +21,8 @@ export const ListInfo: FC<ListInfoProps> = ({ info }) => (
           {info.languagesList.items.map(
             (item: { language: string; repositories: number }) => (
               <Card
-<<<<<<< HEAD
-                key={item.language}
-=======
                 size="small"
                 key={item?.language}
->>>>>>> d956377 (feat: add mobile layout for github page)
                 direction="row"
                 justifyContent="space-between"
               >
@@ -41,7 +37,7 @@ export const ListInfo: FC<ListInfoProps> = ({ info }) => (
         </Box>
       </div>
 
-      <div className="col-4 col-sm-12">
+      <div className="col-12 col-sm-4">
         <S.Title variant="h7">
           User repositories ({info.ownedRepositoriesList.count})
         </S.Title>
@@ -50,27 +46,20 @@ export const ListInfo: FC<ListInfoProps> = ({ info }) => (
           {info.ownedRepositoriesList.items.map((item: { name: string }) => (
             <Card size="small" key={item.name}>
               <S.GrayText variant="p1">{item.name}</S.GrayText>
-              <S.GrayText variant="p1">{item?.name}</S.GrayText>
             </Card>
           ))}
         </Box>
       </div>
 
-      <div className="col-4 col-sm-12">
+      <div className="col-12 col-sm-4">
         <S.Title variant="h7">
           Organisations ({info.organizationsList.count})
         </S.Title>
 
         <Box gap={8}>
-<<<<<<< HEAD
           {info.organizationsList.items.map((item: { name: string }) => (
-            <Card key={item.name}>
+            <Card size="small" key={item.name}>
               <S.GrayText variant="p1">{item.name}</S.GrayText>
-=======
-          {info?.organizationsList?.items.map((item: { name: string }) => (
-            <Card size="small" key={item?.name}>
-              <S.GrayText variant="p1">{item?.name}</S.GrayText>
->>>>>>> d956377 (feat: add mobile layout for github page)
             </Card>
           ))}
         </Box>
