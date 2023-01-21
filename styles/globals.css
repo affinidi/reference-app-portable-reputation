@@ -1,7 +1,11 @@
+@import '@fontsource/nunito-sans/400.css';
+@import '@fontsource/nunito-sans/600.css';
+@import '@fontsource/montserrat/400.css';
+@import '@fontsource/montserrat/500.css';
+@import '@fontsource/montserrat/600.css';
+@import '@fontsource/montserrat/700.css';
 @import '../node_modules/normalize.css';
-@import '../node_modules/react-toastify/dist/ReactToastify.css';
-@import '@fontsource/nunito-sans';
-@import '@fontsource/montserrat';
+@import './bootstrap-grid.css';
 
 html {
   height: 100%;
