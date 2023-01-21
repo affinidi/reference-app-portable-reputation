@@ -21,7 +21,7 @@ export default function App({
 
   return (
     <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient} contextSharing={true}>
+      <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <SessionProvider session={session}>
             <NavBar />

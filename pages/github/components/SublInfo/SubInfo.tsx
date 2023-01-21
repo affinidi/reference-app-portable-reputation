@@ -11,8 +11,8 @@ type SubInfoProps = {
 
 export const SubInfo: FC<SubInfoProps> = ({ info }) => (
   <div className="container">
-    <div className="row">
-      <div className="col-2">
+    <S.Row className="row">
+      <div className="col-2 col-sm-6">
         <Card>
           <S.GrayText variant="p2">Commits</S.GrayText>
 
@@ -22,7 +22,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
         </Card>
       </div>
 
-      <div className="col-2">
+      <div className="col-2 col-sm-6">
         <Card>
           <S.GrayText variant="p2">Solved issues</S.GrayText>
 
@@ -32,7 +32,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
         </Card>
       </div>
 
-      <div className="col-2">
+      <div className="col-2 col-sm-6">
         <Card>
           <S.GrayText variant="p2">Own repos</S.GrayText>
 
@@ -42,7 +42,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
         </Card>
       </div>
 
-      <div className="col-2">
+      <div className="col-2 col-sm-6">
         <Card>
           <S.GrayText variant="p2">Starred repos</S.GrayText>
 
@@ -52,7 +52,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
         </Card>
       </div>
 
-      <div className="col-2">
+      <div className="col-2 col-sm-6">
         <Card>
           <S.GrayText variant="p2">Watched repos</S.GrayText>
 
@@ -62,7 +62,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
         </Card>
       </div>
 
-      <div className="col-2">
+      <div className="col-2 col-sm-6">
         <Card>
           <S.GrayText variant="p2">Following</S.GrayText>
 
@@ -71,10 +71,10 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
           </Typography>
         </Card>
       </div>
-    </div>
+    </S.Row>
 
     <div className="row">
-      <div className="col-2">
+      <div className="col-2 col-sm-6">
         <Card>
           <S.GrayText variant="p2">Followers</S.GrayText>
 

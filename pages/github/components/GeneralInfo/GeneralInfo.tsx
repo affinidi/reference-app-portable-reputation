@@ -12,8 +12,8 @@ type GeneralInfoProps = {
 
 export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
   <div className="container">
-    <div className="row">
-      <div className="col-4">
+    <S.Row className="row">
+      <div className="col-4 col-sm-12">
         <S.UserInfoContainer direction="row" gap={40}>
           <Image
             src={info.profilePictureUrl || ""}
@@ -42,7 +42,7 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
         </S.UserInfoContainer>
       </div>
 
-      <div className="col">
+      <div className="col col-sm-6">
         <S.Card gap={8}>
           <S.GrayText variant="p2">Pull requests total</S.GrayText>
 
@@ -52,7 +52,7 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
         </S.Card>
       </div>
 
-      <div className="col">
+      <div className="col col-sm-6">
         <S.Card gap={8}>
           <S.GrayText variant="p2">Contributions last year</S.GrayText>
 
@@ -62,7 +62,7 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
         </S.Card>
       </div>
 
-      <div className="col">
+      <div className="col col-sm-6">
         <S.Card gap={8}>
           <S.GrayText variant="p2">Commits last week</S.GrayText>
 
@@ -72,7 +72,7 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
         </S.Card>
       </div>
 
-      <div className="col">
+      <div className="col col-sm-6">
         <S.Card gap={8}>
           <S.GrayText variant="p2">Commits last year</S.GrayText>
 
@@ -81,6 +81,6 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
           </Typography>
         </S.Card>
       </div>
-    </div>
+    </S.Row>
   </div>
 );
