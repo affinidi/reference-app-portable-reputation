@@ -16,21 +16,21 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account && account.provider === "github" && account.access_token) {
-        user.accessToken = account.access_token;
+        user.githubAccessToken = account.access_token;
         return true;
       }
 
       return false;
     },
     async jwt({ token, user }) {
-      if (user && "accessToken" in user) {
-        token.accessToken = user.accessToken;
+      if (user?.githubAccessToken) {
+        token.githubAccessToken = user.githubAccessToken;
       }
 
       return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken as string;
+      session.githubAccessToken = token.githubAccessToken as string;
       return session;
     },
   },
