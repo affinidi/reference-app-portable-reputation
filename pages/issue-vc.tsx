@@ -3,7 +3,7 @@ import EmailValidator from "email-validator";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-const IssueVC: FC = (props) => {
+const IssueVC: FC = () => {
   const [storedToken] = useLocalStorage<string>("github_token");
   const [error, setError] = useState("");
   const email = useRef<HTMLInputElement | null>(null);
