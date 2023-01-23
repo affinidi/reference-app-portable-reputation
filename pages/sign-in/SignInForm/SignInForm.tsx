@@ -34,7 +34,6 @@ export const SignInForm: FC<SignInFormProps> = ({
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputError(null);
-    console.log("event:", event.target.value);
     setSignInInput({ username: event.target.value });
   };
 
@@ -42,26 +41,26 @@ export const SignInForm: FC<SignInFormProps> = ({
     <>
       <Header title="Sign in" />
       <Container>
-        <S.CenterDiv>
-          <ContainerForm onSubmit={handleSignIn}>
-            <S.Prompt variant="p1">
-              Please enter your email address to sign in.
-            </S.Prompt>
+          <div className="col-12 col-sm-4 offset-sm-4">
+            <ContainerForm onSubmit={handleSignIn}>
+              <S.Prompt variant="p1">
+                Please enter your email address to sign in.
+              </S.Prompt>
 
-            <Input
-              autoComplete="off"
-              id="username"
-              label="Email address"
-              placeholder="Enter your email address"
-              onChange={handleChange}
-              error={inputError || error?.message}
-            />
-            <Button disabled={disabled} type="submit">
-              send verification code
-            </Button>
-            {isLoading && <Spinner />}
-          </ContainerForm>
-        </S.CenterDiv>
+              <Input
+                autoComplete="off"
+                id="username"
+                label="Email address"
+                placeholder="Enter your email address"
+                onChange={handleChange}
+                error={inputError || error?.message}
+              />
+              <Button disabled={disabled} type="submit">
+                send verification code
+              </Button>
+              {isLoading && <Spinner />}
+            </ContainerForm>
+          </div>
       </Container>
     </>
   );

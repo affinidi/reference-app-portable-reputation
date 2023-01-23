@@ -23,7 +23,7 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
     <>
       <Header title="Sign in" />
       <Container>
-        <S.CenterDiv>
+      <div className="col-12 col-sm-4 offset-sm-4">
           <S.Prompt variant="p1">
             Please enter the verification code you received in your email.
           </S.Prompt>
@@ -45,19 +45,20 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
             Sign in
           </S.SignInButton>
 
-          <S.Message variant="p2">
+          <Typography variant="p2">
             Didn’t receive a code? Click{" "}
-            <span
+            <S.ResendCode
+              variant="l1"
               onClick={handleResendCode}
               onKeyPress={handleResendCode}
               role="button"
               tabIndex={0}
             >
               here
-            </span>{" "}
+            </S.ResendCode>{" "}
             to send it again
-          </S.Message>
-        </S.CenterDiv>
+          </Typography>
+        </div>
       </Container>
     </>
   );

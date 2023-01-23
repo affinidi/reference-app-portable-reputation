@@ -3,18 +3,10 @@ import styled from "styled-components";
 import { Input, Typography, Button, Box, Container } from "../../../components";
 import { InputProps } from "../../../components/Input/Input";
 import { pxToRem } from "../../../utils";
+import { theme } from "../../../components/utils/theme";
 
 export const Prompt = styled(Typography)`
   margin: ${pxToRem(40)} 0;
-`;
-
-export const Message = styled(Typography)`
-  span {
-    text-transform: uppercase;
-    font-weight: 600;
-    cursor: pointer;
-    color: #6af6ff;
-  }
 `;
 
 export const Label = styled(Typography)<{ $error: boolean }>`
@@ -44,11 +36,12 @@ export const VerificationField = styled(Input)<InputProps>`
   }
 `;
 
-export const CenterDiv = styled(Box)`
-  max-width: ${pxToRem(392)};
-  margin: auto;
-`;
-
 export const SignInButton = styled(Button)`
   width: 100%;
+`;
+
+export const ResendCode = styled(Typography)`
+  color: ${theme.colors.brand.secondary[100]};
+  cursor: pointer;
+  text-transform: uppercase;
 `;
