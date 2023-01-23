@@ -2,9 +2,8 @@ import { FC } from "react";
 
 import { GithubIcon } from "components/icons";
 
-import ConnectorCard from "./ConnectorCard";
-
 import * as S from "./ConnectorCard.styled";
+import { Card, Typography } from "components";
 
 interface Props {
   isChecked: boolean;
@@ -13,31 +12,29 @@ interface Props {
 
 const GithubConnectorCard: FC<Props> = ({ isChecked, setIsChecked }) => {
   return (
-    <ConnectorCard>
-      <S.Card
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="stretch"
-      >
-        <S.Header direction="row" alignItems="center">
-          <S.Icon>
-            <GithubIcon />
-          </S.Icon>
-          <S.Name variant="h6">Github</S.Name>
-          <S.CheckboxContainer>
-            <input
-              type="checkbox"
-              checked={isChecked}
-              onChange={() => setIsChecked(!isChecked)}
-            ></input>
-          </S.CheckboxContainer>
-        </S.Header>
-        <S.Description variant="p1">
-          Harnessed for productivity. Designed for collaboration. Celebrated for
-          built-in security.
-        </S.Description>
-      </S.Card>
-    </ConnectorCard>
+    <>
+      <S.CardContainer>
+        <Card>
+          <S.CardHeader direction="row" alignItems="center">
+            <S.CardIcon>
+              <GithubIcon />
+            </S.CardIcon>
+            <Typography variant="h6">Github</Typography>
+            <S.CardCheckboxContainer justifyContent="flex-end" direction="row">
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={() => setIsChecked(!isChecked)}
+              />
+            </S.CardCheckboxContainer>
+          </S.CardHeader>
+          <Typography variant="p1">
+            Harnessed for productivity. Designed for collaboration. Celebrated
+            for built-in security.
+          </Typography>
+        </Card>
+      </S.CardContainer>
+    </>
   );
 };
 
