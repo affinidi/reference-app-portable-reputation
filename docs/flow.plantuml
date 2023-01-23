@@ -1,0 +1,46 @@
+```plantuml
+@startuml
+
+== Cloud Wallet authentication ==
+
+group Holder
+FE as "App FE" -> BE as "App BE" : /affinidi/sign-in
+BE -> CW as "Cloud Wallet" : sign in with username
+CW -> BE : [login token]
+BE -> FE : [login token]
+FE -> FE : (receives email with OTP code)
+FE -> BE : /affinidi/confirm-sign-in
+BE -> CW : confirm sign in with login token and OTP code
+BE -> FE : [access token to Cloud Wallet API]
+end
+
+== Connect Github profile ==
+
+group Holder
+FE -> BE : authenticate using Github Provider
+BE -> GH as "Github" : (Authentication via OAuth App)
+GH -> BE : (redirects with a code)
+BE -> GH : exchanges code for Github access token
+GH -> BE : [Github access token]
+BE -> FE : (redirects and stores Github access token as a cookie)
+end
+
+== Issue Github Profile VC ==
+
+group Issuer
+FE -> BE : /affinidi/github/issue-github-profile-vc
+BE -> GH : fetch Github profile data
+GH -> BE : [Github profile data]
+BE -> BE : generate Github profile VC
+BE -> CW : sign the VC using Issuer's Cloud Wallet
+CW -> BE : [signed Github profile VC]
+BE -> FE : [signed Github profile VC]
+end
+
+group Holder
+FE -> CW : store Github profile VC in Holder's Cloud Wallet
+CW -> FE : (ok)
+end
+
+@enduml
+```
