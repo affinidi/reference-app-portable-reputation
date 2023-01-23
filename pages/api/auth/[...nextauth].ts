@@ -5,8 +5,14 @@ const clientId = process.env.NEXT_PUBLIC_GITHUB_APP_CLIENT_ID || "";
 const clientSecret = process.env.NEXT_PUBLIC_GITHUB_APP_CLIENT_SECRET || "";
 
 export const authOptions: NextAuthOptions = {
-  providers: [GithubProvider({ clientId, clientSecret })],
-  secret: process.env.NEXT_PUBLIC_JWT_SECRET,
+  providers: [
+    GithubProvider({
+      clientId,
+      clientSecret,
+      authorization: { params: { scope: "repo read:org read:user" } },
+    }),
+  ],
+  secret: process.env.JWT_SECRET,
   callbacks: {
     async signIn({ user, account }) {
       if (account && account.provider === "github" && account.access_token) {
