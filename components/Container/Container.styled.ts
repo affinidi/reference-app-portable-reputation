@@ -5,7 +5,7 @@ import { pxToRem } from "utils";
 export const Container = styled.div`
   padding: 0 ${pxToRem(100)};
 
-  @media (max-width: ${pxToRem(392)}) {
+  @media (max-width: 1024px) {
     padding: 0 ${pxToRem(24)};
   }
 `;

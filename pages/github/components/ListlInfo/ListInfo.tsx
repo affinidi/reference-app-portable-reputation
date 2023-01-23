@@ -11,8 +11,8 @@ type ListInfoProps = {
 
 export const ListInfo: FC<ListInfoProps> = ({ info }) => (
   <div className="container">
-    <div className="row">
-      <div className="col-4">
+    <S.Row className="row">
+      <div className="col-12 col-sm-4">
         <S.Title variant="h7">
           Top programming languages ({info.languagesList.count})
         </S.Title>
@@ -21,7 +21,8 @@ export const ListInfo: FC<ListInfoProps> = ({ info }) => (
           {info.languagesList.items.map(
             (item: { language: string; repositories: number }) => (
               <Card
-                key={item.language}
+                size="small"
+                key={item?.language}
                 direction="row"
                 justifyContent="space-between"
               >
@@ -36,33 +37,33 @@ export const ListInfo: FC<ListInfoProps> = ({ info }) => (
         </Box>
       </div>
 
-      <div className="col-4">
+      <div className="col-12 col-sm-4">
         <S.Title variant="h7">
           User repositories ({info.ownedRepositoriesList.count})
         </S.Title>
 
         <Box gap={8}>
           {info.ownedRepositoriesList.items.map((item: { name: string }) => (
-            <Card key={item.name}>
+            <Card size="small" key={item.name}>
               <S.GrayText variant="p1">{item.name}</S.GrayText>
             </Card>
           ))}
         </Box>
       </div>
 
-      <div className="col-4">
+      <div className="col-12 col-sm-4">
         <S.Title variant="h7">
           Organisations ({info.organizationsList.count})
         </S.Title>
 
         <Box gap={8}>
           {info.organizationsList.items.map((item: { name: string }) => (
-            <Card key={item.name}>
+            <Card size="small" key={item.name}>
               <S.GrayText variant="p1">{item.name}</S.GrayText>
             </Card>
           ))}
         </Box>
       </div>
-    </div>
+    </S.Row>
   </div>
 );
