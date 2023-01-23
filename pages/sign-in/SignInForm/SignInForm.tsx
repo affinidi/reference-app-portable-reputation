@@ -7,7 +7,6 @@ import {
   Header,
   Input,
   Spinner,
-  Typography,
 } from "../../../components";
 
 import * as S from "./SigninForm.styled";
@@ -33,6 +32,12 @@ export const SignInForm: FC<SignInFormProps> = ({
   isLoading,
   role,
 }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputError(null);
+    console.log("event:", event.target.value);
+    setSignInInput({ username: event.target.value });
+  };
+
   return (
     <>
       <Header title="Sign in" />
@@ -48,10 +53,7 @@ export const SignInForm: FC<SignInFormProps> = ({
               id="username"
               label="Email address"
               placeholder="Enter your email address"
-              onChange={(e) => {
-                setInputError(null);
-                setSignInInput({ username: e.target.value });
-              }}
+              onChange={handleChange}
               error={inputError || error?.message}
             />
             <Button disabled={disabled} type="submit">
