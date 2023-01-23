@@ -1,14 +1,9 @@
 import { FC, SyntheticEvent, useEffect, useRef, useState } from "react";
 import EmailValidator from "email-validator";
 
-import { GithubTokenResponse } from "./api/github/token";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-import styles from "../styles/Home.module.css";
-
-type IssueVCProps = GithubTokenResponse;
-
-const IssueVC: FC<IssueVCProps> = (props) => {
+const IssueVC: FC = () => {
   const [storedToken] = useLocalStorage<string>("github_token");
   const [error, setError] = useState("");
   const email = useRef<HTMLInputElement | null>(null);
