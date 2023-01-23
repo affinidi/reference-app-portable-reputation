@@ -32,7 +32,7 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
           setIsChecked={setIsConnectorChecked}
         />
 
-        <Box className="col-12 col-sm-3">
+        <div className="col-12 col-sm-3">
           {!!providers &&
             Object.values(providers).map((provider) => {
               return (
@@ -50,7 +50,7 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
                 </>
               );
             })}
-        </Box>
+        </div>
       </Container>
     </>
   );
