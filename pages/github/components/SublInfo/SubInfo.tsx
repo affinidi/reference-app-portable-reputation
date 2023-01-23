@@ -17,7 +17,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Commits</S.GrayText>
 
           <Typography variant="h5" tag="div">
-            {info?.commits?.total}
+            {info.commits.total}
           </Typography>
         </Card>
       </div>
@@ -27,7 +27,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Solved issues</S.GrayText>
 
           <Typography variant="h5" tag="div">
-            {info?.solvedIssues}
+            {info.solvedIssues}
           </Typography>
         </Card>
       </div>
@@ -37,7 +37,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Own repos</S.GrayText>
 
           <Typography variant="h5" tag="div">
-            {info?.ownedRepositoriesList?.count}
+            {info.ownedRepositoriesList.count}
           </Typography>
         </Card>
       </div>
@@ -47,7 +47,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Starred repos</S.GrayText>
 
           <Typography variant="h5" tag="div">
-            {info?.starredRepositories}
+            {info.starredRepositories}
           </Typography>
         </Card>
       </div>
@@ -57,7 +57,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Watched repos</S.GrayText>
 
           <Typography variant="h5" tag="div">
-            {info?.watchedRepositories}
+            {info.watchedRepositories}
           </Typography>
         </Card>
       </div>
@@ -67,7 +67,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Following</S.GrayText>
 
           <Typography variant="h5" tag="div">
-            {info?.following}
+            {info.following}
           </Typography>
         </Card>
       </div>
@@ -79,7 +79,7 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
           <S.GrayText variant="p2">Followers</S.GrayText>
 
           <Typography variant="h5" tag="div">
-            {info?.followers}
+            {info.followers}
           </Typography>
         </Card>
       </div>
