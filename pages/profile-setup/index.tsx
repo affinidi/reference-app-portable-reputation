@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 import { FC, useState } from "react";
 import { getProviders, signIn } from "next-auth/react";
 
-import { Box, Button, Container, Header } from "components";
+import { Button, Container, Header } from "components";
 
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
 import * as S from "./ProfileSetup.styled";
