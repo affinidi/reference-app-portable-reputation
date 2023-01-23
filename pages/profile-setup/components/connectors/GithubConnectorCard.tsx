@@ -2,22 +2,35 @@ import { FC } from "react";
 
 import { GithubIcon } from "components/icons";
 
-import ConnectorCard from "./ConnectorCard";
+import * as S from "./ConnectorCard.styled";
+import { Box, Card, Typography } from "components";
 
-import styles from "./ConnectorCard.module.scss";
+interface Props {
+  isChecked: boolean;
+  setIsChecked: (isChecked: boolean) => void;
+}
 
-const GithubConnectorCard: FC = () => {
+const GithubConnectorCard: FC<Props> = ({ isChecked, setIsChecked }) => {
   return (
-    <ConnectorCard>
-      <div className={styles.card__header}>
-        <GithubIcon className={styles.card__header__icon} />
-        <div className={styles.card__header__name}>Github</div>
-      </div>
-      <div className={styles.card__description}>
-        This area is linked to another screen. To quickly view links and
-        navigate to linked screens, hold down Shift.
-      </div>
-    </ConnectorCard>
+    <Card className="col-12 col-sm-4">
+      <S.CardHeader direction="row" alignItems="center">
+        <S.CardIcon>
+          <GithubIcon />
+        </S.CardIcon>
+        <Typography variant="h6">Github</Typography>
+        <S.CardCheckboxContainer justifyContent="flex-end" direction="row">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={() => setIsChecked(!isChecked)}
+          />
+        </S.CardCheckboxContainer>
+      </S.CardHeader>
+      <Typography variant="p1">
+        Harnessed for productivity. Designed for collaboration. Celebrated for
+        built-in security.
+      </Typography>
+    </Card>
   );
 };
 
