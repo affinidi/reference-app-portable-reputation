@@ -4,10 +4,23 @@ import { pxToRem } from "utils";
 import { Box, Typography } from "components";
 
 export const UserInfoContainer = styled(Box)`
-  padding: 0 ${pxToRem(24)};
+  @media (min-width: 1024px) {
+    padding: 0 ${pxToRem(24)};
+  }
+
+  @media (max-width: 1024px) {
+    margin-bottom: ${pxToRem(32)};
+    gap: ${pxToRem(24)};
+  }
 
   img {
     border-radius: 50%;
+  }
+`;
+
+export const Row = styled.div`
+  @media (max-width: 1024px) {
+    row-gap: ${pxToRem(24)};
   }
 `;
 
