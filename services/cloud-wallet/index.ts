@@ -63,7 +63,7 @@ class CloudWalletService {
       await this.client.users.logout({
         headers: {
           Authorization:
-            getItemFromSessionStorage("accessToken") ||
+            getItemFromSessionStorage("cloudWalletAccessToken") ||
             getCsrfToken().toString(),
         },
       });
@@ -77,7 +77,7 @@ class CloudWalletService {
     try {
       const response = await this.client.users.getDid({
         headers: {
-          Authorization: getItemFromSessionStorage("accessToken") || "",
+          Authorization: getItemFromSessionStorage("cloudWalletAccessToken") || "",
         },
       });
       return response.data;
@@ -92,7 +92,7 @@ class CloudWalletService {
         {},
         {
           headers: {
-            Authorization: getItemFromSessionStorage("accessToken") || "",
+            Authorization: getItemFromSessionStorage("cloudWalletAccessToken") || "",
           },
         }
       );
@@ -107,7 +107,7 @@ class CloudWalletService {
     try {
       const response = await this.client.wallet.getCredential(id, {
         headers: {
-          Authorization: getItemFromSessionStorage("accessToken") || "",
+          Authorization: getItemFromSessionStorage("cloudWalletAccessToken") || "",
         },
       });
       return response.data;
@@ -120,7 +120,7 @@ class CloudWalletService {
     try {
       const response = await this.client.wallet.deleteCredential(id, {
         headers: {
-          Authorization: getItemFromSessionStorage("accessToken") || "",
+          Authorization: getItemFromSessionStorage("cloudWalletAccessToken") || "",
         },
       });
       return response;
@@ -137,7 +137,7 @@ class CloudWalletService {
         },
         {
           headers: {
-            Authorization: getItemFromSessionStorage("accessToken") || "",
+            Authorization: getItemFromSessionStorage("cloudWalletAccessToken") || "",
           },
         }
       );
@@ -154,7 +154,7 @@ class CloudWalletService {
         {},
         {
           headers: {
-            Authorization: getItemFromSessionStorage("accessToken") || "",
+            Authorization: getItemFromSessionStorage("cloudWalletAccessToken") || "",
           },
         }
       );
@@ -179,7 +179,7 @@ class CloudWalletService {
     try {
       const response = await this.client.wallet.storeCredentials(data, {
         headers: {
-          Authorization: getItemFromSessionStorage("accessToken") || "",
+          Authorization: getItemFromSessionStorage("cloudWalletAccessToken") || "",
         },
       });
       return response.data;

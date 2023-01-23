@@ -65,7 +65,7 @@ export const useConfirmSignIn = () => {
 
   useEffect(() => {
     if (data) {
-      storage.setItem("accessToken", data.accessToken);
+      storage.setItem("cloudWalletAccessToken", data.accessToken);
       updateAuthState({
         ...authState,
         loading: false,
