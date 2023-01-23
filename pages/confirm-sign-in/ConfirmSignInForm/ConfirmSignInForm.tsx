@@ -23,13 +23,13 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
     <>
       <Header title="Sign in" />
       <Container>
-      <div className="col-12 col-sm-4 offset-sm-4">
+        <div className="col-12 col-sm-4 offset-sm-4">
           <S.Prompt variant="p1">
             Please enter the verification code you received in your email.
           </S.Prompt>
-          <S.Label $error={!!error} variant="p4">
+          <Typography variant={!!error ? "e1" : "p4"}>
             Verification code
-          </S.Label>
+          </Typography>
           <form id="confirmation" onSubmit={onSubmit}>
             <S.VerificationFieldContainer direction="row">
               {inputs}
@@ -45,9 +45,9 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
             Sign in
           </S.SignInButton>
 
-          <Typography variant="p2">
+          <Typography variant="p1">
             Didn’t receive a code? Click{" "}
-            <S.ResendCode
+            <Typography
               variant="l1"
               onClick={handleResendCode}
               onKeyPress={handleResendCode}
@@ -55,7 +55,7 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
               tabIndex={0}
             >
               here
-            </S.ResendCode>{" "}
+            </Typography>{" "}
             to send it again
           </Typography>
         </div>

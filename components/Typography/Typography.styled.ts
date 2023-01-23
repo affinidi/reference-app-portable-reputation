@@ -11,7 +11,6 @@ export const Typography = styled.p<{
   $ellipsisLines: number;
 }>`
   margin: 0;
-  color: ${(props) => props.theme.colors.neutral.secondary["100"]};
   text-decoration: none;
 
   ${({ $align }) =>
@@ -173,6 +172,44 @@ export const Typography = styled.p<{
 
       default:
         return "normal";
+    }
+  }};
+
+  color: ${(props) => {
+    switch (props.$variant) {
+      case 'l1':
+        return props.theme.colors.brand.secondary['100']
+      case 'e1':
+        return props.theme.colors.utility.danger['100']
+
+      default:
+        return props.theme.colors.neutral.secondary["100"]
+    }
+  }};
+
+  cursor: ${(props) => {
+    switch (props.$variant) {
+      case 'l1':
+      case 'l2':
+        return 'pointer'
+
+      default:
+        return 'default'
+    }
+  }};
+
+  text-transform: ${(props) => {
+    switch (props.$variant) {
+      case 'b1':
+      case 'b2':
+      case 'c1':
+      case 'o1':
+      case 'l1':
+      case 'l2':
+        return 'uppercase'
+
+      default:
+        return 'none'
     }
   }};
 `;

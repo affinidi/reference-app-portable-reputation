@@ -12,7 +12,7 @@ export const authOptions: NextAuthOptions = {
       authorization: { params: { scope: "repo read:org read:user" } },
     }),
   ],
-  secret: process.env.JWT_SECRET,
+  secret: process.env.NEXT_PUBLIC_JWT_SECRET,
   callbacks: {
     async signIn({ user, account }) {
       if (account && account.provider === "github" && account.access_token) {

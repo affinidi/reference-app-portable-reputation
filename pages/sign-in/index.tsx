@@ -17,7 +17,6 @@ const SignIn: FC = () => {
       error={error}
       inputError={inputError}
       setInputError={setInputError}
-      role="holder"
     />
   )
 }

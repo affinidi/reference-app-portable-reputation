@@ -9,12 +9,8 @@ export const Prompt = styled(Typography)`
   margin: ${pxToRem(40)} 0;
 `;
 
-export const Label = styled(Typography)<{ $error: boolean }>`
-  ${(props) => (props.$error ? `color: #e73c5b` : null)};
-`;
-
 export const VerificationFieldContainer = styled(Box)`
-  @media (min-width: ${pxToRem(500)}) {
+  @media (min-width: 1024px) {
     gap: ${pxToRem(22)};
   }
 `;
@@ -40,8 +36,3 @@ export const SignInButton = styled(Button)`
   width: 100%;
 `;
 
-export const ResendCode = styled(Typography)`
-  color: ${theme.colors.brand.secondary[100]};
-  cursor: pointer;
-  text-transform: uppercase;
-`;
