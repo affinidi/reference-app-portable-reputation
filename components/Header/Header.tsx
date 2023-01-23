@@ -1,21 +1,20 @@
-import { FC, SVGAttributes } from 'react'
+import { FC, SVGAttributes } from "react";
 
-import * as S from './Header.styled'
-import { Container } from 'components'
+import * as S from "./Header.styled";
+import { Container } from "components";
 
 export type HeaderProps = {
-  title: string
-  icon?: SVGAttributes<SVGElement>
-  path?: string
-}
+  title: string;
+  icon?: SVGAttributes<SVGElement>;
+  path?: string;
+};
 
 const Header: FC<HeaderProps> = ({ title, icon, path }) => (
-  <S.Container>
+  <S.Container justifyContent="flex-end">
     <Container>
-      {/* <S.IconWrapper>{icon}</S.IconWrapper> */}
-      <S.Title variant="h1">{title}</S.Title>
+      <S.Title variant="h4">{title}</S.Title>
     </Container>
   </S.Container>
-)
+);
 
-export default Header
+export default Header;
