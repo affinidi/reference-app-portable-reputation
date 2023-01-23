@@ -3,14 +3,6 @@ import { theme } from "components/utils/theme";
 import styled from "styled-components";
 import { pxToRem } from "utils";
 
-export const CardContainer = styled(Box)`
-  width: ${pxToRem(392)};
-
-  @media (max-width: ${pxToRem(392)}) {
-    width: ${pxToRem(342)};
-  }
-`;
-
 export const CardHeader = styled(Box)`
   gap: ${pxToRem(16)};
   margin-bottom: ${pxToRem(16)};

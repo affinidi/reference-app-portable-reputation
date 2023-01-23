@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 import { FC, useState } from "react";
 import { getProviders, signIn } from "next-auth/react";
 
-import { Button, Container, Grid, Header } from "components";
+import { Box, Button, Container, Header } from "components";
 
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
 import * as S from "./ProfileSetup.styled";
@@ -23,38 +23,34 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
       <Header title="Setup your profile" />
 
       <Container>
-        <S.Main direction="column">
-          <S.ServiceSelect variant="p1">
-            Please select the service that you would like to connect
-          </S.ServiceSelect>
+        <S.ServiceSelect variant="p1">
+          Please select the service that you would like to connect
+        </S.ServiceSelect>
 
-          <Grid columnsWidth={[4, 4, 4]}>
-            <GithubConnectorCard
-              isChecked={isConnectorChecked}
-              setIsChecked={setIsConnectorChecked}
-            />
-          </Grid>
+        <GithubConnectorCard
+          isChecked={isConnectorChecked}
+          setIsChecked={setIsConnectorChecked}
+        />
 
-          <S.ButtonContainer>
-            {!!providers &&
-              Object.values(providers).map((provider) => {
-                return (
-                  <>
-                    <Button
-                      disabled={!isConnectorChecked}
-                      onClick={() =>
-                        !isConnectorChecked
-                          ? undefined
-                          : connectToGithub(provider.id)
-                      }
-                    >
-                      {"Connect to my profile"}
-                    </Button>
-                  </>
-                );
-              })}
-          </S.ButtonContainer>
-        </S.Main>
+        <Box className="col-12 col-sm-3">
+          {!!providers &&
+            Object.values(providers).map((provider) => {
+              return (
+                <>
+                  <Button
+                    disabled={!isConnectorChecked}
+                    onClick={() =>
+                      !isConnectorChecked
+                        ? undefined
+                        : connectToGithub(provider.id)
+                    }
+                  >
+                    {"Connect to my profile"}
+                  </Button>
+                </>
+              );
+            })}
+        </Box>
       </Container>
     </>
   );
