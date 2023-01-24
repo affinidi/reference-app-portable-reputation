@@ -11,7 +11,7 @@ export default async function handler(
     return;
   }
 
-  const cloudWalletAccessToken = req.headers['Authorization']
+  const cloudWalletAccessToken = req.headers['authorization']
   if (!cloudWalletAccessToken) {
     res.status(401).json({ error: "Cloud Wallet access token is not provided" });
     return;

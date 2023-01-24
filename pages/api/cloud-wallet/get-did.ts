@@ -6,12 +6,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") {
-    res.status(405).send({ error: "Only POST requests allowed" });
+  if (req.method !== "GET") {
+    res.status(405).send({ error: "Only GET requests allowed" });
     return;
   }
 
-  const cloudWalletAccessToken = req.headers['Authorization']
+  const cloudWalletAccessToken = req.headers['authorization']
   if (!cloudWalletAccessToken) {
     res.status(401).json({ error: "Cloud Wallet access token is not provided" });
     return;
@@ -23,9 +23,10 @@ export default async function handler(
       method: "GET",
       headers: {
         "Api-Key": apiKeyHash,
+        Authorization: cloudWalletAccessToken,
       },
     }
   );
 
-  res.status(200).json({ did });
+  res.status(200).json(did);
 };

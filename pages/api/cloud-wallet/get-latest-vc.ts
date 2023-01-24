@@ -6,8 +6,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") {
-    res.status(405).send({ error: "Only POST requests allowed" });
+  if (req.method !== "GET") {
+    res.status(405).send({ error: "Only GET requests allowed" });
     return;
   }
 
@@ -17,15 +17,21 @@ export default async function handler(
     return;
   }
 
-  const { data: token } = await axios(
-    `${cloudWalletApiUrl}/v1/users/logout`,
+  const { type } = req.query
+
+  const { data: vcs } = await axios(
+    `${cloudWalletApiUrl}/v1/wallet/credentials`,
     {
-      method: "POST",
+      method: "GET",
       headers: {
         "Api-Key": apiKeyHash,
+        Authorization: cloudWalletAccessToken,
       },
     }
   );
 
-  res.status(200).json({ token });
+  vcs.sort((vc1: any, vc2: any) => Date.parse(vc2.issuanceDate) - Date.parse(vc1.issuanceDate))
+  const latestVcByType = vcs.find((vc: any) => vc.type.includes(type))
+
+  res.status(200).json({ vc: latestVcByType ?? null });
 };

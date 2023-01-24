@@ -57,9 +57,8 @@ export const confirmSignIn = async (
 
 export const getDid = async (): Promise<string> => {
   const response = await fetch(`${hostUrl}/api/cloud-wallet/get-did`, {
-    method: "POST",
+    method: "GET",
     headers: {
-      "Content-Type": "application/json",
       Authorization: getItemFromSessionStorage("cloudWalletAccessToken"),
     },
   });
