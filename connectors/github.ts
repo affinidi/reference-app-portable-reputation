@@ -1,15 +1,15 @@
 import { createOAuthUserAuth } from "@octokit/auth-oauth-user";
 
-const { GITHUB_APP_CLIENT_ID, GITHUB_APP_CLIENT_SECRET } = process.env;
+const { NEXT_PUBLIC_GITHUB_APP_CLIENT_ID, NEXT_PUBLIC_GITHUB_APP_CLIENT_SECRET } = process.env;
 
-if (!GITHUB_APP_CLIENT_ID || !GITHUB_APP_CLIENT_SECRET) {
+if (!NEXT_PUBLIC_GITHUB_APP_CLIENT_ID || !NEXT_PUBLIC_GITHUB_APP_CLIENT_SECRET) {
   throw Error("No GITHUB APP ClIENT credentials defined");
 }
 
 export const authWithCode = (code: string) => {
   return createOAuthUserAuth({
-    clientId: GITHUB_APP_CLIENT_ID,
-    clientSecret: GITHUB_APP_CLIENT_SECRET,
+    clientId: NEXT_PUBLIC_GITHUB_APP_CLIENT_ID,
+    clientSecret: NEXT_PUBLIC_GITHUB_APP_CLIENT_SECRET,
     code,
   });
 };

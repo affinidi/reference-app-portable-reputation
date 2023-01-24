@@ -9,7 +9,7 @@ import {
 class IssuanceService {
   constructor(
     private readonly client = new IssuanceAPI({
-      baseUrl: `${process.env.AFFINIDI_ISSUANCE_URL}/api/v1`,
+      baseUrl: `${process.env.NEXT_PUBLIC_AFFINIDI_ISSUANCE_URL}/api/v1`,
     })
   ) {}
 
