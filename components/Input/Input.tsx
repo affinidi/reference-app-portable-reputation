@@ -1,23 +1,23 @@
-import React, { forwardRef, InputHTMLAttributes } from 'react'
-import * as S from './Input.styled'
+import React, { forwardRef, InputHTMLAttributes } from "react";
+import * as S from "./Input.styled";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string
-  error?: string
-  units?: string
-  isGroup?: boolean
+  label?: string;
+  error?: string;
+  units?: string;
+  isGroup?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, isGroup, className, units, disabled, ...props }, ref) => (
-    <S.Wrapper direction="column" gap={4} className={className}>
+    <S.Wrapper gap={4} className={className}>
       {label && (
         <S.Label variant="p4" $disabled={disabled}>
           {label}
         </S.Label>
       )}
 
-      {props.type === 'range' && (
+      {props.type === "range" && (
         <S.Range alignItems="flex-end">
           {props.value} {units}
         </S.Range>
@@ -27,7 +27,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         disabled={disabled}
         $hasError={!!error}
         ref={ref}
-        {...(props.type === 'range' && {
+        {...(props.type === "range" && {
           style: {
             backgroundSize: `${
               // @ts-ignore
@@ -40,7 +40,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
       {!isGroup && error && <S.Error variant="p3">{error}</S.Error>}
     </S.Wrapper>
-  ),
-)
-Input.displayName = 'Input'
-export default Input
+  )
+);
+Input.displayName = "Input";
+export default Input;
