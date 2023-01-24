@@ -6,8 +6,6 @@ import {
   useState,
 } from "react";
 
-import { Keys } from "../../../enums/keys";
-
 import * as S from "./ConfirmSignInForm.styled";
 
 type OTPCode = Record<number, string | null>;
@@ -50,9 +48,9 @@ export const useConfirmSignInForm = (message?: string) => {
     });
 
   const onKeyDown = (index: number) => (e: KeyboardEvent<HTMLInputElement>) => {
-    const isBackspacePressed = e.key === Keys.Backspace;
-    const isArrowLeft = e.key === Keys.ArrowLeft;
-    const isArrowRight = e.key === Keys.ArrowRight;
+    const isBackspacePressed = e.key === 'Backspace';
+    const isArrowLeft = e.key === 'ArrowLeft';
+    const isArrowRight = e.key === 'ArrowRight';
 
     if (isBackspacePressed) {
       if (index !== 0) {
