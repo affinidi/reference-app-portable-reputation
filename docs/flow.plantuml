@@ -5,7 +5,7 @@
 
 group Holder
 FE as "App FE" -> BE as "App BE" : /affinidi/sign-in
-BE -> CW as "Cloud Wallet" : sign in with username
+BE -> CW as "Cloud Wallet" : initiate passwordless sign in
 CW -> BE : [login token]
 BE -> FE : [login token]
 FE -> FE : (receives email with OTP code)
