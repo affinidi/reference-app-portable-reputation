@@ -8,7 +8,6 @@ import {
   useSignInMutation,
 } from "../../hooks/useAuthentication";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { CheckCredentials } from "pages/profile-setup";
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
@@ -27,12 +26,6 @@ export const useConfirmSignIn = () => {
       return;
     }
     await signInMutateAsync({ username: authState.username });
-  };
-
-  const checkIfConnected = async () => {
-    const reputationVcs = await CheckCredentials();
-    if (reputationVcs) navigate.push("/github");
-    if (!reputationVcs) navigate.push("/profile-setup");
   };
 
   const onSubmit = async (e?: SyntheticEvent) => {
@@ -58,7 +51,7 @@ export const useConfirmSignIn = () => {
         loading: false,
         authorized: true,
       });
-      if (!error) checkIfConnected();
+      if (!error) navigate.push("profile-setup");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);
