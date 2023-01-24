@@ -1,11 +1,14 @@
 import { nanoid } from 'nanoid'
 import { GithubProfileCredentialSubject } from './types';
 
+const VC_JSON_SCHEMA = 'https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-5.json'
+const VC_JSON_LD_CONTEXT = 'https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-5.jsonld'
+
 export function generateGithubProfileVc(holderDid: string, credentialSubject: GithubProfileCredentialSubject) {
   return {
     '@context': [
       'https://www.w3.org/2018/credentials/v1',
-      'https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-5.jsonld'
+      VC_JSON_LD_CONTEXT,
     ],
     id: `claimId:${nanoid()}`,
     type: ['VerifiableCredential', 'GithubProfile'],
@@ -16,7 +19,7 @@ export function generateGithubProfileVc(holderDid: string, credentialSubject: Gi
     credentialSubject,
     credentialSchema: {
       type: 'JsonSchemaValidator2018',
-      id: 'https://schema.affinidi.com/@did:elem:EiC8fehVnWr2XAXlNSdHWg8fy1s8rMImwgn3YaNZQL--jg/GithubProfileV1-5.json'
+      id: VC_JSON_SCHEMA,
     }
   }
 }
