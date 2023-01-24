@@ -1,15 +1,21 @@
 import { FC, useState } from 'react'
-import { cloudWalletService } from '../../services/cloud-wallet'
+import { hostUrl } from '../env'
 
 export const Test: FC = () => {
   const [isStored, setIsStored] = useState(false)
   const [vc, setVc] = useState<any>(null)
 
   const handleIssue = async () => {
-    const holderDid = await cloudWalletService.getDid()
+    const holderDid = await (await fetch(`${hostUrl}/api/cloud-wallet/get-did`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })).json()
+
     console.log('holderDid:', holderDid)
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/github/issue-vc`, {
+    const response = await fetch(`${hostUrl}/api/github/issue-vc`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,8 +32,15 @@ export const Test: FC = () => {
   }
 
   const handleStore = async () => {
-    const { credentialIds } = await cloudWalletService.storeCredentials({ data: [vc] })
-    console.log('credentialIds:', credentialIds)
+    await fetch(`${hostUrl}/api/cloud-wallet/store-vc`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        vc,
+      }),
+    })
 
     setIsStored(true)
   }

@@ -1,13 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { SignInInput } from '../../services/cloud-wallet/cloud-wallet.api'
 import { useSessionStorage } from '../../hooks/useSessionStorage'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useSignInMutation } from '../../hooks/useAuthentication'
 
 export const useSignIn = () => {
-  const [signInInput, setSignInInput] = useState<SignInInput>({ username: '' })
+  const [username, setUsername] = useState<string>('')
   const [inputError, setInputError] = useState<string | null>(null)
   const navigate = useRouter()
   const storage = useSessionStorage()
@@ -22,23 +21,23 @@ export const useSignIn = () => {
   const handleSignIn = async (e: FormEvent) => {
     e.preventDefault()
     setInputError(null)
-    if (!validateEmail(signInInput.username)) {
+    if (!validateEmail(username)) {
       setInputError('This is not a valid email address.')
       return
     }
-    await mutateAsync(signInInput)
+    await mutateAsync({ username })
   }
 
   useEffect(() => {
     if (data) {
-      storage.setItem('signUpToken', data)
-      updateAuthState({ ...authState, username: signInInput.username })
+      storage.setItem('signInToken', data)
+      updateAuthState({ ...authState, username })
       navigate.push('/confirm-sign-in')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
-  const disabled = !signInInput.username || isLoading
+  const disabled = !username || isLoading
 
   return {
     disabled,
@@ -46,7 +45,7 @@ export const useSignIn = () => {
     isLoading,
 
     handleSignIn,
-    setSignInInput,
+    setUsername,
     inputError,
     setInputError,
   }

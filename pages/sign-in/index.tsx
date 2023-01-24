@@ -5,13 +5,13 @@ import { SignInForm } from './SignInForm'
 import { useSignIn } from './useSignIn'
 
 const SignIn: FC = () => {
-  const { handleSignIn, setSignInInput, disabled, error, isLoading, inputError, setInputError } =
+  const { handleSignIn, setUsername, disabled, error, isLoading, inputError, setInputError } =
     useSignIn()
 
   return (
     <SignInForm
       handleSignIn={handleSignIn}
-      setSignInInput={setSignInInput}
+      setUsername={setUsername}
       disabled={disabled}
       isLoading={isLoading}
       error={error}

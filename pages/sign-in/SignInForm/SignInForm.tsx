@@ -12,7 +12,7 @@ import {
 
 type SignInFormProps = {
   handleSignIn(e: FormEvent): void
-  setSignInInput(data: { username: string }): void
+  setUsername(username: string): void
   disabled: boolean
   isLoading: boolean
   error: Error | null
@@ -23,7 +23,7 @@ type SignInFormProps = {
 
 export const SignInForm: FC<SignInFormProps> = ({
   handleSignIn,
-  setSignInInput,
+  setUsername,
   disabled,
   error,
   inputError,
@@ -44,7 +44,7 @@ export const SignInForm: FC<SignInFormProps> = ({
             placeholder="Enter your email address"
             onChange={(e) => {
               setInputError(null)
-              setSignInInput({ username: e.target.value })
+              setUsername(e.target.value)
             }}
             error={inputError || error?.message}
           ></Input>

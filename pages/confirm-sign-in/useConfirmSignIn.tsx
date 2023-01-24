@@ -35,7 +35,7 @@ export const useConfirmSignIn = () => {
   const onSubmit = async (e?: SyntheticEvent) => {
     e?.preventDefault();
     await mutateAsync({
-      token: storage.getItem("signUpToken") || "",
+      token: storage.getItem("signInToken") || "",
       confirmationCode: computedCode,
     });
   };
@@ -82,7 +82,7 @@ export const useConfirmSignIn = () => {
 
   useEffect(() => {
     if (signInData) {
-      storage.setItem("signUpToken", signInData);
+      storage.setItem("signInToken", signInData);
     }
   }, [signInData, storage]);
   return { error, onSubmit, inputs, isButtonDisabled, handleResendCode };
