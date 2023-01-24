@@ -19,6 +19,7 @@ export const isHttpError = (
 } => {
   return Object.prototype.hasOwnProperty.call(object, "error");
 };
+
 class CloudWalletService {
   constructor(
     private readonly client = new CloudWalletApi({

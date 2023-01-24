@@ -13,7 +13,7 @@ type GeneralInfoProps = {
 export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
   <div className="container">
     <S.Row className="row">
-      <div className="col-12 col-sm">
+      <div className="col-12 col-sm-4">
         <S.UserInfoContainer direction="row" gap={40}>
           <Image
             src={info.profilePictureUrl || ""}
