@@ -8,13 +8,11 @@ import {
   useSignInMutation,
 } from "../../hooks/useAuthentication";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { cloudWalletService } from "../../services/cloud-wallet";
-import { StoredW3CCredential } from "services/cloud-wallet/cloud-wallet.api";
+import { CheckCredentials } from "pages/profile-setup";
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
   const navigate = useRouter();
-  const router = useRouter();
   const { authState, updateAuthState } = useAuthContext();
   const { data, error, mutateAsync } = useConfirmSignInMutation();
   const { data: signInData, mutateAsync: signInMutateAsync } =
@@ -22,7 +20,6 @@ export const useConfirmSignIn = () => {
   const { computedCode, inputs, isButtonDisabled } = useConfirmSignInForm(
     error?.message
   );
-  const [isConnected, setIsConnected] = useState<boolean>(false);
 
   const handleResendCode = async () => {
     if (!authState.username) {
@@ -32,6 +29,12 @@ export const useConfirmSignIn = () => {
     await signInMutateAsync({ username: authState.username });
   };
 
+  const checkIfConnected = async () => {
+    const reputationVcs = await CheckCredentials();
+    if (reputationVcs) navigate.push("/github");
+    if (!reputationVcs) navigate.push("/profile-setup");
+  };
+
   const onSubmit = async (e?: SyntheticEvent) => {
     e?.preventDefault();
     await mutateAsync({
@@ -39,22 +42,6 @@ export const useConfirmSignIn = () => {
       confirmationCode: computedCode,
     });
   };
-
-  useEffect(() => {
-    const checkCredentials = async () => {
-      const vcs = await cloudWalletService.getAllCredentials();
-
-      const reputationVcs = vcs.filter((vc) =>
-        (vc as StoredW3CCredential).type?.includes("PortableReputation")
-      ) as StoredW3CCredential[];
-
-      if (reputationVcs) {
-        setIsConnected(true);
-      }
-    };
-
-    checkCredentials();
-  }, []);
 
   useEffect(() => {
     if (authState.username === "") {
@@ -71,14 +58,11 @@ export const useConfirmSignIn = () => {
         loading: false,
         authorized: true,
       });
-      if (!error && !isConnected) {
-        navigate.push("/profile-setup");
-      } else if (!error && isConnected) {
-        router.push("/github");
-      }
+      // if (!error) navigate.push("/profile-setup");
+      if (!error) checkIfConnected();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error, isConnected, router]);
+  }, [data, error]);
 
   useEffect(() => {
     if (signInData) {
