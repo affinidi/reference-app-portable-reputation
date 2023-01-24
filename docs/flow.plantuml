@@ -4,12 +4,12 @@
 == Cloud Wallet authentication ==
 
 group Holder
-FE as "App FE" -> BE as "App BE" : /affinidi/sign-in
+FE as "App FE" -> BE as "App BE" : /api/cloud-wallet/sign-in
 BE -> CW as "Cloud Wallet" : initiate passwordless sign in
 CW -> BE : [login token]
 BE -> FE : [login token]
 FE -> FE : (receives email with OTP code)
-FE -> BE : /affinidi/confirm-sign-in
+FE -> BE : /api/cloud-wallet/confirm-sign-in
 BE -> CW : confirm sign in with login token and OTP code
 BE -> FE : [access token to Cloud Wallet API]
 end
@@ -25,10 +25,24 @@ GH -> BE : [Github access token]
 BE -> FE : (redirects and stores Github access token as a cookie)
 end
 
+== Check for Profile VCs ==
+
+group Holder
+FE -> BE : /api/cloud-wallet/find-latest-vcs?types=GithubProfile,LinkedinProfile
+BE -> CW : get all VCs in the wallet
+CW -> BE : [vcs]
+BE -> BE : filters the VCs by type and date
+BE -> FE : [vcs]
+end
+
 == Issue Github Profile VC ==
 
 group Issuer
-FE -> BE : /affinidi/github/issue-github-profile-vc
+FE -> BE : /api/cloud-wallet/get-did
+BE -> CW : get Cloud Wallet DID
+CW -> BE : [holder DID]
+BE -> FE : [holder DID]
+FE -> BE : /api/github/issue-vc
 BE -> GH : fetch Github profile data
 GH -> BE : [Github profile data]
 BE -> BE : generate Github profile VC
@@ -38,8 +52,10 @@ BE -> FE : [signed Github profile VC]
 end
 
 group Holder
-FE -> CW : store Github profile VC in Holder's Cloud Wallet
-CW -> FE : (ok)
+FE -> BE : /api/cloud-wallet/store-vc
+BE -> CW : store Github profile VC in Holder's Cloud Wallet
+CW -> BE : (ok)
+BE -> FE : (ok)
 end
 
 @enduml

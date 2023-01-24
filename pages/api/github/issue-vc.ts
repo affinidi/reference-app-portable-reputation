@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
+import { affinidiIamApiUrl, projectDid, apiKeyHash, cloudWalletApiUrl } from '../env';
 import { gatherGithubProfile, } from "./helpers/gather-github-profile";
 import { generateGithubProfileVc } from './helpers/generate-github-profile-vc';
 

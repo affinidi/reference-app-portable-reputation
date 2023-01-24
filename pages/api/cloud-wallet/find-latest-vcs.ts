@@ -20,12 +20,13 @@ export default async function handler(
     return;
   }
 
-  const { type: typeOrTypes } = req.query;
-  const types = typeOrTypes
-    ? Array.isArray(typeOrTypes)
-      ? typeOrTypes
-      : [typeOrTypes]
-    : [];
+  const rawTypes = req.query.types;
+  if (!rawTypes || Array.isArray(rawTypes)) {
+    res.status(400).json({ error: "Invalid types" });
+    return;
+  }
+
+  const types = rawTypes.split(",");
 
   const { data: vcs } = await axios<VerifiableCredential[]>(
     `${cloudWalletApiUrl}/v1/wallet/credentials`,
@@ -48,5 +49,5 @@ export default async function handler(
     if (vc) filteredVcs.push(vc);
   }
 
-  res.status(200).json({ vc: filteredVcs });
+  res.status(200).json({ vcs: filteredVcs });
 }
