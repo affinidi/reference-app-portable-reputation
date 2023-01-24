@@ -58,7 +58,6 @@ export const useConfirmSignIn = () => {
         loading: false,
         authorized: true,
       });
-      // if (!error) navigate.push("/profile-setup");
       if (!error) checkIfConnected();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
