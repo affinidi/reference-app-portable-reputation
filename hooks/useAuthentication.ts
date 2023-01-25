@@ -1,12 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-
-import { cloudWalletService } from "services/cloud-wallet";
-import {
-  ConfirmSignInInput,
-  ConfirmSignInOutput,
-  SignInInput,
-} from "services/cloud-wallet/cloud-wallet.api";
+import { hostUrl } from '../pages/env';
+import { getItemFromSessionStorage } from "./useSessionStorage";
 
 export type ErrorResponse = {
   name: string;
@@ -19,56 +14,77 @@ export type ErrorResponse = {
   };
 };
 
-export const signIn = async ({ username }: SignInInput): Promise<string> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_HOST}/api/affinidi/sign-in`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-      }),
-    }
-  );
+export type SignInInput = {
+  username: string
+}
+
+export const signIn = async (input: SignInInput): Promise<string> => {
+  const response = await fetch(`${hostUrl}/api/cloud-wallet/sign-in`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(input),
+  });
   if (![200, 201].includes(response.status)) {
     throw Error();
   }
   return response.json();
 };
 
-export const confirmSignIn = async ({
-  token,
-  confirmationCode,
-}: ConfirmSignInInput): Promise<ConfirmSignInOutput> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_HOST}/api/affinidi/confirm-sign-in`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token,
-        confirmationCode,
-      }),
-    }
-  );
+export type ConfirmSignInInput = {
+  token: string;
+  confirmationCode: string;
+};
+
+export type ConfirmSignInOutput = {
+  accessToken: string;
+};
+
+export const confirmSignIn = async (
+  input: ConfirmSignInInput
+): Promise<ConfirmSignInOutput> => {
+  const response = await fetch(`${hostUrl}/api/cloud-wallet/confirm-sign-in`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(input),
+  });
+
+  return response.json();
+};
+
+export const getDid = async (): Promise<string> => {
+  const response = await fetch(`${hostUrl}/api/cloud-wallet/get-did`, {
+    method: "GET",
+    headers: createCloudWalletAuthenticationHeaders(),
+  });
 
   return response.json();
 };
 
 export const logout = async () => {
   try {
-    await cloudWalletService.logOut();
+    await fetch(`${hostUrl}/api/cloud-wallet/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...createCloudWalletAuthenticationHeaders(),
+      },
+    });
   } catch (e) {}
 };
 
+const createCloudWalletAuthenticationHeaders = () => {
+  const cloudWalletAccessToken = getItemFromSessionStorage("cloudWalletAccessToken")
+  return {
+    ...cloudWalletAccessToken && { Authorization: cloudWalletAccessToken }
+  }
+}
+
 export const useSignInMutation = () => {
-  return useMutation<string, ErrorResponse, SignInInput, () => void>(
-    (data: SignInInput) => signIn(data)
-  );
+  return useMutation<string, ErrorResponse, SignInInput, () => void>(signIn);
 };
 
 export const useConfirmSignInMutation = () => {
@@ -77,7 +93,7 @@ export const useConfirmSignInMutation = () => {
     ErrorResponse,
     ConfirmSignInInput,
     () => void
-  >((data: ConfirmSignInInput) => confirmSignIn(data));
+  >(confirmSignIn);
 };
 
 export type UserState = {
@@ -97,8 +113,7 @@ export const useAuthentication = () => {
 
   const authenticate = async () => {
     try {
-      const response = await cloudWalletService.getDid();
-
+      const response = await getDid();
       if (response) {
         setAuthState((prevState) => ({
           ...prevState,

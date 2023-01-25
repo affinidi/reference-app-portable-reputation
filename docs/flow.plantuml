@@ -1,0 +1,62 @@
+```plantuml
+@startuml
+
+== Cloud Wallet authentication ==
+
+group Holder
+FE as "App FE" -> BE as "App BE" : /api/cloud-wallet/sign-in
+BE -> CW as "Cloud Wallet" : initiate passwordless sign in
+CW -> BE : [login token]
+BE -> FE : [login token]
+FE -> FE : (receives email with OTP code)
+FE -> BE : /api/cloud-wallet/confirm-sign-in
+BE -> CW : confirm sign in with login token and OTP code
+BE -> FE : [access token to Cloud Wallet API]
+end
+
+== Connect Github profile ==
+
+group Holder
+FE -> BE : authenticate using Github Provider
+BE -> GH as "Github" : (Authentication via OAuth App)
+GH -> BE : (redirects with a code)
+BE -> GH : exchanges code for Github access token
+GH -> BE : [Github access token]
+BE -> FE : (redirects and stores Github access token as a cookie)
+end
+
+== Check for Profile VCs ==
+
+group Holder
+FE -> BE : /api/cloud-wallet/get-profile-vcs
+BE -> CW : get all VCs in the wallet
+CW -> BE : [vcs]
+BE -> BE : filters the VCs by profile types and return the latest by issuance date
+BE -> FE : [vcs]
+end
+
+== Issue Github Profile VC ==
+
+group Issuer
+FE -> BE : /api/cloud-wallet/get-did
+BE -> CW : get Cloud Wallet DID
+CW -> BE : [holder DID]
+BE -> FE : [holder DID]
+FE -> BE : /api/github/issue-vc
+BE -> GH : fetch Github profile data
+GH -> BE : [Github profile data]
+BE -> BE : generate Github profile VC
+BE -> CW : sign the VC using Issuer's Cloud Wallet
+CW -> BE : [signed Github profile VC]
+BE -> FE : [signed Github profile VC]
+end
+
+group Holder
+FE -> BE : /api/cloud-wallet/store-vc
+BE -> CW : store Github profile VC in Holder's Cloud Wallet
+CW -> BE : (ok)
+BE -> FE : (ok)
+end
+
+@enduml
+```

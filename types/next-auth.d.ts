@@ -1,10 +1,10 @@
-import NextAuth, { DefaultSession, User as NextUser } from "next-auth";
+import { DefaultSession, DefaultUser } from "next-auth";
 
 declare module "next-auth" {
-  interface User extends NextUser {
-    accessToken: string;
+  interface User extends DefaultUser {
+    githubAccessToken: string
   }
   interface Session extends DefaultSession {
-    accessToken: string;
+    githubAccessToken: string
   }
 }

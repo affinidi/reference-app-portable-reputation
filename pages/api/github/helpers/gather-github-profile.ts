@@ -1,8 +1,8 @@
 import { Octokit } from '@octokit/rest'
-import { GithubProfileCredentialSubject } from '../../types/github'
+import { GithubProfileCredentialSubject } from '../../../../types/github'
 
-export async function gatherGithubProfile(accessToken: string): Promise<GithubProfileCredentialSubject> {
-  const octokit = new Octokit({ auth: accessToken })
+export async function gatherGithubProfile(githubAccessToken: string): Promise<GithubProfileCredentialSubject> {
+  const octokit = new Octokit({ auth: githubAccessToken })
 
   const { data: user } = await octokit.rest.users.getAuthenticated()
 

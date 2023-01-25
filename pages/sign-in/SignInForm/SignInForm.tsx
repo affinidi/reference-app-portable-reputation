@@ -13,7 +13,7 @@ import * as S from "./SigninForm.styled";
 
 type SignInFormProps = {
   handleSignIn(e: FormEvent): void;
-  setSignInInput(data: { username: string }): void;
+  setUsername(username: string): void
   disabled: boolean;
   isLoading: boolean;
   error: Error | null;
@@ -23,7 +23,7 @@ type SignInFormProps = {
 
 export const SignInForm: FC<SignInFormProps> = ({
   handleSignIn,
-  setSignInInput,
+  setUsername,
   disabled,
   error,
   inputError,
@@ -35,7 +35,7 @@ export const SignInForm: FC<SignInFormProps> = ({
       setInputError(null);
     }
 
-    setSignInInput({ username: event.target.value });
+    setUsername(event.target.value);
   };
 
   return (

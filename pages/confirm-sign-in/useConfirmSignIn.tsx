@@ -8,8 +8,6 @@ import {
   useSignInMutation,
 } from "../../hooks/useAuthentication";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { cloudWalletService } from "../../services/cloud-wallet";
-import { StoredW3CCredential } from "services/cloud-wallet/cloud-wallet.api";
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
@@ -30,31 +28,31 @@ export const useConfirmSignIn = () => {
   const onSubmit = async (e?: SyntheticEvent) => {
     e?.preventDefault();
     await mutateAsync({
-      token: storage.getItem("signUpToken") || "",
+      token: storage.getItem("signInToken") || "",
       confirmationCode: computedCode,
     });
   };
 
-  useEffect(() => {
-    const checkCredentials = async () => {
-      const vcs = await cloudWalletService.getAllCredentials();
+  // TODO: use /cloud-wallet/get-profile-vcs endpoint
+  // useEffect(() => {
+  //   const checkCredentials = async () => {
+  //     const vcs = await cloudWalletService.getAllCredentials();
 
-      const reputationVcs = vcs.filter((vc) =>
-        (vc as StoredW3CCredential).type?.includes("PortableReputation")
-      ) as StoredW3CCredential[];
+  //     const reputationVcs = vcs.filter((vc) =>
+  //       (vc as StoredW3CCredential).type?.includes("PortableReputation")
+  //     ) as StoredW3CCredential[];
 
-      if (reputationVcs) {
-        setIsConnected(true);
-      }
-    };
+  //     if (reputationVcs) {
+  //       setIsConnected(true);
+  //     }
+  //   };
 
-    checkCredentials();
-  }, []);
+  //   checkCredentials();
+  // }, []);
 
   useEffect(() => {
     if (data) {
-      storage.setItem("accessToken", data.accessToken);
-
+      storage.setItem("cloudWalletAccessToken", data.accessToken);
       setAuthState((prevState) => ({
         ...prevState,
         authorized: true,
@@ -65,7 +63,7 @@ export const useConfirmSignIn = () => {
 
   useEffect(() => {
     if (signInData) {
-      storage.setItem("signUpToken", signInData);
+      storage.setItem("signInToken", signInData);
     }
   }, [signInData, storage]);
 
