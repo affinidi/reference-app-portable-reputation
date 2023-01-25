@@ -1,8 +1,10 @@
-import { Button, Modal, Typography } from "components";
 import { getProviders, signIn } from "next-auth/react";
-import { GitHub } from "public/images";
-import Dapp from "public/images/dapp";
+
+import { Box, Button, Modal, Typography } from "components";
 import { ROUTES } from "utils";
+
+import Dapp from "public/images/dapp";
+import { GitHub, IconCheck } from "public/images";
 
 import * as S from "../connectors/connectorModal.styled";
 
@@ -16,38 +18,39 @@ export const ConnectorModal: React.FC<{
   };
 
   return (
-    <>
-      <Modal
-        icon={
-          <>
+    <Modal
+      icon={
+        <>
+          <Box gap={24} direction="row">
             <Dapp />
-            <S.DotContainer direction="row" alignItems="center">
-              <S.DotOne></S.DotOne>
-              <S.DotTwo></S.DotTwo>
-              <S.DotThree></S.DotThree>
-            </S.DotContainer>
+            <Box direction="row" alignItems="center" gap={4}>
+              <S.Dot />
+              <S.Dot />
+              <S.Dot />
+            </Box>
             <GitHub />
-          </>
-        }
-        open={isOpen}
-        access="Access your GitHub profile"
-        footer={
-          <>
-            {providers &&
-              Object.values(providers).map((provider) => {
-                return (
-                  <Button
-                    key={provider.id}
-                    onClick={() => connectToGithub(provider.id)}
-                  >
-                    Connect
-                  </Button>
-                );
-              })}
-          </>
-        }
-        onClose={() => setIsOpen(false)}
-      >
+          </Box>
+        </>
+      }
+      open={isOpen}
+      footer={
+        <>
+          {providers &&
+            Object.values(providers).map((provider) => {
+              return (
+                <Button
+                  key={provider.id}
+                  onClick={() => connectToGithub(provider.id)}
+                >
+                  Connect
+                </Button>
+              );
+            })}
+        </>
+      }
+      onClose={() => setIsOpen(false)}
+    >
+      <>
         <Typography variant="p1">
           DApp wants to connect to your GitHub account. You are currently signed
           in as max.sampimon.
@@ -57,7 +60,17 @@ export const ConnectorModal: React.FC<{
             Not you?<Typography variant="l1"> CLICK HERE</Typography>
           </Typography>
         </S.NotYou>
-      </Modal>
-    </>
+
+        <S.AccessContainer alignItems="flex-start" gap={17}>
+          <Typography variant="o1">This will allow DApp to:</Typography>
+          <S.AccessIconContainer>
+            <Typography variant="p1">
+              <IconCheck />
+              Access your GitHub profile
+            </Typography>
+          </S.AccessIconContainer>
+        </S.AccessContainer>
+      </>
+    </Modal>
   );
 };

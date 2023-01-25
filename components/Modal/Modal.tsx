@@ -1,17 +1,15 @@
 import React, { useRef } from "react";
+import { ModalProps as ReactModalProps } from "react-responsive-modal";
 
 import Typography from "../Typography/Typography";
-import { ModalProps as ReactModalProps } from "react-responsive-modal";
-import Button from "components/Button/Button";
-import IconCheck from "public/images/iconCheck";
-import * as S from "components/Modal/Modal.styled";
+
+import * as S from "./Modal.styled";
 
 export type ModalProps = {
   useLocalContainer?: boolean;
   useRelativePosition?: boolean;
   title?: string;
   icon: React.ReactElement;
-  access: string;
   footer: React.ReactElement;
 } & ReactModalProps;
 
@@ -20,7 +18,6 @@ const Modal: React.FC<ModalProps> = ({
   icon,
   useLocalContainer = false,
   children,
-  access,
   footer,
   useRelativePosition = false,
   onClose,
@@ -62,17 +59,6 @@ const Modal: React.FC<ModalProps> = ({
           {children}
         </S.Content>
 
-        {access && (
-          <S.AccessContainer alignItems="flex-start" gap={17}>
-            <Typography variant="o1">This will allow DApp to:</Typography>
-            <S.AccessIconContainer>
-              <Typography variant="p1">
-                <IconCheck />
-                {access}
-              </Typography>
-            </S.AccessIconContainer>
-          </S.AccessContainer>
-        )}
         <S.Footer
           direction="row"
           alignItems="center"

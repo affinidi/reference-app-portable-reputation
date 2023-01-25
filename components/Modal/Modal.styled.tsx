@@ -1,11 +1,14 @@
 import React from "react";
 import { Modal as ReactModal } from "react-responsive-modal";
 import styled from "styled-components";
-import { pxToRem } from "../../utils";
-import Box from "components/Box/Box";
-import { ModalProps } from "./Modal";
+
+import { pxToRem } from "utils";
 import { theme } from "components/utils/theme";
-import Button from "components/Button/Button";
+
+import Button from "../Button/Button";
+import Box from "../Box/Box";
+
+import { ModalProps } from "./Modal";
 
 export const Modal = styled(({ classNames, className, $position, ...rest }) => (
   <ReactModal
@@ -69,7 +72,7 @@ export const Modal = styled(({ classNames, className, $position, ...rest }) => (
     align-items: center;
     height: ${pxToRem(552)};
     width: ${pxToRem(456)};
-    background-color: ${theme.colors.neutral.primary[100]};
+    background-color: ${({ theme }) => theme.colors.neutral.primary[100]};
   }
 `;
 
@@ -84,42 +87,24 @@ export const Icon = styled(Box)`
 `;
 
 export const Content = styled(Box)`
-  padding: ${pxToRem(32)} ${pxToRem(28)};
+  padding: 0 ${pxToRem(28)};
   overflow-y: auto;
 `;
 
-export const AccessContainer = styled(Box)`
-  width: 100%;
-  padding: ${pxToRem(32)} ${pxToRem(28)} ${pxToRem(56)} ${pxToRem(28)}};
-  border-top: 1px solid ${theme.colors.neutral.primary["15"]};
-`;
-
-export const AccessIconContainer = styled(Box)`
-  p {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  svg {
-    margin-right: ${pxToRem(8)};
-  }
-`;
-
 export const CancelButton = styled(Button)`
-  border: 3px solid #313a55;
-  background-color: #313a55;
-  color: #6af6ff;
+  border: 3px solid ${({ theme }) => theme.colors.neutral.primary[100]};
+  background-color: ${({ theme }) => theme.colors.neutral.primary[100]};
+  color: ${({ theme }) => theme.colors.brand.secondary[100]};
 
   &:hover:not(:disabled) {
-    background-color: #313a55;
-    border: 3px solid #313a55;
+    background-color: ${({ theme }) => theme.colors.neutral.primary[100]};
+    border: 3px solid ${({ theme }) => theme.colors.neutral.primary[100]};
   }
 `;
 
 export const Footer = styled(Box)`
   width: 100%;
-  padding: ${pxToRem(0)} ${pxToRem(28)};
+  padding: 0 ${pxToRem(28)};
 
   button {
     margin-top: 0;
