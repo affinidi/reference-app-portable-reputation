@@ -7,12 +7,14 @@ import Dapp from "public/images/dapp";
 import { GitHub, IconCheck } from "public/images";
 
 import * as S from "../connectors/connectorModal.styled";
+import { useAuthContext } from "hooks/useAuthContext";
 
 export const ConnectorModal: React.FC<{
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   providers: ReturnType<typeof getProviders>;
 }> = ({ isOpen, setIsOpen, providers }) => {
+  const { authState } = useAuthContext();
   const connectToGithub = async (id: string) => {
     await signIn(id, { callbackUrl: ROUTES.github });
   };
@@ -53,7 +55,7 @@ export const ConnectorModal: React.FC<{
       <>
         <Typography variant="p1">
           DApp wants to connect to your GitHub account. You are currently signed
-          in as max.sampimon.
+          in as {authState.username}
         </Typography>
         <S.NotYou>
           <Typography variant="p1">
