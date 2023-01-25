@@ -1,6 +1,5 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { format } from "date-fns";
 import { Box, Container, Header, InfoOutlinedIcon, Spinner } from "components";
 
@@ -156,14 +155,7 @@ const data = {
 };
 
 const Github: FC = () => {
-  const router = useRouter();
   const { status } = useSession();
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/sign-in");
-    }
-  }, [status, router.replace]);
 
   if (status === "loading") {
     return <Spinner />;

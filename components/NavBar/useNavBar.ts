@@ -1,22 +1,31 @@
-import { useCallback, useState } from 'react'
+import { useSession } from "next-auth/react";
+import { useCallback, useState } from "react";
 
-import { useAuthContext } from '../../hooks/useAuthContext'
-import { logout } from '../../hooks/useAuthentication'
+import { logout } from "hooks/useAuthentication";
+import { useAuthContext } from "hooks/useAuthContext";
+import { useSessionStorage } from "hooks/useSessionStorage";
 
 export const useNavBar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { authState, updateAuthState } = useAuthContext()
-
-  const isAuthorized = true
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { status } = useSession();
+  const { authState, setAuthState } = useAuthContext();
+  const { clear } = useSessionStorage();
 
   const handleLogOut = useCallback(async () => {
-    await logout(authState)
-    updateAuthState({
-      authorized: false,
-    })
-    setIsMenuOpen(false)
-    // todo: navigate to HOME or PROFILE SET-UP
-  }, [authState, updateAuthState])
+    await logout();
 
-  return { isMenuOpen, handleLogOut, setIsMenuOpen, isAuthorized }
-}
+    // NOTE: session storage do not cleared with cloudWalletService.logOut
+    clear();
+
+    setIsMenuOpen(false);
+
+    setAuthState({ username: "", loading: false, authorized: false });
+  }, [setIsMenuOpen, logout, clear, setAuthState]);
+
+  return {
+    isMenuOpen,
+    handleLogOut,
+    setIsMenuOpen,
+    isAuthorized: status === "authenticated" || authState.authorized,
+  };
+};

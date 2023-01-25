@@ -1,13 +1,15 @@
-import { FC } from 'react'
+import Link from "next/link";
+import { FC } from "react";
 
-import { Typography } from '../index'
+import { ROUTES } from "utils";
 
-import { useNavBar } from './useNavBar'
+import Typography from "../Typography/Typography";
 
-import * as S from './NavBar.styled'
+import { useNavBar } from "./useNavBar";
+import * as S from "./NavBar.styled";
 
 const NavBar: FC = () => {
-  const { isMenuOpen, setIsMenuOpen, handleLogOut, isAuthorized } = useNavBar()
+  const { isMenuOpen, setIsMenuOpen, handleLogOut, isAuthorized } = useNavBar();
 
   return (
     <>
@@ -32,23 +34,24 @@ const NavBar: FC = () => {
           </div>
         )}
       </S.Container>
+
       {isAuthorized && isMenuOpen && (
         <S.MenuContainer $isOpen={isMenuOpen}>
-          <S.ButtonContainer
-            onClick={() => {
-              setIsMenuOpen(false)
-              // todo: navigate to HOME or PROFILE SET-UP
-            }}
-          >
-            <Typography variant="h6">Home</Typography>
+          <S.ButtonContainer>
+            <Link
+              href={ROUTES.profileSetup}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Typography variant="b1">Home</Typography>
+            </Link>
           </S.ButtonContainer>
-          <S.ButtonContainer onClick={() => handleLogOut()}>
-            <Typography variant="h6">Log out</Typography>
+          <S.ButtonContainer onClick={handleLogOut}>
+            <Typography variant="b1">Log out</Typography>
           </S.ButtonContainer>
         </S.MenuContainer>
       )}
     </>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

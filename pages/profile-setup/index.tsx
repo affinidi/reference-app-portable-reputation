@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import { FC, useState } from "react";
 import { getProviders, signIn } from "next-auth/react";
 
+import { ROUTES } from "utils";
 import { Button, Container, Header } from "components";
 
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
@@ -13,7 +14,7 @@ type ProfileSetupProps = {
 
 const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
   const connectToGithub = async (id: string) => {
-    await signIn(id, { callbackUrl: "/github" });
+    await signIn(id, { callbackUrl: ROUTES.github });
   };
 
   const [isConnectorChecked, setIsConnectorChecked] = useState(false);
@@ -27,17 +28,22 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
           Please select the service that you would like to connect
         </S.ServiceSelect>
 
-        <GithubConnectorCard
-          isChecked={isConnectorChecked}
-          setIsChecked={setIsConnectorChecked}
-        />
+        <div className="row">
+          <div className="col-12 col-sm-4">
+            <GithubConnectorCard
+              isChecked={isConnectorChecked}
+              setIsChecked={setIsConnectorChecked}
+            />
+          </div>
+        </div>
 
-        <div className="col-12 col-sm-3">
-          {!!providers &&
-            Object.values(providers).map((provider) => {
-              return (
-                <>
+        <div className="row">
+          <div className="col-12 col-sm-3">
+            {!!providers &&
+              Object.values(providers).map((provider) => {
+                return (
                   <Button
+                    key={provider.id}
                     disabled={!isConnectorChecked}
                     onClick={() =>
                       !isConnectorChecked
@@ -45,11 +51,11 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
                         : connectToGithub(provider.id)
                     }
                   >
-                    {"Connect to my profile"}
+                    Connect to my profile
                   </Button>
-                </>
-              );
-            })}
+                );
+              })}
+          </div>
         </div>
       </Container>
     </>

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { hostUrl } from '../pages/env';
 import { getItemFromSessionStorage } from "./useSessionStorage";
 
@@ -106,23 +106,24 @@ const BASIC_STATE: UserState = {
 export const useAuthentication = () => {
   const [authState, setAuthState] = useState<UserState>(BASIC_STATE);
 
-  const updatePartiallyState =
-    <T>(updateFunction: Dispatch<SetStateAction<T>>) =>
-    (newState: Partial<T>) => {
-      updateFunction((prev) => ({ ...prev, ...newState }));
-    };
-  const updateAuthState = updatePartiallyState<typeof authState>(setAuthState);
-
   const authenticate = async () => {
     try {
       const response = await getDid();
       if (response) {
-        updateAuthState({ loading: false, authorized: true });
+        setAuthState((prevState) => ({
+          ...prevState,
+          loading: false,
+          authorized: true,
+        }));
       }
     } catch (error) {
-      updateAuthState({ loading: false, authorized: false });
+      setAuthState((prevState) => ({
+        ...prevState,
+        loading: false,
+        authorized: false,
+      }));
     }
   };
 
-  return { authState, setAuthState, updateAuthState, authenticate };
+  return { authState, setAuthState, authenticate };
 };
