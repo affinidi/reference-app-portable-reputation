@@ -78,9 +78,9 @@ const Modal: React.FC<ModalProps> = ({
           alignItems="center"
           justifyContent="space-between"
         >
-          <Button variant="ghost" onClick={onClose}>
+          <S.CancelButton variant="ghost" onClick={onClose}>
             Cancel
-          </Button>
+          </S.CancelButton>
           {footer}
         </S.Footer>
       </S.Modal>

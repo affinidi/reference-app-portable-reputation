@@ -35,7 +35,7 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
       case "outlined":
         return "#fff";
       case "ghost":
-        return "#313a55";
+        return "#fff";
       default:
         return "#6af6ff";
     }
@@ -44,7 +44,7 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
   border-color: ${(props) => {
     switch (props.$variant) {
       case "ghost":
-        return "#313a55";
+        return "#fff";
       case "outlined":
         return "#000770";
       default:
@@ -55,7 +55,6 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
   color: ${(props) => {
     switch (props.$variant) {
       case "ghost":
-        return "#6af6ff";
       case "outlined":
         return "#000770";
       default:
@@ -108,7 +107,7 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
     background: ${(props) => {
       switch (props.$variant) {
         case "ghost":
-          return "#313a55";
+          return "#e0e1e5";
         case "outlined":
           return "#d9daea";
         default:
@@ -119,7 +118,7 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
     border-color: ${(props) => {
       switch (props.$variant) {
         case "ghost":
-          return "#313a55";
+          return "#e0e1e5";
         case "outlined":
           return "#4c519b";
         default:

@@ -5,6 +5,7 @@ import { pxToRem } from "../../utils";
 import Box from "components/Box/Box";
 import { ModalProps } from "./Modal";
 import { theme } from "components/utils/theme";
+import Button from "components/Button/Button";
 
 export const Modal = styled(({ classNames, className, $position, ...rest }) => (
   <ReactModal
@@ -102,6 +103,17 @@ export const AccessIconContainer = styled(Box)`
 
   svg {
     margin-right: ${pxToRem(8)};
+  }
+`;
+
+export const CancelButton = styled(Button)`
+  border: 3px solid #313a55;
+  background-color: #313a55;
+  color: #6af6ff;
+
+  &:hover:not(:disabled) {
+    background-color: #313a55;
+    border: 3px solid #313a55;
   }
 `;
 
