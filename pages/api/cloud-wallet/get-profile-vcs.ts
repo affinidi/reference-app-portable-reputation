@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { VerifiableCredential } from "../../../types/vc";
+import { VerifiableCredential } from "types/vc";
 import { cloudWalletApiUrl, apiKeyHash } from "../env";
 
 const PROFILE_VC_TYPES = ['GithubProfile']
