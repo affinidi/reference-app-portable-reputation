@@ -1,120 +1,132 @@
-import styled from 'styled-components'
+import styled, { css } from "styled-components";
 
-import { pxToRem } from '../../utils'
-// import CalendarIcon from 'assets/svg/calendar.svg'
+import { pxToRem } from "utils";
+import { Theme } from "components/utils/theme";
 
-import Box from '../Box/Box'
-import Typography from '../Typography/Typography'
+import Box from "../Box/Box";
+import Typography from "../Typography/Typography";
+
+type Props = {
+  $hasError?: boolean;
+  $disabled?: boolean;
+  theme: Theme;
+};
 
 export const Wrapper = styled(Box)`
-  margin: ${pxToRem(24)} 0 ${pxToRem(20)};
-`
+  margin-bottom: ${pxToRem(24)};
+`;
 
-export const Input = styled.input<{ $hasError?: boolean }>`
+const getTextColor = (props: Props) => {
+  if (props.$hasError) {
+    return props.theme.colors.utility.danger["100"];
+  }
+
+  if (props.$disabled) {
+    return props.theme.colors.neutral.primary["50"];
+  }
+
+  return "";
+};
+
+export const Label = styled(Typography)<{
+  $hasError?: boolean;
+  $disabled?: boolean;
+}>`
+  color: ${getTextColor};
+`;
+
+export const InputWrapper = styled.div`
+  position: relative;
+`;
+
+const getIconColor = (props: Props) => {
+  if (props.$hasError) {
+    return props.theme.colors.utility.danger["100"];
+  }
+
+  if (props.$disabled) {
+    return props.theme.colors.neutral.primary["15"];
+  }
+
+  return props.theme.colors.brand.primary["90"];
+};
+
+export const Icon = styled.div<Props>`
+  position: absolute;
+  top: 50%;
+  right: ${pxToRem(16)};
+  transform: translate(0, -50%);
+  cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+  pointer-events: ${(props) => (props.$disabled ? "none" : "unset")};
+
+  svg {
+    display: block;
+    fill: ${getIconColor};
+  }
+`;
+
+export const Input = styled.input<
+  Pick<Props, "$hasError"> & { $hasIcon: boolean }
+>`
   width: 100%;
   height: ${pxToRem(48)};
-  padding: ${pxToRem(13)} ${pxToRem(16)};
-  border: 1px solid ${(props) => (props.$hasError ? '#e42648' : '#e0e1e5')};
-  background: #fff;
-  color: ${(props) => (props.$hasError ? '#e42648' : '#464e66')};
-  font-family: 'Roboto', sans-serif;
+  padding: ${pxToRem(16)} ${pxToRem(12)};
+  background: ${(props) => props.theme.colors.neutral.secondary["100"]};
+  color: ${(props) => props.theme.colors.neutral.primary["90"]};
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 500;
   font-size: ${pxToRem(16)};
   border-radius: 4px;
-  transition: all 0.125s ease-in-out;
+  line-height: ${pxToRem(22)};
+  letter-spacing: 0.2px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "text")};
+  transition: border-color 0.125s ease-in-out;
   outline: none;
-  -webkit-min-logical-width: calc(100% - 16px);
+  border: 1px solid ${(props) => props.theme.colors.neutral.primary["15"]};
 
-  &:not([disabled]) {
-    &:hover,
-    &:focus {
-      border: 1px solid ${(props) => (props.$hasError ? '#e42648' : '#1a207e')};
-    }
+  ${(props) =>
+    props.$hasIcon &&
+    css`
+      padding-right: ${pxToRem(48)};
+    `}
+  ${(props) =>
+    props.value &&
+    css`
+      background: ${props.theme.colors.neutral.secondary["100"]};
+    `}
+  ${(props) =>
+    props.$hasError &&
+    css`
+      padding: ${pxToRem(15)} ${pxToRem(11)};
+      border: 2px solid ${props.theme.colors.utility.danger["100"]};
+    `}
+  ${(props) =>
+    !props.$hasError &&
+    css`
+      &:not([disabled]) {
+        &:hover {
+          border-color: ${props.theme.colors.brand.primary["90"]};
+        }
 
-    ::placeholder {
-      color: #989daa;
-    }
+        &:focus {
+          padding: ${pxToRem(15)} ${pxToRem(11)};
+          border: 2px solid ${props.theme.colors.brand.primary["90"]};
+        }
+      }
+    `}
+  ::placeholder {
+    font-weight: 500;
+    color: ${(props) => props.theme.colors.neutral.primary["50"]};
   }
 
   &[disabled] {
-    cursor: default;
-    color: #989daa;
-    border-color: #989daa;
+    color: ${(props) => props.theme.colors.neutral.primary["50"]};
   }
+`;
 
-  &[type='range'] {
-    -webkit-appearance: none;
-    height: ${pxToRem(6)};
-    padding: 0;
-    background: #e0e1e5;
-    border-radius: 10px;
-    background-image: linear-gradient(#01f6bf, #01f6bf);
-    background-size: 70% 100%;
-    background-repeat: no-repeat;
-    transition: none;
-    border: none;
-
-    &:hover,
-    &:focus {
-      border: none;
-    }
-  }
-
-  /* Input Thumb */
-  &[type='range']::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: ${pxToRem(20)};
-    width: ${pxToRem(20)};
-    border-radius: 50%;
-    background: #01f6bf;
-  }
-
-  &[type='range']::-moz-range-thumb {
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #01f6bf;
-  }
-
-  &[type='range']::-ms-thumb {
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #01f6bf;
-  }
-
-  /* Input Track */
-  &[type='range']::-webkit-slider-runnable-track {
-    -webkit-appearance: none;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-
-  &[type='range']::-moz-range-track {
-    -webkit-appearance: none;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-
-  &[type='range']::-ms-track {
-    -webkit-appearance: none;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-`
-
-export const Error = styled(Typography)`
-  margin-bottom: 0;
-  color: #e42648;
-`
-
-export const Range = styled(Box)`
-  margin: ${pxToRem(8)} 0 ${pxToRem(4)};
-`
-export const Label = styled(Typography)<{ $disabled?: boolean }>`
-  ${(props) => (props.$disabled ? `color: #989daa;` : null)}
-`
+export const HelpText = styled(Typography)<{
+  $hasError?: boolean;
+  $disabled?: boolean;
+}>`
+  color: ${getTextColor};
+`;

@@ -1,13 +1,18 @@
 import { getProviders, signIn } from "next-auth/react";
 
-import { Box, Button, Modal, Typography } from "components";
+import {
+  Box,
+  Button,
+  CheckIcon,
+  GithubIcon,
+  LogoIcon,
+  Modal,
+  Typography,
+} from "components";
 import { ROUTES } from "utils";
-
-import Dapp from "public/images/dapp";
-import { GitHub, IconCheck } from "public/images";
+import { useAuthContext } from "hooks/useAuthContext";
 
 import * as S from "../connectors/connectorModal.styled";
-import { useAuthContext } from "hooks/useAuthContext";
 
 export const ConnectorModal: React.FC<{
   isOpen: boolean;
@@ -15,44 +20,30 @@ export const ConnectorModal: React.FC<{
   providers: ReturnType<typeof getProviders>;
 }> = ({ isOpen, setIsOpen, providers }) => {
   const { authState } = useAuthContext();
-  const connectToGithub = async (id: string) => {
-    await signIn(id, { callbackUrl: ROUTES.github });
+
+  const connectToGithub = async () => {
+    // @ts-ignore
+    await signIn(providers.github?.id, { callbackUrl: ROUTES.github });
   };
 
   return (
     <Modal
-      icon={
-        <>
-          <Box gap={24} direction="row">
-            <Dapp />
-            <Box direction="row" alignItems="center" gap={4}>
-              <S.Dot />
-              <S.Dot />
-              <S.Dot />
-            </Box>
-            <GitHub />
-          </Box>
-        </>
-      }
       open={isOpen}
-      footer={
-        <>
-          {providers &&
-            Object.values(providers).map((provider) => {
-              return (
-                <Button
-                  key={provider.id}
-                  onClick={() => connectToGithub(provider.id)}
-                >
-                  Connect
-                </Button>
-              );
-            })}
-        </>
-      }
       onClose={() => setIsOpen(false)}
+      showCloseIcon={false}
+      modalClassName="connector-modal"
     >
-      <>
+      <S.Wrapper>
+        <S.Logos gap={24} direction="row" justifyContent="center">
+          <LogoIcon />
+          <Box direction="row" alignItems="center" gap={4}>
+            <S.Dot />
+            <S.Dot />
+            <S.Dot />
+          </Box>
+          <GithubIcon />
+        </S.Logos>
+
         <Typography variant="p1">
           DApp wants to connect to your GitHub account. You are currently signed
           in as {authState.username}
@@ -64,15 +55,21 @@ export const ConnectorModal: React.FC<{
         </S.NotYou>
 
         <S.AccessContainer alignItems="flex-start" gap={17}>
-          <Typography variant="o1">This will allow DApp to:</Typography>
-          <S.AccessIconContainer>
-            <Typography variant="p1">
-              <IconCheck />
-              Access your GitHub profile
-            </Typography>
-          </S.AccessIconContainer>
+          <S.TextO1 variant="o1">This will allow DApp to:</S.TextO1>
+
+          <Box direction="row" alignItems="center" gap={8}>
+            <CheckIcon />
+            <Typography variant="p1">Access your GitHub profile</Typography>
+          </Box>
         </S.AccessContainer>
-      </>
+
+        <Box direction="row" justifyContent="space-between">
+          <Button onClick={() => setIsOpen(false)} variant="ghost">
+            Cancel
+          </Button>
+          <Button onClick={connectToGithub}>Connect</Button>
+        </Box>
+      </S.Wrapper>
     </Modal>
   );
 };

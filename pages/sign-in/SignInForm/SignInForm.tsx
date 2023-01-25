@@ -1,19 +1,12 @@
 import { Dispatch, FC, FormEvent, SetStateAction } from "react";
 
-import {
-  Button,
-  Container,
-  ContainerForm,
-  Header,
-  Input,
-  Spinner,
-} from "components";
+import { Container, ContainerForm, Header, Input } from "components";
 
 import * as S from "./SigninForm.styled";
 
 type SignInFormProps = {
   handleSignIn(e: FormEvent): void;
-  setUsername(username: string): void
+  setUsername(username: string): void;
   disabled: boolean;
   isLoading: boolean;
   error: Error | null;
@@ -30,12 +23,12 @@ export const SignInForm: FC<SignInFormProps> = ({
   setInputError,
   isLoading,
 }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (value: string) => {
     if (inputError) {
       setInputError(null);
     }
 
-    setUsername(event.target.value);
+    setUsername(value);
   };
 
   return (
@@ -56,12 +49,18 @@ export const SignInForm: FC<SignInFormProps> = ({
                 label="Email address"
                 placeholder="Enter your email address"
                 onChange={handleChange}
-                error={inputError || error?.message}
+                hasError={Boolean(inputError || error?.message)}
+                helpText={inputError || error?.message}
               />
-              <Button disabled={disabled} type="submit">
+
+              <S.ButtonWrapper
+                disabled={disabled}
+                type="submit"
+                loading={isLoading}
+                fullWidth
+              >
                 send verification code
-              </Button>
-              {isLoading && <Spinner />}
+              </S.ButtonWrapper>
             </ContainerForm>
           </div>
         </div>

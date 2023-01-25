@@ -19,7 +19,7 @@ export const useConfirmSignIn = () => {
   const { computedCode, inputs, isButtonDisabled } = useConfirmSignInForm(
     error?.message
   );
-  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleResendCode = async () => {
     await signInMutateAsync({ username: authState.username });
@@ -27,6 +27,8 @@ export const useConfirmSignIn = () => {
 
   const onSubmit = async (e?: SyntheticEvent) => {
     e?.preventDefault();
+    setIsLoading(true);
+
     await mutateAsync({
       token: storage.getItem("signInToken") || "",
       confirmationCode: computedCode,
@@ -59,7 +61,7 @@ export const useConfirmSignIn = () => {
         loading: false,
       }));
     }
-  }, [data, error, isConnected, router, setAuthState]);
+  }, [data, error, router, setAuthState]);
 
   useEffect(() => {
     if (signInData) {
@@ -67,5 +69,12 @@ export const useConfirmSignIn = () => {
     }
   }, [signInData, storage]);
 
-  return { error, onSubmit, inputs, isButtonDisabled, handleResendCode };
+  return {
+    error,
+    onSubmit,
+    inputs,
+    isButtonDisabled,
+    handleResendCode,
+    isLoading,
+  };
 };

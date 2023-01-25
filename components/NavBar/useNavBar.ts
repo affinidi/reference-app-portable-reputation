@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import { useCallback, useState } from "react";
 
 import { logout } from "hooks/useAuthentication";
@@ -7,7 +6,6 @@ import { useSessionStorage } from "hooks/useSessionStorage";
 
 export const useNavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { status } = useSession();
   const { authState, setAuthState } = useAuthContext();
   const { clear } = useSessionStorage();
 
@@ -26,6 +24,6 @@ export const useNavBar = () => {
     isMenuOpen,
     handleLogOut,
     setIsMenuOpen,
-    isAuthorized: status === "authenticated" || authState.authorized,
+    isAuthorized: authState.authorized,
   };
 };
