@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "generate:api": "node scripts/generate-api.cjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "@fontsource/montserrat": "^4.5.13",
@@ -28,6 +27,7 @@
     "email-validator": "^2.0.4",
     "eslint": "8.30.0",
     "eslint-config-next": "13.0.7",
+    "nanoid": "^4.0.0",
     "next": "13.0.7",
     "next-auth": "^4.18.7",
     "normalize.css": "^8.0.1",
