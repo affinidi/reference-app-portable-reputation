@@ -3,6 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { VerifiableCredential } from "../../../types/vc";
 import { cloudWalletApiUrl, apiKeyHash } from "../env";
 
+const PROFILE_VC_TYPES = ['GithubProfile']
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -20,14 +22,6 @@ export default async function handler(
     return;
   }
 
-  const rawTypes = req.query.types;
-  if (!rawTypes || Array.isArray(rawTypes)) {
-    res.status(400).json({ error: "Invalid types" });
-    return;
-  }
-
-  const types = rawTypes.split(",");
-
   const { data: vcs } = await axios<VerifiableCredential[]>(
     `${cloudWalletApiUrl}/v1/wallet/credentials`,
     {
@@ -44,7 +38,7 @@ export default async function handler(
   );
 
   const filteredVcs = [];
-  for (const type of types) {
+  for (const type of PROFILE_VC_TYPES) {
     const vc = vcs.find((vc) => vc.type.includes(type));
     if (vc) filteredVcs.push(vc);
   }

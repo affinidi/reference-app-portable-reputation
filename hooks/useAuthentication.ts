@@ -68,7 +68,7 @@ export const getDid = async (): Promise<string> => {
 
 export const logout = async () => {
   try {
-    await fetch(`${hostUrl}/api/cloud-wallet/confirm-sign-in`, {
+    await fetch(`${hostUrl}/api/cloud-wallet/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

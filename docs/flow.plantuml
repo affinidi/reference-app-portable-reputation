@@ -28,10 +28,10 @@ end
 == Check for Profile VCs ==
 
 group Holder
-FE -> BE : /api/cloud-wallet/find-latest-vcs?types=GithubProfile,LinkedinProfile
+FE -> BE : /api/cloud-wallet/get-profile-vcs
 BE -> CW : get all VCs in the wallet
 CW -> BE : [vcs]
-BE -> BE : filters the VCs by type and date
+BE -> BE : filters the VCs by profile types and return the latest by issuance date
 BE -> FE : [vcs]
 end
 
