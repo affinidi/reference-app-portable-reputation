@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { getProviders, signIn } from "next-auth/react";
 
 import { Button, Container, Header } from "components";
@@ -19,15 +19,23 @@ export const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
   const [isConnectorChecked, setIsConnectorChecked] = useState(false);
 
   const connectToGithub = async (id: string) => {
-    const vcs = await cloudWalletService.getAllCredentials();
-
-    const reputationVcs = vcs.filter((vc) =>
-      (vc as StoredW3CCredential).type?.includes("PortableReputation")
-    ) as StoredW3CCredential[];
-
-    if (reputationVcs) navigate.push("/github");
-    if (!reputationVcs) await signIn(id, { callbackUrl: "/github" });
+    await signIn(id, { callbackUrl: "/github" });
   };
+
+  useEffect(() => {
+    const checkCredentials = async () => {
+      const vcs = await cloudWalletService.getAllCredentials();
+
+      const reputationVcs = vcs.filter((vc) =>
+        (vc as StoredW3CCredential).type?.includes("PortableReputation")
+      ) as StoredW3CCredential[];
+
+      if (reputationVcs) navigate.push("/github");
+      if (!reputationVcs) navigate.push("profile-setup");
+    };
+
+    checkCredentials();
+  }, [navigate]);
 
   return (
     <>
