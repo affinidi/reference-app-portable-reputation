@@ -126,4 +126,4 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
       }
     }};
   }
-`;
+`
