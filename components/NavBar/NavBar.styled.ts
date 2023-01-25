@@ -1,5 +1,6 @@
-import styled from 'styled-components'
-import { pxToRem } from '../../utils'
+import styled from "styled-components";
+
+import { pxToRem } from "utils";
 
 export const Container = styled.div`
   background: #0e1533;
@@ -18,7 +19,7 @@ export const Container = styled.div`
     padding: ${pxToRem(22)} ${pxToRem(100)};
     height: ${pxToRem(72)};
   }
-`
+`;
 
 export const MenuContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
@@ -31,16 +32,23 @@ export const MenuContainer = styled.div<{ $isOpen: boolean }>`
   padding: ${pxToRem(40)} ${pxToRem(24)};
   text-align: right;
   transform: ${(props) =>
-    props.$isOpen ? `translateX(${pxToRem(0)})` : `translateX(${pxToRem(524)})`};
+    props.$isOpen
+      ? `translateX(${pxToRem(0)})`
+      : `translateX(${pxToRem(524)})`};
   @media (min-width: ${pxToRem(500)}) {
     padding: ${pxToRem(108)} ${pxToRem(100)};
   }
-`
+`;
 
 export const ButtonContainer = styled.div`
-  cursor: pointer;
   margin-bottom: ${pxToRem(24)};
-`
+
+  * {
+    cursor: pointer;
+    text-decoration: none;
+  }
+`;
+
 export const Logo = styled.img`
   cursor: pointer;
   width: ${pxToRem(100)};
@@ -49,7 +57,7 @@ export const Logo = styled.img`
     width: ${pxToRem(139)};
     height: ${pxToRem(32)};
   }
-`
+`;
 export const Icon = styled.img`
   cursor: pointer;
   width: ${pxToRem(24)};
@@ -58,4 +66,4 @@ export const Icon = styled.img`
     width: ${pxToRem(32)};
     height: ${pxToRem(32)};
   }
-`
+`;

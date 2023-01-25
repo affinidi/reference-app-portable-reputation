@@ -23,8 +23,6 @@ const FROM_ZERO_TO_NINE = Array(10)
   .map((_, idx) => idx.toString());
 
 export const useConfirmSignInForm = (message?: string) => {
-  const pathTo = "/profile-setup";
-
   const [verifyCode, setVerifyCode] = useState<OTPCode>({
     0: null,
     1: null,
@@ -97,6 +95,7 @@ export const useConfirmSignInForm = (message?: string) => {
   const inputs = Array.from({ length: INPUT_ELEMENTS_AMOUNT }, (_, index) => {
     return (
       <S.VerificationField
+        onChange={() => ({})}
         value={verifyCode[index] || ""}
         onPaste={onPaste}
         key={index}
@@ -113,7 +112,6 @@ export const useConfirmSignInForm = (message?: string) => {
   });
 
   return {
-    pathTo,
     computedCode,
     inputs,
     isButtonDisabled,

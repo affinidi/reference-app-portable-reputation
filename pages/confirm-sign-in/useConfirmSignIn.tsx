@@ -13,9 +13,8 @@ import { StoredW3CCredential } from "services/cloud-wallet/cloud-wallet.api";
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
-  const navigate = useRouter();
   const router = useRouter();
-  const { authState, updateAuthState } = useAuthContext();
+  const { authState, setAuthState } = useAuthContext();
   const { data, error, mutateAsync } = useConfirmSignInMutation();
   const { data: signInData, mutateAsync: signInMutateAsync } =
     useSignInMutation();
@@ -25,10 +24,6 @@ export const useConfirmSignIn = () => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
   const handleResendCode = async () => {
-    if (!authState.username) {
-      navigate.push("/sign-in");
-      return;
-    }
     await signInMutateAsync({ username: authState.username });
   };
 
@@ -57,33 +52,22 @@ export const useConfirmSignIn = () => {
   }, []);
 
   useEffect(() => {
-    if (authState.username === "") {
-      navigate.push("/sign-in");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authState, updateAuthState]);
-
-  useEffect(() => {
     if (data) {
       storage.setItem("accessToken", data.accessToken);
-      updateAuthState({
-        ...authState,
-        loading: false,
+
+      setAuthState((prevState) => ({
+        ...prevState,
         authorized: true,
-      });
-      if (!error && !isConnected) {
-        navigate.push("/profile-setup");
-      } else if (!error && isConnected) {
-        router.push("/github");
-      }
+        loading: false,
+      }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error, isConnected, router]);
+  }, [data, error, isConnected, router, setAuthState]);
 
   useEffect(() => {
     if (signInData) {
       storage.setItem("signUpToken", signInData);
     }
   }, [signInData, storage]);
+
   return { error, onSubmit, inputs, isButtonDisabled, handleResendCode };
 };

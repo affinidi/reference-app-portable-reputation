@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
-import { cloudWalletService } from "../services/cloud-wallet";
+import { cloudWalletService } from "services/cloud-wallet";
 import {
   ConfirmSignInInput,
   ConfirmSignInOutput,
   SignInInput,
-} from "../services/cloud-wallet/cloud-wallet.api";
+} from "services/cloud-wallet/cloud-wallet.api";
 
 export type ErrorResponse = {
   name: string;
@@ -20,7 +20,6 @@ export type ErrorResponse = {
 };
 
 export const signIn = async ({ username }: SignInInput): Promise<string> => {
-
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_HOST}/api/affinidi/sign-in`,
     {
@@ -60,12 +59,10 @@ export const confirmSignIn = async ({
   return response.json();
 };
 
-export const logout = async (authState: UserState) => {
-  if (authState.authorized) {
-    try {
-      await cloudWalletService.logOut();
-    } catch (e) {}
-  }
+export const logout = async () => {
+  try {
+    await cloudWalletService.logOut();
+  } catch (e) {}
 };
 
 export const useSignInMutation = () => {
@@ -98,23 +95,25 @@ const BASIC_STATE: UserState = {
 export const useAuthentication = () => {
   const [authState, setAuthState] = useState<UserState>(BASIC_STATE);
 
-  const updatePartiallyState =
-    <T>(updateFunction: Dispatch<SetStateAction<T>>) =>
-    (newState: Partial<T>) => {
-      updateFunction((prev) => ({ ...prev, ...newState }));
-    };
-  const updateAuthState = updatePartiallyState<typeof authState>(setAuthState);
-
   const authenticate = async () => {
     try {
       const response = await cloudWalletService.getDid();
+
       if (response) {
-        updateAuthState({ loading: false, authorized: true });
+        setAuthState((prevState) => ({
+          ...prevState,
+          loading: false,
+          authorized: true,
+        }));
       }
     } catch (error) {
-      updateAuthState({ loading: false, authorized: false });
+      setAuthState((prevState) => ({
+        ...prevState,
+        loading: false,
+        authorized: false,
+      }));
     }
   };
 
-  return { authState, setAuthState, updateAuthState, authenticate };
+  return { authState, setAuthState, authenticate };
 };

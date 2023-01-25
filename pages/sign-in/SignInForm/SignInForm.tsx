@@ -7,7 +7,7 @@ import {
   Header,
   Input,
   Spinner,
-} from "../../../components";
+} from "components";
 
 import * as S from "./SigninForm.styled";
 
@@ -31,33 +31,39 @@ export const SignInForm: FC<SignInFormProps> = ({
   isLoading,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputError(null);
+    if (inputError) {
+      setInputError(null);
+    }
+
     setSignInInput({ username: event.target.value });
   };
 
   return (
     <>
       <Header title="Sign in" />
-      <Container>
-        <div className="col-12 col-sm-4 offset-sm-4">
-          <ContainerForm onSubmit={handleSignIn}>
-            <S.Prompt variant="p1">
-              Please enter your email address to sign in.
-            </S.Prompt>
 
-            <Input
-              autoComplete="off"
-              id="username"
-              label="Email address"
-              placeholder="Enter your email address"
-              onChange={handleChange}
-              error={inputError || error?.message}
-            />
-            <Button disabled={disabled} type="submit">
-              send verification code
-            </Button>
-            {isLoading && <Spinner />}
-          </ContainerForm>
+      <Container>
+        <div className="row">
+          <div className="col-12 col-sm-4 offset-sm-4">
+            <ContainerForm onSubmit={handleSignIn}>
+              <S.Prompt variant="p1">
+                Please enter your email address to sign in.
+              </S.Prompt>
+
+              <Input
+                id="email"
+                type="email"
+                label="Email address"
+                placeholder="Enter your email address"
+                onChange={handleChange}
+                error={inputError || error?.message}
+              />
+              <Button disabled={disabled} type="submit">
+                send verification code
+              </Button>
+              {isLoading && <Spinner />}
+            </ContainerForm>
+          </div>
         </div>
       </Container>
     </>

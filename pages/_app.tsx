@@ -6,6 +6,7 @@ import { NavBar } from "../components";
 import { AuthProvider } from "../contexts/AuthContext";
 import { ThemeProvider } from "styled-components";
 import { theme } from "components/utils/theme";
+import AuthRedirect from "components/AuthRedirect/AuthRedirect";
 
 export default function App({
   Component,
@@ -24,8 +25,10 @@ export default function App({
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <SessionProvider session={session}>
-            <NavBar />
-            <Component {...pageProps} />
+            <AuthRedirect>
+              <NavBar />
+              <Component {...pageProps} />
+            </AuthRedirect>
           </SessionProvider>
         </AuthProvider>
       </QueryClientProvider>

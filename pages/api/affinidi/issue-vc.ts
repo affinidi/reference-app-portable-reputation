@@ -38,6 +38,7 @@ interface CreateIssuanceInput {
   };
   projectId: string;
 }
+
 type IssueVCResponse = {
   error?: string;
 };
@@ -101,7 +102,7 @@ const handler = async (
       languages: languages.join(", "),
       pullRequests: prs.length,
       commits: 0,
-      solvedIssues: 0
+      solvedIssues: 0,
     };
 
     const offerInput: CreateIssuanceOfferInput = {
