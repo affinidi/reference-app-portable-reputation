@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { VerifiableCredential } from "types/vc";
 import { cloudWalletApiUrl, apiKeyHash } from "../env";
 
-const PROFILE_VC_TYPES = ['GithubProfile']
+const PROFILE_VC_TYPES = [{ name: "github", type: "GithubProfile" }];
 
 export default async function handler(
   req: NextApiRequest,
@@ -37,11 +37,13 @@ export default async function handler(
     (vc1, vc2) => Date.parse(vc2.issuanceDate) - Date.parse(vc1.issuanceDate)
   );
 
-  const filteredVcs = [];
-  for (const type of PROFILE_VC_TYPES) {
+  const profileVcs: Record<string, VerifiableCredential> = {};
+  for (const { name, type } of PROFILE_VC_TYPES) {
     const vc = vcs.find((vc) => vc.type.includes(type));
-    if (vc) filteredVcs.push(vc);
+    if (vc) {
+      profileVcs[name] = vc;
+    }
   }
 
-  res.status(200).json({ vcs: filteredVcs });
+  res.status(200).json(profileVcs);
 }

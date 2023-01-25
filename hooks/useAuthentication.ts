@@ -58,9 +58,7 @@ export const confirmSignIn = async (
 export const getDid = async (): Promise<string> => {
   const response = await fetch(`${hostUrl}/api/cloud-wallet/get-did`, {
     method: "GET",
-    headers: {
-      Authorization: getItemFromSessionStorage("cloudWalletAccessToken"),
-    },
+    headers: createCloudWalletAuthenticationHeaders(),
   });
 
   return response.json();
@@ -72,11 +70,18 @@ export const logout = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getItemFromSessionStorage("cloudWalletAccessToken"),
+        ...createCloudWalletAuthenticationHeaders(),
       },
     });
   } catch (e) {}
 };
+
+const createCloudWalletAuthenticationHeaders = () => {
+  const cloudWalletAccessToken = getItemFromSessionStorage("cloudWalletAccessToken")
+  return {
+    ...cloudWalletAccessToken && { Authorization: cloudWalletAccessToken }
+  }
+}
 
 export const useSignInMutation = () => {
   return useMutation<string, ErrorResponse, SignInInput, () => void>(signIn);
