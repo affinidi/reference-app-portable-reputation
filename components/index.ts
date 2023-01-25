@@ -7,5 +7,6 @@ export { default as Input } from "./Input/Input";
 export { default as NavBar } from "./NavBar/NavBar";
 export { default as Spinner } from "./Spinner/Spinner";
 export { default as Typography } from "./Typography/Typography";
+export { default as Modal } from "./Modal/Modal";
 export * from "./icons";
 export * from "./Card";
