@@ -33,6 +33,7 @@
     "normalize.css": "^8.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-responsive-modal": "^6.4.1",
     "styled-components": "^5.3.6",
     "typescript": "4.9.4"
   },

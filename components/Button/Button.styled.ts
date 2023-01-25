@@ -1,8 +1,8 @@
 /* eslint-disable indent */
-import styled, { css } from 'styled-components'
-import { pxToRem } from '../../utils'
+import styled, { css } from "styled-components";
+import { pxToRem } from "../../utils";
 
-import { Variant } from './types'
+import { Variant } from "./types";
 
 // eslint-disable-next-line import/prefer-default-export
 export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
@@ -16,7 +16,7 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
   cursor: pointer;
   border-width: 2px;
   border-style: solid;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   margin: ${pxToRem(40)} 0;
 
@@ -32,33 +32,34 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
 
   background: ${(props) => {
     switch (props.$variant) {
-      case 'outlined':
-        return '#fff'
-      case 'ghost':
-        return '#fff'
+      case "outlined":
+        return "#fff";
+      case "ghost":
+        return "#313a55";
       default:
-        return '#6af6ff'
+        return "#6af6ff";
     }
   }};
 
   border-color: ${(props) => {
     switch (props.$variant) {
-      case 'ghost':
-        return '#fff'
-      case 'outlined':
-        return '#000770'
+      case "ghost":
+        return "#313a55";
+      case "outlined":
+        return "#000770";
       default:
-        return '#6af6ff'
+        return "#6af6ff";
     }
   }};
 
   color: ${(props) => {
     switch (props.$variant) {
-      case 'ghost':
-      case 'outlined':
-        return '#000770'
+      case "ghost":
+        return "#6af6ff";
+      case "outlined":
+        return "#000770";
       default:
-        return '#313a55'
+        return "#313a55";
     }
   }};
 
@@ -71,34 +72,34 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
 
     background: ${(props) => {
       switch (props.$variant) {
-        case 'ghost':
-          return '#c1c4cc'
-        case 'outlined':
-          return '#fff'
+        case "ghost":
+          return "#c1c4cc";
+        case "outlined":
+          return "#fff";
         default:
-          return '#c1c4cc'
+          return "#c1c4cc";
       }
     }};
 
     border-color: ${(props) => {
       switch (props.$variant) {
-        case 'ghost':
-          return '#c1c4cc'
-        case 'outlined':
-          return '#e0e1e5'
+        case "ghost":
+          return "#c1c4cc";
+        case "outlined":
+          return "#e0e1e5";
         default:
-          return '#c1c4cc'
+          return "#c1c4cc";
       }
     }};
 
     color: ${(props) => {
       switch (props.$variant) {
-        case 'ghost':
-          return '#fff'
-        case 'outlined':
-          return '#e0e1e5'
+        case "ghost":
+          return "#fff";
+        case "outlined":
+          return "#e0e1e5";
         default:
-          return '#fff'
+          return "#fff";
       }
     }};
   }
@@ -106,24 +107,24 @@ export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
   &:hover:not(:disabled) {
     background: ${(props) => {
       switch (props.$variant) {
-        case 'ghost':
-          return '#e0e1e5'
-        case 'outlined':
-          return '#d9daea'
+        case "ghost":
+          return "#313a55";
+        case "outlined":
+          return "#d9daea";
         default:
-          return '#97f9ff'
+          return "#97f9ff";
       }
     }};
 
     border-color: ${(props) => {
       switch (props.$variant) {
-        case 'ghost':
-          return '#e0e1e5'
-        case 'outlined':
-          return '#4c519b'
+        case "ghost":
+          return "#313a55";
+        case "outlined":
+          return "#4c519b";
         default:
-          return '#97f9ff'
+          return "#97f9ff";
       }
     }};
   }
-`
+`;
