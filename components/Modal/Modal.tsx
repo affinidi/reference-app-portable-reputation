@@ -2,10 +2,9 @@ import React, { useRef } from "react";
 
 import Typography from "../Typography/Typography";
 import { ModalProps as ReactModalProps } from "react-responsive-modal";
-import * as S from "components/Modal/Modal.styled";
 import Button from "components/Button/Button";
-import Box from "components/Box/Box";
 import IconCheck from "public/images/iconCheck";
+import * as S from "components/Modal/Modal.styled";
 
 export type ModalProps = {
   useLocalContainer?: boolean;
@@ -24,10 +23,10 @@ const Modal: React.FC<ModalProps> = ({
   access,
   footer,
   useRelativePosition = false,
+  onClose,
   ...rest
 }) => {
   const containerRef = useRef(null);
-
   return (
     <>
       {useLocalContainer && <div ref={containerRef} />}
@@ -37,7 +36,6 @@ const Modal: React.FC<ModalProps> = ({
         {...(useLocalContainer && {
           container: containerRef.current,
         })}
-        // $position={position}
         $useRelativePosition={useRelativePosition}
         showCloseIcon={false}
         focusTrapped={false}
@@ -80,7 +78,7 @@ const Modal: React.FC<ModalProps> = ({
           alignItems="center"
           justifyContent="space-between"
         >
-          <Button variant="ghost" onClick={rest.onClose}>
+          <Button variant="ghost" onClick={onClose}>
             Cancel
           </Button>
           {footer}

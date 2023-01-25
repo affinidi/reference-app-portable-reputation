@@ -1,11 +1,11 @@
 import { GetServerSideProps } from "next";
 import { FC, useState } from "react";
-import { getProviders, signIn } from "next-auth/react";
+import { getProviders } from "next-auth/react";
 
-import { ROUTES } from "utils";
 import { Button, Container, Header } from "components";
 
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
+import { ConnectorModal } from "./components/connectors/connectorModal";
 import * as S from "./ProfileSetup.styled";
 
 type ProfileSetupProps = {
@@ -13,11 +13,8 @@ type ProfileSetupProps = {
 };
 
 const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
-  const connectToGithub = async (id: string) => {
-    await signIn(id, { callbackUrl: ROUTES.github });
-  };
-
   const [isConnectorChecked, setIsConnectorChecked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
@@ -46,9 +43,7 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
                     key={provider.id}
                     disabled={!isConnectorChecked}
                     onClick={() =>
-                      !isConnectorChecked
-                        ? undefined
-                        : connectToGithub(provider.id)
+                      !isConnectorChecked ? undefined : setIsModalOpen(true)
                     }
                   >
                     Connect to my profile
@@ -57,6 +52,13 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
               })}
           </div>
         </div>
+        {isModalOpen && (
+          <ConnectorModal
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+            providers={providers}
+          />
+        )}
       </Container>
     </>
   );
