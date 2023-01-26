@@ -27,12 +27,7 @@ export const ConnectorModal: React.FC<{
   };
 
   return (
-    <Modal
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
-      showCloseIcon={false}
-      modalClassName="connector-modal"
-    >
+    <Modal open={isOpen} onClose={() => setIsOpen(false)} showCloseIcon={false}>
       <S.Wrapper>
         <S.Logos gap={24} direction="row" justifyContent="center">
           <LogoIcon />

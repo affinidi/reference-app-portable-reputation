@@ -30,9 +30,3 @@ body {
   flex-direction: column;
   height: 100%;
 }
-
-@media (max-width: 576px) {
-  .react-responsive-modal-modal.modal.connector-modal {
-    width: 328px
-  }
-}

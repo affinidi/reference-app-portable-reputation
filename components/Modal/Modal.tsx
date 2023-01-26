@@ -13,7 +13,6 @@ export type ModalProps = {
   title?: string;
   footer?: React.ReactElement;
   position?: "rightSide" | "center";
-  modalClassName?: string;
 } & ReactModalProps;
 
 const Modal: React.FC<ModalProps> = ({
@@ -23,7 +22,6 @@ const Modal: React.FC<ModalProps> = ({
   position = "center",
   onClose,
   showCloseIcon = true,
-  modalClassName,
   ...rest
 }) => {
   const modalAnimationIn =
@@ -41,7 +39,7 @@ const Modal: React.FC<ModalProps> = ({
       classNames={{
         root: "root",
         overlay: "overlay",
-        modal: `modal ${modalClassName}`,
+        modal: "modal",
         container: "container",
         modalAnimationIn,
         modalAnimationOut,

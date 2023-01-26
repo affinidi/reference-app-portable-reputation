@@ -141,6 +141,10 @@ export const Modal = styled(({ classNames, className, $position, ...rest }) => (
         height: ${pxToRem(552)};
         width: ${pxToRem(456)};
         max-width: unset;
+
+        @media (max-width: 576px) {
+          width: ${pxToRem(328)};
+        }
       `;
     }}
   }
