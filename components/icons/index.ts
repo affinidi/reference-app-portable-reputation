@@ -1,6 +1,10 @@
-export { FullLogoIcon } from './FullLogoIcon'
-export { GithubIcon } from './GithubIcon'
-export { LogoIcon } from './LogoIcon'
-export { default as InfoOutlinedIcon } from './info-outlined'
-export { default as OfficeIcon } from './office'
-export { default as MapOutlinedIcon } from './map-outlined'
+export { default as GithubIcon } from "components/icons/github";
+export { default as InfoOutlinedIcon } from "./info-outlined";
+export { default as OfficeIcon } from "./office";
+export { default as MapOutlinedIcon } from "./map-outlined";
+export { default as LoadingIcon } from "./loading";
+export { default as CloseIcon } from "./close";
+export { default as CheckIcon } from "./check";
+export { default as MenuIcon } from "./menu";
+export { default as LogoMainIcon } from "./logo-main";
+export { default as LogoIcon } from "components/icons/logo";

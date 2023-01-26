@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { hostUrl } from '../pages/env';
+import { hostUrl } from "../pages/env";
 import { getItemFromSessionStorage } from "./useSessionStorage";
 
 export type ErrorResponse = {
@@ -15,8 +15,8 @@ export type ErrorResponse = {
 };
 
 export type SignInInput = {
-  username: string
-}
+  username: string;
+};
 
 export const signIn = async (input: SignInInput): Promise<string> => {
   const response = await fetch(`${hostUrl}/api/cloud-wallet/sign-in`, {
@@ -55,7 +55,7 @@ export const confirmSignIn = async (
   return response.json();
 };
 
-export const getDid = async (): Promise<string> => {
+export const getDid = async (): Promise<{ error: string } | string> => {
   const response = await fetch(`${hostUrl}/api/cloud-wallet/get-did`, {
     method: "GET",
     headers: createCloudWalletAuthenticationHeaders(),
@@ -77,11 +77,13 @@ export const logout = async () => {
 };
 
 const createCloudWalletAuthenticationHeaders = () => {
-  const cloudWalletAccessToken = getItemFromSessionStorage("cloudWalletAccessToken")
+  const cloudWalletAccessToken = getItemFromSessionStorage(
+    "cloudWalletAccessToken"
+  );
   return {
-    ...cloudWalletAccessToken && { Authorization: cloudWalletAccessToken }
-  }
-}
+    ...(cloudWalletAccessToken && { Authorization: cloudWalletAccessToken }),
+  };
+};
 
 export const useSignInMutation = () => {
   return useMutation<string, ErrorResponse, SignInInput, () => void>(signIn);
@@ -114,7 +116,14 @@ export const useAuthentication = () => {
   const authenticate = async () => {
     try {
       const response = await getDid();
-      if (response) {
+
+      if (typeof response === "object" && response?.error) {
+        setAuthState((prevState) => ({
+          ...prevState,
+          loading: false,
+          authorized: false,
+        }));
+      } else {
         setAuthState((prevState) => ({
           ...prevState,
           loading: false,

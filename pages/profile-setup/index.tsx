@@ -25,14 +25,14 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
           Please select the service that you would like to connect
         </S.ServiceSelect>
 
-        <div className="row">
+        <S.CardRow className="row">
           <div className="col-12 col-sm-4">
             <GithubConnectorCard
               isChecked={isConnectorChecked}
               setIsChecked={setIsConnectorChecked}
             />
           </div>
-        </div>
+        </S.CardRow>
 
         <div className="row">
           <div className="col-12 col-sm-3">
@@ -52,13 +52,12 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
               })}
           </div>
         </div>
-        {isModalOpen && (
-          <ConnectorModal
-            isOpen={isModalOpen}
-            setIsOpen={setIsModalOpen}
-            providers={providers}
-          />
-        )}
+
+        <ConnectorModal
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          providers={providers}
+        />
       </Container>
     </>
   );

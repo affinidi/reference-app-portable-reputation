@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 
-import { Container, Header, Typography } from "components";
+import { Box, Container, Header, Typography } from "components";
 
 import * as S from "./ConfirmSignInForm.styled";
 
@@ -9,6 +9,7 @@ type ConfirmSignInFormProps = {
   onSubmit(): void;
   inputs: ReactNode;
   isButtonDisabled: boolean;
+  isLoading: boolean;
   handleResendCode(): void;
 };
 
@@ -18,31 +19,36 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
   inputs,
   isButtonDisabled,
   handleResendCode,
+  isLoading,
 }) => {
   return (
     <>
       <Header title="Sign in" />
 
       <Container>
-        <div className="row">
+        <S.Wrapper className="row">
           <div className="col-12 col-sm-4 offset-sm-4">
             <S.Prompt variant="p1">
               Please enter the verification code you received in your email.
             </S.Prompt>
-            <Typography variant={!!error ? "e1" : "p4"}>
-              Verification code
-            </Typography>
             <form id="confirmation" onSubmit={onSubmit}>
-              <S.VerificationFieldContainer direction="row">
-                {inputs}
-              </S.VerificationFieldContainer>
+              <Box gap={4}>
+                <Typography variant="p4">Verification code</Typography>
+
+                <S.VerificationFieldContainer direction="row" gap={30}>
+                  {inputs}
+                </S.VerificationFieldContainer>
+              </Box>
 
               {error && <Typography variant="e1">{error?.message}</Typography>}
             </form>
+
             <S.SignInButton
               form="confirmation"
               type="submit"
               disabled={isButtonDisabled}
+              loading={isLoading}
+              fullWidth
             >
               Sign in
             </S.SignInButton>
@@ -52,7 +58,6 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
               <Typography
                 variant="l1"
                 onClick={handleResendCode}
-                onKeyPress={handleResendCode}
                 role="button"
                 tabIndex={0}
               >
@@ -61,7 +66,7 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
               to send it again
             </Typography>
           </div>
-        </div>
+        </S.Wrapper>
       </Container>
     </>
   );

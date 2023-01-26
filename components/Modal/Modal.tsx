@@ -1,5 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 import { ModalProps as ReactModalProps } from "react-responsive-modal";
+
+import { CloseIcon } from "components/icons";
 
 import Typography from "../Typography/Typography";
 
@@ -9,68 +11,74 @@ export type ModalProps = {
   useLocalContainer?: boolean;
   useRelativePosition?: boolean;
   title?: string;
-  icon: React.ReactElement;
-  footer: React.ReactElement;
+  footer?: React.ReactElement;
+  position?: "rightSide" | "center";
 } & ReactModalProps;
 
 const Modal: React.FC<ModalProps> = ({
   title,
-  icon,
-  useLocalContainer = false,
   children,
   footer,
-  useRelativePosition = false,
+  position = "center",
   onClose,
+  showCloseIcon = true,
   ...rest
 }) => {
-  const containerRef = useRef(null);
+  const modalAnimationIn =
+    position === "rightSide" ? "slideFromRightIn" : "zoomIn";
+  const modalAnimationOut =
+    position === "rightSide" ? "slideFromRightOut" : "zoomOut";
+
   return (
-    <>
-      {useLocalContainer && <div ref={containerRef} />}
+    <S.Modal
+      {...rest}
+      onClose={onClose}
+      $position={position}
+      showCloseIcon={false}
+      focusTrapped={false}
+      classNames={{
+        root: "root",
+        overlay: "overlay",
+        modal: "modal",
+        container: "container",
+        modalAnimationIn,
+        modalAnimationOut,
+      }}
+    >
+      {rest.open && (
+        <>
+          {title && (
+            <>
+              <S.Title
+                alignItems="center"
+                justifyContent="space-between"
+                gap={24}
+              >
+                <Typography variant="l1">{title}</Typography>
+              </S.Title>
+            </>
+          )}
 
-      <S.Modal
-        {...rest}
-        {...(useLocalContainer && {
-          container: containerRef.current,
-        })}
-        $useRelativePosition={useRelativePosition}
-        showCloseIcon={false}
-        focusTrapped={false}
-        classNames={{
-          root: "root",
-          overlay: "overlay",
-          modal: "modal",
-          container: "container",
-        }}
-      >
-        {title && (
-          <S.Title alignItems="center" justifyContent="space-between" gap={24}>
-            <Typography variant="l1">{title}</Typography>
-          </S.Title>
-        )}
+          {showCloseIcon && (
+            <S.CloseButton>
+              <CloseIcon onClick={onClose} />
+            </S.CloseButton>
+          )}
 
-        {icon && (
-          <S.Icon direction="row" justifyContent="center">
-            {icon}
-          </S.Icon>
-        )}
+          <S.Content>{children}</S.Content>
 
-        <S.Content flex={1} justifyContent="flex-end">
-          {children}
-        </S.Content>
-
-        <S.Footer
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <S.CancelButton variant="ghost" onClick={onClose}>
-            Cancel
-          </S.CancelButton>
-          {footer}
-        </S.Footer>
-      </S.Modal>
-    </>
+          {footer && (
+            <S.Footer
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              {footer}
+            </S.Footer>
+          )}
+        </>
+      )}
+    </S.Modal>
   );
 };
 

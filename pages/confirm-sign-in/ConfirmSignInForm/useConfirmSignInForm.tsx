@@ -46,9 +46,9 @@ export const useConfirmSignInForm = (message?: string) => {
     });
 
   const onKeyDown = (index: number) => (e: KeyboardEvent<HTMLInputElement>) => {
-    const isBackspacePressed = e.key === 'Backspace';
-    const isArrowLeft = e.key === 'ArrowLeft';
-    const isArrowRight = e.key === 'ArrowRight';
+    const isBackspacePressed = e.key === "Backspace";
+    const isArrowLeft = e.key === "ArrowLeft";
+    const isArrowRight = e.key === "ArrowRight";
 
     if (isBackspacePressed) {
       if (index !== 0) {
@@ -101,10 +101,9 @@ export const useConfirmSignInForm = (message?: string) => {
         autoFocus={index === 0}
         type="text"
         ref={refInputs[index]}
-        error={message}
+        hasError={Boolean(message)}
         maxLength={1}
         onKeyDown={onKeyDown(index)}
-        isGroup
       />
     );
   });

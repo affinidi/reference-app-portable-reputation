@@ -1,129 +1,170 @@
-/* eslint-disable indent */
-import styled, { css } from 'styled-components'
-import { pxToRem } from '../../utils'
+import styled, { css, keyframes } from "styled-components";
 
-import { Variant } from './types'
+import { pxToRem } from "utils";
 
-// eslint-disable-next-line import/prefer-default-export
-export const Button = styled.button<{ $variant: Variant; $round: boolean }>`
-  height: ${pxToRem(48)};
-  padding: 0 ${pxToRem(19)};
-  font-size: ${pxToRem(16)};
-  line-height: ${pxToRem(24)};
-  border-radius: 48px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  border-width: 2px;
-  border-style: solid;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  margin: ${pxToRem(40)} 0;
+import Typography from "../Typography/Typography";
 
-  ${({ $round }) =>
-    $round &&
-    css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: ${pxToRem(48)};
-      padding: 0;
-    `}
+import {
+  ButtonColor,
+  ButtonSize,
+  ButtonVariant,
+  getBackgroundColor,
+  getBorder,
+  getColor,
+  getPadding,
+} from "./Button.themes";
 
-  background: ${(props) => {
-    switch (props.$variant) {
-      case 'outlined':
-        return '#fff'
-      case 'ghost':
-        return '#fff'
-      default:
-        return '#6af6ff'
-    }
-  }};
+interface StyledButtonProps {
+  $color: ButtonColor;
+  $variant: ButtonVariant;
+  $size: ButtonSize;
+  $hasIcon: boolean;
+  $iconButton?: boolean;
+  $loading?: boolean;
+  $fullWidth?: boolean;
+}
 
-  border-color: ${(props) => {
-    switch (props.$variant) {
-      case 'ghost':
-        return '#fff'
-      case 'outlined':
-        return '#000770'
-      default:
-        return '#6af6ff'
-    }
-  }};
+export const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
 
-  color: ${(props) => {
-    switch (props.$variant) {
-      case 'ghost':
-      case 'outlined':
-        return '#000770'
-      default:
-        return '#313a55'
-    }
-  }};
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const SpinnerWrapper = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
   svg {
     display: block;
+    animation: ${rotate} 1.5s linear infinite;
+  }
+`;
+
+export const IconWrapper = styled.div<Pick<StyledButtonProps, "$loading">>`
+  opacity: ${(props) => (props.$loading ? "0" : "1")};
+
+  svg {
+    display: block;
+    max-height: ${pxToRem(20)};
+    max-width: ${pxToRem(20)};
+  }
+`;
+
+export const Button = styled.button<StyledButtonProps>`
+  position: relative;
+  display: flex;
+  gap: ${pxToRem(12)};
+  align-items: center;
+  justify-content: center;
+  padding: ${(props) => getPadding(props.$size, props.$hasIcon)};
+  background-color: ${(props) =>
+    getBackgroundColor(props.$variant, props.$color, "default")};
+  border: 2px solid
+    ${(props) => getBorder(props.$variant, props.$color, "default")};
+  border-radius: 48px;
+  box-sizing: border-box;
+  color: ${(props) => getColor(props.$variant, props.$color, "default")};
+  cursor: pointer;
+  transition: all 0.125s ease-in-out;
+
+  ${(props) =>
+    props.$fullWidth &&
+    css`
+      width: 100%;
+    `}
+  path {
+    fill: ${(props) => getColor(props.$variant, props.$color, "default")};
   }
 
-  &:disabled {
-    cursor: default;
+  &._hover,
+  &:hover {
+    background-color: ${(props) =>
+      getBackgroundColor(props.$variant, props.$color, "hover")};
+    border-color: ${(props) =>
+      getBorder(props.$variant, props.$color, "hover")};
+    color: ${(props) => getColor(props.$variant, props.$color, "hover")};
 
-    background: ${(props) => {
-      switch (props.$variant) {
-        case 'ghost':
-          return '#c1c4cc'
-        case 'outlined':
-          return '#fff'
-        default:
-          return '#c1c4cc'
-      }
-    }};
-
-    border-color: ${(props) => {
-      switch (props.$variant) {
-        case 'ghost':
-          return '#c1c4cc'
-        case 'outlined':
-          return '#e0e1e5'
-        default:
-          return '#c1c4cc'
-      }
-    }};
-
-    color: ${(props) => {
-      switch (props.$variant) {
-        case 'ghost':
-          return '#fff'
-        case 'outlined':
-          return '#e0e1e5'
-        default:
-          return '#fff'
-      }
-    }};
+    path {
+      fill: ${(props) => getColor(props.$variant, props.$color, "hover")};
+    }
   }
 
-  &:hover:not(:disabled) {
-    background: ${(props) => {
-      switch (props.$variant) {
-        case 'ghost':
-          return '#e0e1e5'
-        case 'outlined':
-          return '#d9daea'
-        default:
-          return '#97f9ff'
-      }
-    }};
+  &._active,
+  &:active {
+    background-color: ${(props) =>
+      getBackgroundColor(props.$variant, props.$color, "active")};
+    border-color: ${(props) =>
+      getBorder(props.$variant, props.$color, "active")};
+    color: ${(props) => getColor(props.$variant, props.$color, "active")};
 
-    border-color: ${(props) => {
-      switch (props.$variant) {
-        case 'ghost':
-          return '#e0e1e5'
-        case 'outlined':
-          return '#4c519b'
-        default:
-          return '#97f9ff'
-      }
-    }};
+    path {
+      fill: ${(props) => getColor(props.$variant, props.$color, "active")};
+    }
   }
-`
+
+  &[disabled] {
+    background-color: ${(props) =>
+      getBackgroundColor(props.$variant, props.$color, "disabled")};
+    border-color: ${(props) =>
+      getBorder(props.$variant, props.$color, "disabled")};
+    color: ${(props) => getColor(props.$variant, props.$color, "disabled")};
+    cursor: not-allowed;
+
+    path {
+      fill: ${(props) => getColor(props.$variant, props.$color, "disabled")};
+    }
+  }
+
+  ${(props) =>
+    props.$iconButton &&
+    css`
+      height: ${pxToRem(48)};
+      width: ${pxToRem(48)};
+    `}
+
+  ${(props) =>
+    props.$loading &&
+    css`
+      background-color: ${getBackgroundColor(
+        props.$variant,
+        props.$color,
+        "loading"
+      )};
+      border-color: ${getBorder(props.$variant, props.$color, "loading")};
+      color: ${getColor(props.$variant, props.$color, "loading")};
+      cursor: not-allowed;
+
+      path {
+        fill: ${getColor(props.$variant, props.$color, "loading")};
+      }
+    `}
+`;
+
+export const Content = styled(Typography)<
+  Pick<StyledButtonProps, "$loading" | "$iconButton">
+>`
+  opacity: ${(props) => (props.$loading ? "0" : "1")};
+  color: inherit;
+  cursor: inherit;
+
+  ${(props) =>
+    props.$iconButton &&
+    css`
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      svg {
+        display: block;
+        max-width: ${pxToRem(20)};
+        max-height: ${pxToRem(20)};
+      }
+    `};
+`;

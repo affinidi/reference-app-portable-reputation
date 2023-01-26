@@ -1,38 +1,41 @@
 import styled from "styled-components";
 
-import { Input, Typography, Button, Box, Container } from "../../../components";
-import { InputProps } from "../../../components/Input/Input";
-import { pxToRem } from "../../../utils";
-import { theme } from "../../../components/utils/theme";
+import { pxToRem } from "utils";
+import { Box, Button, Input, Typography } from "components";
+
+export const Wrapper = styled.div`
+  padding-bottom: ${pxToRem(40)};
+`;
 
 export const Prompt = styled(Typography)`
   margin: ${pxToRem(40)} 0;
 `;
 
 export const VerificationFieldContainer = styled(Box)`
-  @media (min-width: 1024px) {
-    gap: ${pxToRem(22)};
+  @media (max-width: 1024px) {
+    gap: ${pxToRem(16)};
   }
 `;
 
-export const VerificationField = styled(Input)<InputProps>`
-  margin: ${pxToRem(10)} ${pxToRem(10)} ${pxToRem(10)} 0;
-
+export const VerificationField = styled(Input)`
   input {
     text-align: center;
-    padding: ${pxToRem(10)};
+    padding: ${pxToRem(4)} ${pxToRem(8)};
     border-radius: ${pxToRem(8)};
-    font-family: Montserrat;
     font-size: ${pxToRem(28)};
     font-weight: bold;
-    line-height: 1.29;
-    letter-spacing: ${pxToRem(0.2)};
-    color: #464e66;
-    background: #f8f8f9;
+
+    &:focus {
+      padding: ${pxToRem(4)} ${pxToRem(8)};
+      border-width: 1px !important;
+    }
   }
 `;
 
 export const SignInButton = styled(Button)`
-  width: 100%;
-`;
+  margin: ${pxToRem(16)} 0 ${pxToRem(48)};
 
+  @media (max-width: 1024px) {
+    margin-bottom: ${pxToRem(40)};
+  }
+`;
