@@ -1,26 +1,23 @@
 import axios from "axios";
+import { use } from "next-api-middleware";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { VerifiableCredential } from "types/vc";
 import { cloudWalletApiUrl, apiKeyHash } from "../env";
+import { allowedHttpMethods } from '../middlewares/allowed-http-methods';
+import { errorHandler } from '../middlewares/error-handler';
+import { authenticateCloudWallet } from './helpers/authenticate-cloud-wallet';
 
-const PROFILE_VC_TYPES = [{ name: "github", type: "GithubProfile" }];
+type HandlerResponse = {
+  [profile: string]: VerifiableCredential
+};
 
-export default async function handler(
+const PROFILE_VC_TYPES = [{ profile: "github", type: "GithubProfile" }];
+
+async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<HandlerResponse>
 ) {
-  if (req.method !== "GET") {
-    res.status(405).send({ error: "Only GET requests allowed" });
-    return;
-  }
-
-  const cloudWalletAccessToken = req.headers["authorization"];
-  if (!cloudWalletAccessToken) {
-    res
-      .status(401)
-      .json({ error: "Cloud Wallet access token is not provided" });
-    return;
-  }
+  const cloudWalletAccessToken = authenticateCloudWallet(req)
 
   const { data: vcs } = await axios<VerifiableCredential[]>(
     `${cloudWalletApiUrl}/v1/wallet/credentials`,
@@ -33,17 +30,20 @@ export default async function handler(
     }
   );
 
+  // sort by issuance date (descending)
   vcs.sort(
     (vc1, vc2) => Date.parse(vc2.issuanceDate) - Date.parse(vc1.issuanceDate)
   );
 
-  const profileVcs: Record<string, VerifiableCredential> = {};
-  for (const { name, type } of PROFILE_VC_TYPES) {
+  const response: HandlerResponse = {}
+  for (const { profile, type } of PROFILE_VC_TYPES) {
     const vc = vcs.find((vc) => vc.type.includes(type));
     if (vc) {
-      profileVcs[name] = vc;
+      response[profile] = vc;
     }
   }
 
-  res.status(200).json(profileVcs);
+  res.status(200).json(response);
 }
+
+export default use(allowedHttpMethods("GET"), errorHandler)(handler);
