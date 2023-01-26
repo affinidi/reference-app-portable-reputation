@@ -2,7 +2,7 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 import { use } from "next-api-middleware";
-import { VerifiableCredential } from "../../../types/vc";
+import { VerifiableCredential } from "types/vc";
 import {
   affinidiIamApiUrl,
   projectDid,
