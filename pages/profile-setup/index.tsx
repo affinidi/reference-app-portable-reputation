@@ -1,11 +1,17 @@
+import axios from "axios";
 import { GetServerSideProps } from "next";
-import { FC, useState } from "react";
-import { getProviders } from "next-auth/react";
+import { FC, useEffect, useState } from "react";
+import { getProviders, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
-import { Button, Container, Header } from "components";
-
+import { Button, Container, Header, Spinner } from "components";
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
 import { ConnectorModal } from "./components/connectors/connectorModal";
+import { hostUrl } from "pages/env";
+
+import { ROUTES } from "utils";
+import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
+
 import * as S from "./ProfileSetup.styled";
 
 type ProfileSetupProps = {
@@ -13,8 +19,39 @@ type ProfileSetupProps = {
 };
 
 const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
-  const [isConnectorChecked, setIsConnectorChecked] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGithubConnectorChecked, setIsGithubConnectorChecked] =
+    useState(false);
+  const [isConnectorModalOpen, setIsConnectorModalOpen] = useState(false);
+  const { push } = useRouter();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "loading") return;
+
+    async function fetchVc() {
+      const { data: vcs } = await axios(
+        `${hostUrl}/api/cloud-wallet/get-profile-vcs`,
+        {
+          method: "GET",
+          headers: createCloudWalletAuthenticationHeaders(),
+        }
+      );
+
+      if (vcs.github) {
+        await push(ROUTES.github);
+        return;
+      }
+
+      setIsLoading(false);
+    }
+
+    fetchVc();
+  }, [push, status]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -28,35 +65,34 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
         <S.CardRow className="row">
           <div className="col-12 col-sm-4">
             <GithubConnectorCard
-              isChecked={isConnectorChecked}
-              setIsChecked={setIsConnectorChecked}
+              isChecked={isGithubConnectorChecked}
+              setIsChecked={setIsGithubConnectorChecked}
             />
           </div>
         </S.CardRow>
 
         <div className="row">
           <div className="col-12 col-sm-3">
-            {!!providers &&
-              Object.values(providers).map((provider) => {
-                return (
-                  <Button
-                    key={provider.id}
-                    disabled={!isConnectorChecked}
-                    onClick={() =>
-                      !isConnectorChecked ? undefined : setIsModalOpen(true)
-                    }
-                  >
-                    Connect to my profile
-                  </Button>
-                );
-              })}
+            {Object.values(providers).map((provider) => {
+              return (
+                <Button
+                  key={provider.id}
+                  disabled={!isGithubConnectorChecked}
+                  onClick={() =>
+                    !isGithubConnectorChecked
+                      ? undefined
+                      : setIsConnectorModalOpen(true)
+                  }
+                >
+                  Connect my Github profile
+                </Button>
+              );
+            })}
           </div>
         </div>
-
         <ConnectorModal
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          providers={providers}
+          isOpen={isConnectorModalOpen}
+          setIsOpen={setIsConnectorModalOpen}
         />
       </Container>
     </>

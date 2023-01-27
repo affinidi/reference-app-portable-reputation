@@ -2,9 +2,10 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 
-import { ROUTES } from "utils";
-import { useAuthContext } from "hooks/useAuthContext";
 import { Spinner } from "components";
+
+import { ROUTES } from "utils";
+import { useAuthentication } from "hooks/useAuthentication";
 
 type AuthRedirectProps = {
   children: React.ReactNode;
@@ -13,7 +14,7 @@ type AuthRedirectProps = {
 const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
   const { status } = useSession();
   const { route, push } = useRouter();
-  const { authState, authenticate } = useAuthContext();
+  const { authState, authenticate } = useAuthentication();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

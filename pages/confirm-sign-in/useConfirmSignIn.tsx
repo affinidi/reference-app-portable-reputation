@@ -35,23 +35,6 @@ export const useConfirmSignIn = () => {
     });
   };
 
-  // TODO: use /cloud-wallet/get-profile-vcs endpoint
-  // useEffect(() => {
-  //   const checkCredentials = async () => {
-  //     const vcs = await cloudWalletService.getAllCredentials();
-
-  //     const reputationVcs = vcs.filter((vc) =>
-  //       (vc as StoredW3CCredential).type?.includes("PortableReputation")
-  //     ) as StoredW3CCredential[];
-
-  //     if (reputationVcs) {
-  //       setIsConnected(true);
-  //     }
-  //   };
-
-  //   checkCredentials();
-  // }, []);
-
   useEffect(() => {
     if (data) {
       storage.setItem("cloudWalletAccessToken", data.accessToken);
@@ -61,7 +44,7 @@ export const useConfirmSignIn = () => {
         loading: false,
       }));
     }
-  }, [data, error, router, setAuthState]);
+  }, [data, error, router, setAuthState, storage]);
 
   useEffect(() => {
     if (signInData) {

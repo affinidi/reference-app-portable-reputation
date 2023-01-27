@@ -1,4 +1,4 @@
-import { getProviders, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 import {
   Box,
@@ -10,20 +10,15 @@ import {
   Typography,
 } from "components";
 import { ROUTES } from "utils";
-import { useAuthContext } from "hooks/useAuthContext";
 
 import * as S from "../connectors/connectorModal.styled";
 
 export const ConnectorModal: React.FC<{
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  providers: ReturnType<typeof getProviders>;
-}> = ({ isOpen, setIsOpen, providers }) => {
-  const { authState } = useAuthContext();
-
+}> = ({ isOpen, setIsOpen }) => {
   const connectToGithub = async () => {
-    // @ts-ignore
-    await signIn(providers.github?.id, { callbackUrl: ROUTES.github });
+    await signIn("github", { callbackUrl: ROUTES.githubCallback });
   };
 
   return (
@@ -40,8 +35,7 @@ export const ConnectorModal: React.FC<{
         </S.Logos>
 
         <Typography variant="p1">
-          DApp wants to connect to your GitHub account. You are currently signed
-          in as {authState.username}
+          DApp wants to connect to your GitHub account.
         </Typography>
         <S.NotYou>
           <Typography variant="p1">
