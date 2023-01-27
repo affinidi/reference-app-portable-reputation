@@ -20,11 +20,11 @@ export type SignInInput = {
 };
 
 export const signIn = async (input: SignInInput): Promise<string> => {
-  const response = await axios<string>(`${hostUrl}/api/cloud-wallet/sign-in`, {
+  const response = await axios<{ token: string }>(`${hostUrl}/api/cloud-wallet/sign-in`, {
     method: "POST",
     data: input,
   });
-  return response.data
+  return response.data.token
 };
 
 export type ConfirmSignInInput = {
