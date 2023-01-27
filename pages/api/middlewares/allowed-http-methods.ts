@@ -1,5 +1,5 @@
 import { Middleware } from "next-api-middleware";
-import { ApiError } from '../errors';
+import { ApiError } from '../helpers/errors';
 
 type HttpMethod = "GET" | "POST";
 

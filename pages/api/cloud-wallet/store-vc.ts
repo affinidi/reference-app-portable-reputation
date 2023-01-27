@@ -3,7 +3,7 @@ import { z } from "zod";
 import { use } from "next-api-middleware";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { cloudWalletApiUrl, apiKeyHash } from '../env';
-import { authenticateCloudWallet } from '../middlewares/authenticate-cloud-wallet';
+import { authenticateCloudWallet } from '../helpers/authenticate-cloud-wallet';
 import { allowedHttpMethods } from '../middlewares/allowed-http-methods';
 import { errorHandler } from '../middlewares/error-handler';
 
