@@ -1,13 +1,15 @@
 import { FC, useEffect } from "react";
 import axios from "axios";
-import { Spinner } from "components";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+
+import { Spinner } from "components";
+
 import {
   createCloudWalletAuthenticationHeaders,
   getDid,
 } from "hooks/useAuthentication";
 import { VerifiableCredential } from "types/vc";
-import { useRouter } from "next/router";
 import { ROUTES } from "utils";
 import { hostUrl } from "pages/env";
 

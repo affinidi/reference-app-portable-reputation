@@ -7,12 +7,13 @@ import { useRouter } from "next/router";
 import { Button, Container, Header, Spinner } from "components";
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
 import { ConnectorModal } from "./components/connectors/connectorModal";
-import { hostUrl } from "pages/env";
 
+import { hostUrl } from "pages/env";
 import { ROUTES } from "utils";
 import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
 
 import * as S from "./ProfileSetup.styled";
+import useVcFetch from "hooks/useFetchVc";
 
 type ProfileSetupProps = {
   providers: ReturnType<typeof getProviders>;
@@ -25,7 +26,16 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
   const [isConnectorModalOpen, setIsConnectorModalOpen] = useState(false);
   const { push } = useRouter();
   const { status } = useSession();
+  // const vcs = useVcFetch();
 
+  // console.log("vcs in profile setup", vcs);
+
+  // if (vcs) {
+  //   if (vcs.github) {
+  //     await push(ROUTES.github);
+  //     return;
+  //   }
+  // }
   useEffect(() => {
     if (status === "loading") return;
 

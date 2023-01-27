@@ -20,6 +20,16 @@ const Github: FC = () => {
   const { push } = useRouter();
   const { status } = useSession();
   const [vc, setVc] = useState<VerifiableCredential>();
+  // const vcs = useVcFetch();
+
+  // console.log("vcs in profile setup", vcs);
+
+  // if (vcs) {
+  //   if (vcs.github) {
+  //     await push(ROUTES.github);
+  //     return;
+  //   }
+  // }
 
   useEffect(() => {
     if (status === "loading") return;
