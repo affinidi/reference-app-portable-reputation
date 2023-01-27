@@ -114,21 +114,13 @@ export const useAuthentication = () => {
 
   const authenticate = async () => {
     try {
-      const response = await getDid();
+      await getDid();
 
-      if (typeof response === "object" && response?.error) {
-        setAuthState((prevState) => ({
-          ...prevState,
-          loading: false,
-          authorized: false,
-        }));
-      } else {
-        setAuthState((prevState) => ({
-          ...prevState,
-          loading: false,
-          authorized: true,
-        }));
-      }
+      setAuthState((prevState) => ({
+        ...prevState,
+        loading: false,
+        authorized: true,
+      }));
     } catch (error) {
       setAuthState((prevState) => ({
         ...prevState,
