@@ -6,7 +6,7 @@ import { useSignInMutation } from "hooks/useAuthentication";
 import { useAuthContext } from "hooks/useAuthContext";
 
 export const useSignIn = () => {
-  const [username, setUsername] = useState<string>('');
+  const [username, setUsername] = useState<string>("");
   const [inputError, setInputError] = useState<string | null>(null);
   const navigate = useRouter();
   const storage = useSessionStorage();
@@ -30,6 +30,7 @@ export const useSignIn = () => {
 
   useEffect(() => {
     if (data) {
+      storage.setItem("signInUsername", username);
       storage.setItem("signInToken", data);
       setAuthState((prevState) => ({
         ...prevState,

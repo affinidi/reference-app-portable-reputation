@@ -24,10 +24,7 @@ const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
     (async () => {
       if (!authState.loading) {
         if (!authState.authorized && route !== ROUTES.singIn) {
-          if (
-            route !== ROUTES.confirmSingIn ||
-            (authState.username === "" && route === ROUTES.confirmSingIn)
-          ) {
+          if (route !== ROUTES.confirmSingIn) {
             await push(ROUTES.singIn);
           }
         }
