@@ -3,7 +3,7 @@ import { use } from "next-api-middleware";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { allowedHttpMethods } from '../middlewares/allowed-http-methods';
 import { errorHandler } from '../middlewares/error-handler';
-import { cloudWalletClient } from '../_clients/cloud-wallet-client';
+import { cloudWalletClient } from '../clients/cloud-wallet-client';
 
 type HandlerResponse = {
   token: string

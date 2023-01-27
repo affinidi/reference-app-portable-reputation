@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { useState } from "react";
 import { hostUrl } from "../pages/env";
 import { getItemFromSessionStorage } from "./useSessionStorage";
@@ -19,17 +20,14 @@ export type SignInInput = {
 };
 
 export const signIn = async (input: SignInInput): Promise<string> => {
-  const response = await fetch(`${hostUrl}/api/cloud-wallet/sign-in`, {
+  const {
+    data: { token },
+  } = await axios<{ token: string }>(`${hostUrl}/api/cloud-wallet/sign-in`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(input),
+    data: input,
   });
-  if (![200, 201].includes(response.status)) {
-    throw Error();
-  }
-  return response.json();
+
+  return token;
 };
 
 export type ConfirmSignInInput = {
@@ -44,34 +42,35 @@ export type ConfirmSignInOutput = {
 export const confirmSignIn = async (
   input: ConfirmSignInInput
 ): Promise<ConfirmSignInOutput> => {
-  const response = await fetch(`${hostUrl}/api/cloud-wallet/confirm-sign-in`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(input),
-  });
+  const {
+    data: { accessToken },
+  } = await axios<{ accessToken: string }>(
+    `${hostUrl}/api/cloud-wallet/confirm-sign-in`,
+    {
+      method: "POST",
+      data: input,
+    }
+  );
 
-  return response.json();
+  return { accessToken };
 };
 
-export const getDid = async (): Promise<{ error: string } | string> => {
-  const response = await fetch(`${hostUrl}/api/cloud-wallet/get-did`, {
+export const getDid = async (): Promise<string> => {
+  const {
+    data: { did },
+  } = await axios<{ did: string }>(`${hostUrl}/api/cloud-wallet/get-did`, {
     method: "GET",
     headers: createCloudWalletAuthenticationHeaders(),
   });
 
-  return response.json();
+  return did;
 };
 
 export const logout = async () => {
   try {
-    await fetch(`${hostUrl}/api/cloud-wallet/logout`, {
+    await axios<void>(`${hostUrl}/api/cloud-wallet/logout`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...createCloudWalletAuthenticationHeaders(),
-      },
+      headers: createCloudWalletAuthenticationHeaders(),
     });
   } catch (e) {}
 };

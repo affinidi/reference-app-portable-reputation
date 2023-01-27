@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { allowedHttpMethods } from '../middlewares/allowed-http-methods';
 import { errorHandler } from '../middlewares/error-handler';
 import { authenticateCloudWallet } from '../helpers/authenticate-cloud-wallet';
-import { cloudWalletClient } from '../_clients/cloud-wallet-client';
+import { cloudWalletClient } from '../clients/cloud-wallet-client';
 
 async function handler(
   req: NextApiRequest,

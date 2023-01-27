@@ -7,8 +7,8 @@ import { gatherGithubProfile } from "./helpers/gather-github-profile";
 import { generateGithubProfileVc } from "./helpers/generate-github-profile-vc";
 import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
 import { errorHandler } from "../middlewares/error-handler";
-import { cloudWalletClient } from "../_clients/cloud-wallet-client";
-import { iamClient } from "../_clients/iam-client";
+import { cloudWalletClient } from "../clients/cloud-wallet-client";
+import { iamClient } from "../clients/iam-client";
 import { projectDid } from '../env';
 
 type HandlerResponse = {

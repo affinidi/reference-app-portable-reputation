@@ -5,7 +5,7 @@ import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
 import { errorHandler } from "../middlewares/error-handler";
 import { authenticateCloudWallet } from "../helpers/authenticate-cloud-wallet";
 import { Profile } from "types/profile";
-import { cloudWalletClient } from '../_clients/cloud-wallet-client';
+import { cloudWalletClient } from '../clients/cloud-wallet-client';
 
 type HandlerResponse = {
   vcs: {

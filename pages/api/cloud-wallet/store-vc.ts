@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { authenticateCloudWallet } from "../helpers/authenticate-cloud-wallet";
 import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
 import { errorHandler } from "../middlewares/error-handler";
-import { cloudWalletClient } from "../_clients/cloud-wallet-client";
+import { cloudWalletClient } from "../clients/cloud-wallet-client";
 import { VerifiableCredential } from '../../../types/vc';
 
 const requestSchema = z
