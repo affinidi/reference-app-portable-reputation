@@ -1,12 +1,11 @@
-import axios from "axios";
 import { use } from "next-api-middleware";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { VerifiableCredential } from "types/vc";
-import { cloudWalletApiUrl, apiKeyHash } from "../env";
 import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
 import { errorHandler } from "../middlewares/error-handler";
 import { authenticateCloudWallet } from "../helpers/authenticate-cloud-wallet";
 import { Profile } from "types/profile";
+import { cloudWalletClient } from '../_clients/cloud-wallet-client';
 
 type HandlerResponse = {
   vcs: {
@@ -18,22 +17,13 @@ const PROFILE_VC_TYPES: { profile: Profile; type: string }[] = [
   { profile: "github", type: "GithubProfile" },
 ];
 
-async function handler(
+export async function handler(
   req: NextApiRequest,
   res: NextApiResponse<HandlerResponse>
 ) {
-  const cloudWalletAccessToken = authenticateCloudWallet(req);
+  const accessToken = authenticateCloudWallet(req);
 
-  const { data: vcs } = await axios<VerifiableCredential[]>(
-    `${cloudWalletApiUrl}/v1/wallet/credentials`,
-    {
-      method: "GET",
-      headers: {
-        "Api-Key": apiKeyHash,
-        Authorization: cloudWalletAccessToken,
-      },
-    }
-  );
+  const { vcs } = await cloudWalletClient.getCredentials({}, { accessToken })
 
   // sort by issuance date (descending)
   vcs.sort(

@@ -44,6 +44,7 @@
   "devDependencies": {
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.13",
+    "node-mocks-http": "^1.12.1",
     "postcss": "^8.4.20",
     "react-icons": "^4.7.1",
     "sass": "^1.57.1",
