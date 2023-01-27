@@ -1,6 +1,6 @@
 import { NextApiRequest } from 'next';
 import { getSession } from 'next-auth/react';
-import { ApiError } from './api-error';
+import { ApiError } from '../api-error';
 
 export async function authenticateGithub(req: NextApiRequest): Promise<string> {
   const session = await getSession({ req })
