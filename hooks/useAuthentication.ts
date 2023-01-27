@@ -60,9 +60,7 @@ export const logout = async () => {
   try {
     await axios<void>(`${hostUrl}/api/cloud-wallet/logout`, {
       method: "POST",
-      headers: {
-        ...createCloudWalletAuthenticationHeaders(),
-      },
+      headers: createCloudWalletAuthenticationHeaders(),
     });
   } catch (e) {}
 };

@@ -1,39 +1,31 @@
-import axios from "axios";
 import { z } from "zod";
 import { use } from "next-api-middleware";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { cloudWalletApiUrl, apiKeyHash } from '../env';
-import { authenticateCloudWallet } from '../helpers/authenticate-cloud-wallet';
-import { allowedHttpMethods } from '../middlewares/allowed-http-methods';
-import { errorHandler } from '../middlewares/error-handler';
+import { authenticateCloudWallet } from "../helpers/authenticate-cloud-wallet";
+import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
+import { errorHandler } from "../middlewares/error-handler";
+import { cloudWalletClient } from "../clients/cloud-wallet-client";
+import { VerifiableCredential } from '../../../types/vc';
 
-const requestSchema = z.object({
-  vc: z.unknown(),
-}).strict();
+const requestSchema = z
+  .object({
+    vc: z.unknown(),
+  })
+  .strict();
 
-async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<void>
-) {
-  const cloudWalletAccessToken = authenticateCloudWallet(req)
+async function handler(req: NextApiRequest, res: NextApiResponse<void>) {
+  const accessToken = authenticateCloudWallet(req);
 
   const { vc } = requestSchema.parse(req.body);
 
-  await axios<void>(
-    `${cloudWalletApiUrl}/v1/wallet/credentials`,
+  await cloudWalletClient.storeCredentials(
     {
-      method: "POST",
-      headers: {
-        "Api-Key": apiKeyHash,
-        Authorization: cloudWalletAccessToken,
-      },
-      data: {
-        data: [vc]
-      },
-    }
+      vcs: [vc as VerifiableCredential],
+    },
+    { accessToken }
   );
 
   res.status(200).end();
-};
+}
 
 export default use(allowedHttpMethods("POST"), errorHandler)(handler);
