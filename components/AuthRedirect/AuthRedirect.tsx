@@ -5,7 +5,7 @@ import React, { FC, useEffect, useState } from "react";
 import { Spinner } from "components";
 
 import { ROUTES } from "utils";
-import { useAuthentication } from "hooks/useAuthentication";
+import { useAuthContext } from "hooks/useAuthContext";
 
 type AuthRedirectProps = {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ type AuthRedirectProps = {
 const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
   const { status } = useSession();
   const { route, push } = useRouter();
-  const { authState, authenticate } = useAuthentication();
+  const { authState, authenticate } = useAuthContext();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

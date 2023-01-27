@@ -1,13 +1,13 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { useSessionStorage } from "../../hooks/useSessionStorage";
+import { useSessionStorage } from "hooks/useSessionStorage";
 import { useConfirmSignInForm } from "./ConfirmSignInForm/useConfirmSignInForm";
 import {
   useConfirmSignInMutation,
   useSignInMutation,
-} from "../../hooks/useAuthentication";
-import { useAuthContext } from "../../hooks/useAuthContext";
+} from "hooks/useAuthentication";
+import { useAuthContext } from "hooks/useAuthContext";
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
