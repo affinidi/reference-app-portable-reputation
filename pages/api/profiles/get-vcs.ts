@@ -5,7 +5,7 @@ import { VerifiableCredential } from "types/vc";
 import { cloudWalletApiUrl, apiKeyHash } from "../env";
 import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
 import { errorHandler } from "../middlewares/error-handler";
-import { authenticateCloudWallet } from "../cloud-wallet/helpers/authenticate-cloud-wallet";
+import { authenticateCloudWallet } from "../middlewares/authenticate-cloud-wallet";
 import { Profile } from "types/profile";
 
 type HandlerResponse = {

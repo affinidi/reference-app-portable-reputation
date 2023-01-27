@@ -9,7 +9,7 @@ import {
   apiKeyHash,
   cloudWalletApiUrl,
 } from "../env";
-import { authenticateGithub } from "./helpers/authenticate-github";
+import { authenticateGithub } from "../middlewares/authenticate-github";
 import { gatherGithubProfile } from "./helpers/gather-github-profile";
 import { generateGithubProfileVc } from "./helpers/generate-github-profile-vc";
 import { allowedHttpMethods } from '../middlewares/allowed-http-methods';
