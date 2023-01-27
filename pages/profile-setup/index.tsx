@@ -7,40 +7,41 @@ import { Button, Container, Header, Spinner } from "components";
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
 import { ConnectorModal } from "./components/connectors/connectorModal";
 import * as S from "./ProfileSetup.styled";
-import { hostUrl } from '../env';
-import axios from 'axios';
-import { createCloudWalletAuthenticationHeaders } from '../../hooks/useAuthentication';
+import { hostUrl } from "../env";
+import axios from "axios";
+import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
+import { useRouter } from "next/router";
+import { ROUTES } from "utils";
 
 type ProfileSetupProps = {
   providers: ReturnType<typeof getProviders>;
 };
 
 const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
+  const { push } = useRouter();
   const { status } = useSession();
-  const [isLoading, setIsLoading] = useState(true)
-  const [isGithubConnectorChecked, setIsGithubConnectorChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGithubConnectorChecked, setIsGithubConnectorChecked] =
+    useState(false);
   const [isConnectorModalOpen, setIsConnectorModalOpen] = useState(false);
 
   useEffect(() => {
     if (status === "loading") return;
 
     async function fetchVc() {
-      const { data: { vcs } } = await (
-        await axios(`${hostUrl}/api/profiles/get-vcs`, {
-          method: "GET",
-          headers: createCloudWalletAuthenticationHeaders(),
-        })
-      );
+      const {
+        data: { vcs },
+      } = await axios(`${hostUrl}/api/profiles/get-vcs`, {
+        method: "GET",
+        headers: createCloudWalletAuthenticationHeaders(),
+      });
 
       if (vcs.github) {
-        console.log(
-          "You already have a Github profile VC yet, redirecting to profile page"
-        );
-        // TODO: redirect
+        await push(ROUTES.github);
         return;
       }
 
-      setIsLoading(false)
+      setIsLoading(false);
     }
 
     fetchVc();
@@ -76,7 +77,9 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
                   key={provider.id}
                   disabled={!isGithubConnectorChecked}
                   onClick={() =>
-                    !isGithubConnectorChecked ? undefined : setIsConnectorModalOpen(true)
+                    !isGithubConnectorChecked
+                      ? undefined
+                      : setIsConnectorModalOpen(true)
                   }
                 >
                   Connect my Github profile
@@ -86,7 +89,10 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
           </div>
         </div>
 
-        <ConnectorModal isOpen={isConnectorModalOpen} setIsOpen={setIsConnectorModalOpen} />
+        <ConnectorModal
+          isOpen={isConnectorModalOpen}
+          setIsOpen={setIsConnectorModalOpen}
+        />
       </Container>
     </>
   );

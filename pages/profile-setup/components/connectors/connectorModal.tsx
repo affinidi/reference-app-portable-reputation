@@ -10,7 +10,6 @@ import {
   Typography,
 } from "components";
 import { ROUTES } from "utils";
-import { useAuthContext } from "hooks/useAuthContext";
 
 import * as S from "../connectors/connectorModal.styled";
 
@@ -18,10 +17,8 @@ export const ConnectorModal: React.FC<{
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }> = ({ isOpen, setIsOpen }) => {
-  const { authState } = useAuthContext();
-
   const connectToGithub = async () => {
-    await signIn("github", { callbackUrl: ROUTES.github });
+    await signIn("github", { callbackUrl: ROUTES.githubCallback });
   };
 
   return (

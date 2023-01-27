@@ -1,16 +1,16 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
+import React from "react";
+import styled, { css } from "styled-components";
 
-import { pxToRem } from '../../utils'
+import { pxToRem } from "utils";
 
 type StyledProps = {
-  $wrap: React.CSSProperties['flexWrap']
-  $direction: React.CSSProperties['flexDirection']
-  $justifyContent: React.CSSProperties['justifyContent']
-  $alignItems: React.CSSProperties['alignItems']
-  $flex: number
-  $gap: number
-}
+  $wrap: React.CSSProperties["flexWrap"];
+  $direction: React.CSSProperties["flexDirection"];
+  $justifyContent: React.CSSProperties["justifyContent"];
+  $alignItems: React.CSSProperties["alignItems"];
+  $flex: number;
+  $gap: number;
+};
 
 // eslint-disable-next-line import/prefer-default-export
 export const Box = styled.div<StyledProps>`
@@ -31,4 +31,4 @@ export const Box = styled.div<StyledProps>`
     css`
       gap: ${pxToRem(props.$gap)};
     `}
-`
+`;

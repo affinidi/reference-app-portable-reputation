@@ -1,5 +1,5 @@
-import styled, { keyframes } from 'styled-components'
-import { pxToRem } from '../../utils'
+import styled, { keyframes } from "styled-components";
+import { pxToRem } from "utils";
 
 export const rotate = keyframes`
   from {
@@ -9,7 +9,7 @@ export const rotate = keyframes`
   to {
     transform: rotate(360deg);
   }
-`
+`;
 
 export const Spinner = styled.div<{ $width: number; $height: number }>`
   width: ${({ $width }) => pxToRem($width)};
@@ -19,4 +19,4 @@ export const Spinner = styled.div<{ $width: number; $height: number }>`
   border-radius: 50%;
   border-top: 10px solid #6af6ff;
   margin: ${pxToRem(40)} auto;
-`
+`;

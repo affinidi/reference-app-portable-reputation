@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 import {
   getItemFromSessionStorage,
   useSessionStorage,
-} from "../../hooks/useSessionStorage";
+} from "hooks/useSessionStorage";
 import { useConfirmSignInForm } from "./ConfirmSignInForm/useConfirmSignInForm";
 import {
   useConfirmSignInMutation,
   useSignInMutation,
-} from "../../hooks/useAuthentication";
-import { useAuthContext } from "../../hooks/useAuthContext";
+} from "hooks/useAuthentication";
+import { useAuthContext } from "hooks/useAuthContext";
+import { ROUTES } from "utils";
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
@@ -27,8 +28,8 @@ export const useConfirmSignIn = () => {
   const handleResendCode = async () => {
     const username = getItemFromSessionStorage("signInUsername");
     if (!username) {
-      // TODO: redirect
-      return
+      await router.push(ROUTES.singIn);
+      return;
     }
 
     await signInMutateAsync({ username });

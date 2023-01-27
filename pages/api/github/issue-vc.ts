@@ -14,6 +14,7 @@ import { gatherGithubProfile } from "./helpers/gather-github-profile";
 import { generateGithubProfileVc } from "./helpers/generate-github-profile-vc";
 import { allowedHttpMethods } from '../middlewares/allowed-http-methods';
 import { errorHandler } from '../middlewares/error-handler';
+import { logger } from '../logger';
 
 type HandlerResponse = {
   vc: VerifiableCredential;
@@ -30,10 +31,13 @@ async function handler(
   res: NextApiResponse<HandlerResponse>
 ) {
   const githubAccessToken = await authenticateGithub(req);
+  logger.info({ githubAccessToken })
 
   const { holderDid } = requestSchema.parse(req.body);
+  logger.info({ holderDid })
 
   const credentialSubject = await gatherGithubProfile(githubAccessToken);
+  logger.info({ credentialSubject: Boolean(credentialSubject) })
 
   const unsignedGithubProfileVc = generateGithubProfileVc(
     holderDid,
@@ -53,6 +57,7 @@ async function handler(
       },
     }
   );
+  logger.info({ cloudWalletAccessToken })
 
   const {
     data: { signedCredential: vc },
@@ -69,6 +74,7 @@ async function handler(
       },
     }
   );
+  logger.info({ signedCredential: Boolean(vc) })
 
   res.status(200).json({ vc });
 }

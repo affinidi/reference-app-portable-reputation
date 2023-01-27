@@ -7,13 +7,15 @@ import { GeneralInfo } from "./components/GeneralInfo/GeneralInfo";
 import { SubInfo } from "./components/SublInfo/SubInfo";
 import { ListInfo } from "./components/ListlInfo/ListInfo";
 import * as S from "./Github.styled";
-import { VerifiableCredential } from "../../types/vc";
+import { VerifiableCredential } from "types/vc";
 import { hostUrl } from "../env";
-import { getItemFromSessionStorage } from "../../hooks/useSessionStorage";
-import axios from 'axios';
-import { createCloudWalletAuthenticationHeaders } from '../../hooks/useAuthentication';
+import axios from "axios";
+import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
+import { ROUTES } from "utils";
+import { useRouter } from "next/router";
 
 const Github: FC = () => {
+  const { push } = useRouter();
   const { status } = useSession();
   const [vc, setVc] = useState<VerifiableCredential>();
 
@@ -21,18 +23,15 @@ const Github: FC = () => {
     if (status === "loading") return;
 
     async function fetchVc() {
-      const { data: { vcs } } = await (
-        await axios(`${hostUrl}/api/profiles/get-vcs`, {
-          method: "GET",
-          headers: createCloudWalletAuthenticationHeaders(),
-        })
-      );
+      const {
+        data: { vcs },
+      } = await axios(`${hostUrl}/api/profiles/get-vcs`, {
+        method: "GET",
+        headers: createCloudWalletAuthenticationHeaders(),
+      });
 
       if (!vcs.github) {
-        console.log(
-          "You don't have a Github profile VC yet, redirecting to profile setup page"
-        );
-        // TODO: redirect
+        await push(ROUTES.profileSetup);
         return;
       }
 
