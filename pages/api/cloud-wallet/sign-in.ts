@@ -1,30 +1,27 @@
-import axios from "axios";
+import { z } from "zod";
+import { use } from "next-api-middleware";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { cloudWalletApiUrl, apiKeyHash } from '../env';
+import { allowedHttpMethods } from '../middlewares/allowed-http-methods';
+import { errorHandler } from '../middlewares/error-handler';
+import { cloudWalletClient } from '../clients/cloud-wallet-client';
 
-export default async function handler(
+type HandlerResponse = {
+  token: string
+}
+
+const requestSchema = z.object({
+  username: z.string(),
+}).strict();
+
+async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<HandlerResponse>
 ) {
-  if (req.method !== "POST") {
-    res.status(405).send({ error: "Only POST requests allowed" });
-    return;
-  }
+  const { username } = requestSchema.parse(req.body);
 
-  const { username } = req.body;
+  const { token } = await cloudWalletClient.signInPasswordless({ username })
 
-  const { data: token } = await axios(
-    `${cloudWalletApiUrl}/v1/users/sign-in-passwordless`,
-    {
-      method: "POST",
-      headers: {
-        "Api-Key": apiKeyHash,
-      },
-      data: {
-        username,
-      },
-    }
-  );
-
-  res.status(200).json(token);
+  res.status(200).json({ token });
 };
+
+export default use(allowedHttpMethods("POST"), errorHandler)(handler);

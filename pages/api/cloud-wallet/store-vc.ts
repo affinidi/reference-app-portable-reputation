@@ -1,37 +1,31 @@
-import axios from "axios";
+import { z } from "zod";
+import { use } from "next-api-middleware";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { cloudWalletApiUrl, apiKeyHash } from '../env';
+import { authenticateCloudWallet } from "../helpers/authenticate-cloud-wallet";
+import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
+import { errorHandler } from "../middlewares/error-handler";
+import { cloudWalletClient } from "../clients/cloud-wallet-client";
+import { VerifiableCredential } from '../../../types/vc';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "POST") {
-    res.status(405).send({ error: "Only POST requests allowed" });
-    return;
-  }
+const requestSchema = z
+  .object({
+    vc: z.unknown(),
+  })
+  .strict();
 
-  const cloudWalletAccessToken = req.headers['authorization']
-  if (!cloudWalletAccessToken) {
-    res.status(401).json({ error: "Cloud Wallet access token is not provided" });
-    return;
-  }
+async function handler(req: NextApiRequest, res: NextApiResponse<void>) {
+  const accessToken = authenticateCloudWallet(req);
 
-  const { vc } = req.body;
+  const { vc } = requestSchema.parse(req.body);
 
-  await axios(
-    `${cloudWalletApiUrl}/v1/wallet/credentials`,
+  await cloudWalletClient.storeCredentials(
     {
-      method: "POST",
-      headers: {
-        "Api-Key": apiKeyHash,
-        Authorization: cloudWalletAccessToken,
-      },
-      data: {
-        data: [vc]
-      },
-    }
+      vcs: [vc as VerifiableCredential],
+    },
+    { accessToken }
   );
 
   res.status(200).end();
-};
+}
+
+export default use(allowedHttpMethods("POST"), errorHandler)(handler);
