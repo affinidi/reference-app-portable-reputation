@@ -55,7 +55,7 @@ const ProfileSetup: FC = () => {
                 disabled={!isGithubConnectorChecked}
                 onClick={connectToGithub}
               >
-                Connect to my profile
+                Connect to Github profile
               </Button>
           </div>
         </div>
