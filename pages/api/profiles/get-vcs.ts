@@ -1,16 +1,13 @@
 import { use } from "next-api-middleware";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { VerifiableCredential } from "types/vc";
 import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
 import { errorHandler } from "../middlewares/error-handler";
 import { authenticateCloudWallet } from "../helpers/authenticate-cloud-wallet";
-import { Profile } from "types/profile";
+import { Profile, ProfileVcMap } from "types/profile";
 import { cloudWalletClient } from '../clients/cloud-wallet-client';
 
 type HandlerResponse = {
-  vcs: {
-    [profile in Profile]?: VerifiableCredential
-  }
+  vcs: ProfileVcMap
 };
 
 const PROFILE_VC_TYPES: { profile: Profile; type: string }[] = [

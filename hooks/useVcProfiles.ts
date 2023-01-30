@@ -3,15 +3,11 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 import { hostUrl } from "pages/env";
-import { VerifiableCredential } from "types/vc";
 import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
+import { ProfileVcMap } from '../types/profile';
 
-type VcProfiles = {
-  [profile: string]: VerifiableCredential | undefined;
-};
-
-const useVcProfiles = (): VcProfiles | undefined => {
-  const [vcs, setVcs] = useState<VcProfiles>();
+const useVcProfiles = (): ProfileVcMap | undefined => {
+  const [vcs, setVcs] = useState<ProfileVcMap>();
   const { status } = useSession();
 
   useEffect(() => {
@@ -20,7 +16,7 @@ const useVcProfiles = (): VcProfiles | undefined => {
     async function fetchVcProfiles() {
       const {
         data: { vcs },
-      } = await axios(`${hostUrl}/api/profiles/get-vcs`, {
+      } = await axios<{ vcs: ProfileVcMap }>(`${hostUrl}/api/profiles/get-vcs`, {
         method: "GET",
         headers: createCloudWalletAuthenticationHeaders(),
       });
