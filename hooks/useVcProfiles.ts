@@ -10,29 +10,28 @@ type VcProfiles = {
   [profile: string]: VerifiableCredential | undefined;
 };
 
-const useVcFetch = (): VcProfiles | undefined => {
+const useVcProfiles = (): VcProfiles | undefined => {
   const [vcs, setVcs] = useState<VcProfiles>();
   const { status } = useSession();
 
   useEffect(() => {
     if (status === "loading") return;
 
-    async function fetchVc() {
-      const { data } = await axios(
-        `${hostUrl}/api/cloud-wallet/get-profile-vcs`,
-        {
-          method: "GET",
-          headers: createCloudWalletAuthenticationHeaders(),
-        }
-      );
+    async function fetchVcProfiles() {
+      const {
+        data: { vcs },
+      } = await axios(`${hostUrl}/api/profiles/get-vcs`, {
+        method: "GET",
+        headers: createCloudWalletAuthenticationHeaders(),
+      });
 
-      setVcs(data);
+      setVcs(vcs);
     }
 
-    fetchVc();
+    fetchVcProfiles();
   }, [status]);
 
   return vcs;
 };
 
-export default useVcFetch;
+export default useVcProfiles;

@@ -10,20 +10,16 @@ import { SubInfo } from "./components/SublInfo/SubInfo";
 import { ListInfo } from "./components/ListlInfo/ListInfo";
 
 import { VerifiableCredential } from "types/vc";
-import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
 import { ROUTES } from "utils";
-import { hostUrl } from "pages/env";
 
 import * as S from "./Github.styled";
-import useVcFetch from "hooks/useFetchVc";
+import useVcProfiles from "hooks/useVcProfiles";
 
 const Github: FC = () => {
   const { push } = useRouter();
   const { status } = useSession();
   const [vc, setVc] = useState<VerifiableCredential>();
-  const vcs = useVcFetch();
-
-  console.log("vcs in github setup", vcs);
+  const vcs = useVcProfiles();
 
   useEffect(() => {
     if (!vcs) return;

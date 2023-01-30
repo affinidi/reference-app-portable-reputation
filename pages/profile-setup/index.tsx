@@ -11,7 +11,7 @@ import { ConnectorModal } from "./components/connectors/connectorModal";
 import { ROUTES } from "utils";
 
 import * as S from "./ProfileSetup.styled";
-import useVcFetch from "hooks/useFetchVc";
+import useVcProfiles from "hooks/useVcProfiles";
 
 type ProfileSetupProps = {
   providers: ReturnType<typeof getProviders>;
@@ -22,9 +22,7 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
     useState(false);
   const [isConnectorModalOpen, setIsConnectorModalOpen] = useState(false);
   const { push } = useRouter();
-  const vcs = useVcFetch();
-
-  console.log("vcs in profile setup", vcs);
+  const vcs = useVcProfiles();
 
   useEffect(() => {
     if (vcs?.github) {
