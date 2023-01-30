@@ -15,7 +15,7 @@ const ProfileSetup: FC = () => {
     useState(false);
 
   const connectToGithub = async () => {
-    await signIn('github', { callbackUrl: ROUTES.github });
+    await signIn('github', { callbackUrl: ROUTES.githubCallback });
   };
 
   const { push } = useRouter();
@@ -27,7 +27,7 @@ const ProfileSetup: FC = () => {
     }
   }, [push, vcs]);
 
-  if (!vcs) {
+  if (!vcs || vcs.github) {
     return <Spinner />;
   }
 
