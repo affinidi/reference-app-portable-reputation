@@ -19,7 +19,7 @@ const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
 
   useEffect(() => {
     authenticate();
-  }, [authenticate]);
+  }, []);
 
   useEffect(() => {
     (async () => {

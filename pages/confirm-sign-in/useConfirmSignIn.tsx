@@ -49,7 +49,7 @@ export const useConfirmSignIn = () => {
         loading: false,
       }));
     }
-  }, [storage, data, error, router, setAuthState]);
+  }, [data, error, router, setAuthState]);
 
   useEffect(() => {
     if (signInData) {
