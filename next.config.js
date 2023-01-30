@@ -2,6 +2,14 @@
 const path = require("path");
 
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/",
+        destination: "/profile-setup",
+      },
+    ];
+  },
   reactStrictMode: false,
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
