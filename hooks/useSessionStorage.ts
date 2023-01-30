@@ -1,4 +1,8 @@
-type KeyValues = 'signInToken' | 'did' | 'cloudWalletAccessToken'
+type KeyValues =
+  | "signInToken"
+  | "did"
+  | "cloudWalletAccessToken"
+  | "signInUsername";
 
 export const getItemFromSessionStorage = (
   key: KeyValues

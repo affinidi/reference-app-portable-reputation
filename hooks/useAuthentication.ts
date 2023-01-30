@@ -98,13 +98,11 @@ export const useConfirmSignInMutation = () => {
 };
 
 export type UserState = {
-  username: string;
   authorized: boolean;
   loading: boolean;
 };
 
 const BASIC_STATE: UserState = {
-  username: "",
   authorized: false,
   loading: true,
 };
