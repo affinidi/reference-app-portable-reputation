@@ -44,7 +44,7 @@ export const useConfirmSignIn = () => {
         loading: false,
       }));
     }
-  }, [data, error, router, setAuthState, storage]);
+  }, [data, error, router, setAuthState]);
 
   useEffect(() => {
     if (signInData) {

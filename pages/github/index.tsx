@@ -15,44 +15,25 @@ import { ROUTES } from "utils";
 import { hostUrl } from "pages/env";
 
 import * as S from "./Github.styled";
+import useVcFetch from "hooks/useFetchVc";
 
 const Github: FC = () => {
   const { push } = useRouter();
   const { status } = useSession();
   const [vc, setVc] = useState<VerifiableCredential>();
-  // const vcs = useVcFetch();
+  const vcs = useVcFetch();
 
-  // console.log("vcs in profile setup", vcs);
-
-  // if (vcs) {
-  //   if (vcs.github) {
-  //     await push(ROUTES.github);
-  //     return;
-  //   }
-  // }
+  console.log("vcs in github setup", vcs);
 
   useEffect(() => {
-    if (status === "loading") return;
+    if (!vcs) return;
 
-    async function fetchVc() {
-      const { data: vcs } = await axios(
-        `${hostUrl}/api/cloud-wallet/get-profile-vcs`,
-        {
-          method: "GET",
-          headers: createCloudWalletAuthenticationHeaders(),
-        }
-      );
-
-      if (!vcs.github) {
-        await push(ROUTES.profileSetup);
-        return;
-      }
-
+    if (vcs.github) {
       setVc(vcs.github);
+    } else {
+      push(ROUTES.profileSetup);
     }
-
-    fetchVc();
-  }, [push, status]);
+  }, [push, vcs]);
 
   if (status === "loading" || !vc) {
     return <Spinner />;

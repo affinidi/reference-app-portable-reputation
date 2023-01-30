@@ -1,16 +1,14 @@
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import { FC, useEffect, useState } from "react";
-import { getProviders, useSession } from "next-auth/react";
+import { getProviders } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { Button, Container, Header, Spinner } from "components";
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
 import { ConnectorModal } from "./components/connectors/connectorModal";
 
-import { hostUrl } from "pages/env";
 import { ROUTES } from "utils";
-import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
 
 import * as S from "./ProfileSetup.styled";
 import useVcFetch from "hooks/useFetchVc";
@@ -20,46 +18,21 @@ type ProfileSetupProps = {
 };
 
 const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [isGithubConnectorChecked, setIsGithubConnectorChecked] =
     useState(false);
   const [isConnectorModalOpen, setIsConnectorModalOpen] = useState(false);
   const { push } = useRouter();
-  const { status } = useSession();
-  // const vcs = useVcFetch();
+  const vcs = useVcFetch();
 
-  // console.log("vcs in profile setup", vcs);
+  console.log("vcs in profile setup", vcs);
 
-  // if (vcs) {
-  //   if (vcs.github) {
-  //     await push(ROUTES.github);
-  //     return;
-  //   }
-  // }
   useEffect(() => {
-    if (status === "loading") return;
-
-    async function fetchVc() {
-      const { data: vcs } = await axios(
-        `${hostUrl}/api/cloud-wallet/get-profile-vcs`,
-        {
-          method: "GET",
-          headers: createCloudWalletAuthenticationHeaders(),
-        }
-      );
-
-      if (vcs.github) {
-        await push(ROUTES.github);
-        return;
-      }
-
-      setIsLoading(false);
+    if (vcs?.github) {
+      push(ROUTES.github);
     }
+  }, [push, vcs]);
 
-    fetchVc();
-  }, [push, status]);
-
-  if (isLoading) {
+  if (!vcs) {
     return <Spinner />;
   }
 

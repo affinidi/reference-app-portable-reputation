@@ -1,12 +1,17 @@
-import { useSession } from "next-auth/react";
-import { hostUrl } from "pages/env";
-import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
-const useVcFetch = () => {
-  const [vcs, setVcs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+import { hostUrl } from "pages/env";
+import { VerifiableCredential } from "types/vc";
+import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
+
+type VcProfiles = {
+  [profile: string]: VerifiableCredential | undefined;
+};
+
+const useVcFetch = (): VcProfiles | undefined => {
+  const [vcs, setVcs] = useState<VcProfiles>();
   const { status } = useSession();
 
   useEffect(() => {
@@ -22,13 +27,12 @@ const useVcFetch = () => {
       );
 
       setVcs(data);
-      setIsLoading(false);
     }
 
     fetchVc();
   }, [status]);
 
-  return [vcs, isLoading];
+  return vcs;
 };
 
 export default useVcFetch;
