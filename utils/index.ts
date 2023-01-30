@@ -5,4 +5,5 @@ export const ROUTES = {
   confirmSingIn: "/confirm-sign-in",
   profileSetup: "/profile-setup",
   github: "/github",
+  githubCallback: "/github/callback",
 };

@@ -1,13 +1,13 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { useSessionStorage } from "../../hooks/useSessionStorage";
+import { useSessionStorage } from "hooks/useSessionStorage";
 import { useConfirmSignInForm } from "./ConfirmSignInForm/useConfirmSignInForm";
 import {
   useConfirmSignInMutation,
   useSignInMutation,
-} from "../../hooks/useAuthentication";
-import { useAuthContext } from "../../hooks/useAuthContext";
+} from "hooks/useAuthentication";
+import { useAuthContext } from "hooks/useAuthContext";
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
@@ -34,23 +34,6 @@ export const useConfirmSignIn = () => {
       confirmationCode: computedCode,
     });
   };
-
-  // TODO: use /cloud-wallet/get-profile-vcs endpoint
-  // useEffect(() => {
-  //   const checkCredentials = async () => {
-  //     const vcs = await cloudWalletService.getAllCredentials();
-
-  //     const reputationVcs = vcs.filter((vc) =>
-  //       (vc as StoredW3CCredential).type?.includes("PortableReputation")
-  //     ) as StoredW3CCredential[];
-
-  //     if (reputationVcs) {
-  //       setIsConnected(true);
-  //     }
-  //   };
-
-  //   checkCredentials();
-  // }, []);
 
   useEffect(() => {
     if (data) {

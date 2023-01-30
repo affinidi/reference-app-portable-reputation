@@ -2,9 +2,10 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 
+import { Spinner } from "components";
+
 import { ROUTES } from "utils";
 import { useAuthContext } from "hooks/useAuthContext";
-import { Spinner } from "components";
 
 type AuthRedirectProps = {
   children: React.ReactNode;

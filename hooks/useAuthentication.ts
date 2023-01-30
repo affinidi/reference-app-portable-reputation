@@ -75,7 +75,7 @@ export const logout = async () => {
   } catch (e) {}
 };
 
-const createCloudWalletAuthenticationHeaders = () => {
+export const createCloudWalletAuthenticationHeaders = () => {
   const cloudWalletAccessToken = getItemFromSessionStorage(
     "cloudWalletAccessToken"
   );
