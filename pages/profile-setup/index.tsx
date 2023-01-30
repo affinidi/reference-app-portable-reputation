@@ -1,20 +1,18 @@
-import { GetServerSideProps } from "next";
 import { FC, useState } from "react";
-import { getProviders } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 import { Button, Container, Header } from "components";
 
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
-import { ConnectorModal } from "./components/connectors/connectorModal";
 import * as S from "./ProfileSetup.styled";
+import { ROUTES } from '../../utils';
 
-type ProfileSetupProps = {
-  providers: ReturnType<typeof getProviders>;
-};
-
-const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
+const ProfileSetup: FC = () => {
   const [isConnectorChecked, setIsConnectorChecked] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const connectToGithub = async () => {
+    await signIn('github', { callbackUrl: ROUTES.github });
+  };
 
   return (
     <>
@@ -36,39 +34,17 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
 
         <div className="row">
           <div className="col-12 col-sm-3">
-            {!!providers &&
-              Object.values(providers).map((provider) => {
-                return (
-                  <Button
-                    key={provider.id}
-                    disabled={!isConnectorChecked}
-                    onClick={() =>
-                      !isConnectorChecked ? undefined : setIsModalOpen(true)
-                    }
-                  >
-                    Connect to my profile
-                  </Button>
-                );
-              })}
+              <Button
+                disabled={!isConnectorChecked}
+                onClick={connectToGithub}
+              >
+                Connect to my profile
+              </Button>
           </div>
         </div>
-
-        <ConnectorModal
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          providers={providers}
-        />
       </Container>
     </>
   );
 };
 
 export default ProfileSetup;
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const providers = await getProviders();
-
-  return {
-    props: { providers },
-  };
-};
