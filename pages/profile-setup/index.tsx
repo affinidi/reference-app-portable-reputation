@@ -1,26 +1,23 @@
-import axios from "axios";
-import { GetServerSideProps } from "next";
 import { FC, useEffect, useState } from "react";
-import { getProviders } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { Button, Container, Header, Spinner } from "components";
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
-import { ConnectorModal } from "./components/connectors/connectorModal";
 
 import { ROUTES } from "utils";
 
 import * as S from "./ProfileSetup.styled";
 import useVcProfiles from "hooks/useVcProfiles";
 
-type ProfileSetupProps = {
-  providers: ReturnType<typeof getProviders>;
-};
-
-const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
+const ProfileSetup: FC = () => {
   const [isGithubConnectorChecked, setIsGithubConnectorChecked] =
     useState(false);
-  const [isConnectorModalOpen, setIsConnectorModalOpen] = useState(false);
+
+  const connectToGithub = async () => {
+    await signIn('github', { callbackUrl: ROUTES.githubCallback });
+  };
+
   const { push } = useRouter();
   const vcs = useVcProfiles();
 
@@ -30,7 +27,7 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
     }
   }, [push, vcs]);
 
-  if (!vcs) {
+  if (!vcs || vcs.github) {
     return <Spinner />;
   }
 
@@ -54,38 +51,17 @@ const ProfileSetup: FC<ProfileSetupProps> = ({ providers }) => {
 
         <div className="row">
           <div className="col-12 col-sm-3">
-            {Object.values(providers).map((provider) => {
-              return (
-                <Button
-                  key={provider.id}
-                  disabled={!isGithubConnectorChecked}
-                  onClick={() =>
-                    !isGithubConnectorChecked
-                      ? undefined
-                      : setIsConnectorModalOpen(true)
-                  }
-                >
-                  Connect my Github profile
-                </Button>
-              );
-            })}
+              <Button
+                disabled={!isGithubConnectorChecked}
+                onClick={connectToGithub}
+              >
+                Connect my Github profile
+              </Button>
           </div>
         </div>
-        <ConnectorModal
-          isOpen={isConnectorModalOpen}
-          setIsOpen={setIsConnectorModalOpen}
-        />
       </Container>
     </>
   );
 };
 
 export default ProfileSetup;
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const providers = await getProviders();
-
-  return {
-    props: { providers },
-  };
-};

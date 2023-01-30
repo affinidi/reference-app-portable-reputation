@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import { githubClientSecret, authJwtSecret, githubClientId } from '../env';
+import { githubClientSecret, authJwtSecret, githubClientId } from "../env";
 
 if (!githubClientId || !githubClientSecret) {
   throw Error("Github client ID or client secret are not provided");
@@ -11,7 +11,13 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: githubClientId,
       clientSecret: githubClientSecret,
-      authorization: { params: { scope: "repo read:org read:user" } },
+      authorization: {
+        params: {
+          scope: "repo read:org read:user",
+          // always show Github authentication modal to user
+          prompt: "consent"
+        },
+      },
     }),
   ],
   secret: authJwtSecret,

@@ -12,7 +12,7 @@ import { useAuthContext } from "hooks/useAuthContext";
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage();
   const router = useRouter();
-  const { authState, setAuthState } = useAuthContext();
+  const { setAuthState } = useAuthContext();
   const { data, error, mutateAsync } = useConfirmSignInMutation();
   const { data: signInData, mutateAsync: signInMutateAsync } =
     useSignInMutation();
@@ -22,7 +22,12 @@ export const useConfirmSignIn = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleResendCode = async () => {
-    await signInMutateAsync({ username: authState.username });
+    const username = storage.getItem("signInUsername");
+    if (username) {
+      await signInMutateAsync({ username });
+    } else {
+      await router.push("/sign-in");
+    }
   };
 
   const onSubmit = async (e?: SyntheticEvent) => {

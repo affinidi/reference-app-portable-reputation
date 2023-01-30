@@ -31,6 +31,8 @@ export const useSignIn = () => {
   useEffect(() => {
     if (data) {
       storage.setItem("signInToken", data);
+      storage.setItem("signInUsername", username)
+
       setAuthState((prevState) => ({
         ...prevState,
         username,

@@ -5,7 +5,7 @@ import { authenticateCloudWallet } from "../helpers/authenticate-cloud-wallet";
 import { allowedHttpMethods } from "../middlewares/allowed-http-methods";
 import { errorHandler } from "../middlewares/error-handler";
 import { cloudWalletClient } from "../clients/cloud-wallet-client";
-import { VerifiableCredential } from '../../../types/vc';
+import { VerifiableCredential } from 'types/vc';
 
 const requestSchema = z
   .object({

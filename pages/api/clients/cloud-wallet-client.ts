@@ -1,7 +1,7 @@
 // TODO: replace with client-sdk
 
 import axios from "axios";
-import { VerifiableCredential } from "../../../types/vc";
+import { VerifiableCredential } from "types/vc";
 import { apiKeyHash, cloudWalletApiUrl } from "../env";
 
 type Options = {

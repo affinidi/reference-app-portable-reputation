@@ -17,7 +17,7 @@ export const useNavBar = () => {
 
     setIsMenuOpen(false);
 
-    setAuthState({ username: "", loading: false, authorized: false });
+    setAuthState({ loading: false, authorized: false });
   }, [setIsMenuOpen, logout, clear, setAuthState]);
 
   return {
