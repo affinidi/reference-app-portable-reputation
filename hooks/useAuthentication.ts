@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-import { hostUrl } from "../pages/env";
+import { hostUrl } from "pages/env";
 import { getItemFromSessionStorage } from "./useSessionStorage";
 
 export type ErrorResponse = {

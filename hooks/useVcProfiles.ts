@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 
 import { hostUrl } from "pages/env";
 import { createCloudWalletAuthenticationHeaders } from "hooks/useAuthentication";
-import { ProfileVcMap } from '../types/profile';
+import { ProfileVcMap } from 'types/profile';
 
 const useVcProfiles = (): ProfileVcMap | undefined => {
   const [vcs, setVcs] = useState<ProfileVcMap>();
