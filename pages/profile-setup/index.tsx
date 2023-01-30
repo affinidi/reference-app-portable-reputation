@@ -1,18 +1,35 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
-import { Button, Container, Header } from "components";
-
+import { Button, Container, Header, Spinner } from "components";
 import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
+
+import { ROUTES } from "utils";
+
 import * as S from "./ProfileSetup.styled";
-import { ROUTES } from '../../utils';
+import useVcProfiles from "hooks/useVcProfiles";
 
 const ProfileSetup: FC = () => {
-  const [isConnectorChecked, setIsConnectorChecked] = useState(false);
+  const [isGithubConnectorChecked, setIsGithubConnectorChecked] =
+    useState(false);
 
   const connectToGithub = async () => {
     await signIn('github', { callbackUrl: ROUTES.github });
   };
+
+  const { push } = useRouter();
+  const vcs = useVcProfiles();
+
+  useEffect(() => {
+    if (vcs?.github) {
+      push(ROUTES.github);
+    }
+  }, [push, vcs]);
+
+  if (!vcs) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -26,8 +43,8 @@ const ProfileSetup: FC = () => {
         <S.CardRow className="row">
           <div className="col-12 col-sm-4">
             <GithubConnectorCard
-              isChecked={isConnectorChecked}
-              setIsChecked={setIsConnectorChecked}
+              isChecked={isGithubConnectorChecked}
+              setIsChecked={setIsGithubConnectorChecked}
             />
           </div>
         </S.CardRow>
@@ -35,7 +52,7 @@ const ProfileSetup: FC = () => {
         <div className="row">
           <div className="col-12 col-sm-3">
               <Button
-                disabled={!isConnectorChecked}
+                disabled={!isGithubConnectorChecked}
                 onClick={connectToGithub}
               >
                 Connect to my profile

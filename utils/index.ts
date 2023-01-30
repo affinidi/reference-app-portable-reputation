@@ -5,4 +5,5 @@ export const ROUTES = {
   singIn: "/sign-in",
   confirmSingIn: "/confirm-sign-in",
   github: "/github",
+  githubCallback: "/github/callback",
 };
