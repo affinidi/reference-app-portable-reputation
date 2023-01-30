@@ -1,7 +1,7 @@
 import { createMocks } from "node-mocks-http";
-import { cloudWalletClient } from "../../../../pages/api/clients/cloud-wallet-client";
-import { handler } from "../../../../pages/api/profiles/get-vcs";
-import { VerifiableCredential } from "../../../../types/vc";
+import { cloudWalletClient } from "pages/api/clients/cloud-wallet-client";
+import { handler } from "pages/api/profiles/get-vcs";
+import { VerifiableCredential } from "types/vc";
 
 function createFakeVc(input: {
   type: string;

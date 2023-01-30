@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { pxToRem } from '../../utils'
+import { pxToRem } from 'utils'
 
 type StyledProps = {
   $wrap: React.CSSProperties['flexWrap']

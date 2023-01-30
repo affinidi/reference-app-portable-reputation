@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import { pxToRem } from '../../utils'
+import { pxToRem } from 'utils'
 
 export const rotate = keyframes`
   from {
