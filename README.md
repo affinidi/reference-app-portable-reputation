@@ -43,14 +43,22 @@ These are called "flavours" and they're adapted for a specific industry.
 
 #### "Career profile" flavour
 
-Data providers:
-- Github
+Import your professional and career data.  
+For example: Github projects and languages, Medium articles and comments, LinkedIn courses and certificates, and more.
+
+Built-in data provider: Github.
 
 #### "Gaming profile" flavour (upcoming) 
 
+Import your gaming statistics and account data.  
+For example: games owned, hours played, achievements unlocked, skins purchased, wins and losses, and more.
+
+Built-in data provider: _upcoming_.
+
 ### Terminology
 
-**Verifiable Credential (VC)** –
+**Verifiable Credential (VC)** –  
+[W3C specification](https://www.w3.org/TR/vc-data-model/)
 
 **Issuer** –
 
@@ -61,6 +69,8 @@ Data providers:
 **Wallet (Cloud Wallet)** –
 
 **Data provider** –
+
+Learn more about [VCs](https://academy.affinidi.com/what-are-verifiable-credentials-79f1846a7b9), [trust triangle](https://academy.affinidi.com/what-is-the-trust-triangle-9a9caf36b321), [Decentralized Identifiers (DIDs)](https://academy.affinidi.com/demystifying-decentralized-identifiers-dids-2dc6fc3148fd), and [selective disclosure](https://academy.affinidi.com/a-detailed-guide-on-selective-disclosure-87b89cea1602).
 
 ### Overview diagram
 
@@ -103,19 +113,19 @@ sequenceDiagram
 ## Tools & frameworks
 
 This project is built with **NextJS** framework, which allows you to quickly build applications using TypeScript and **React**. NextJS has built-in router, server-side rendering, backend support and useful extensions like Next Auth for authenticating via Github and other data providers.  
-Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html)  
+Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html).  
 
 We also use **Styled Components**, **Tailwind CSS** and Bootstrap Grid to build the UI.  
-Read [Styled Components docs](https://styled-components.com/docs), [TailWind CSS docs](https://tailwindcss.com/docs/installation)  
+Read [Styled Components docs](https://styled-components.com/docs), [TailWind CSS docs](https://tailwindcss.com/docs/installation).  
 
 To make API requests, **axios** library is used.  
-Read [axios docs]()  
+Read [axios docs](https://axios-http.com/docs/intro).  
 
 Backend requests are validated with **zod** and logged with **pino**.  
-Read [Zod docs](https://www.npmjs.com/package/zod), [pino docs](https://www.npmjs.com/package/pino)  
+Read [Zod docs](https://www.npmjs.com/package/zod), [pino docs](https://www.npmjs.com/package/pino).  
 
 Github profile data is fetched using **Octokit** and **GraphQL**.  
-Read [Octokit docs](https://github.com/octokit/octokit.js), [GraphQL docs](https://graphql.org/learn/)  
+Read [Octokit docs](https://github.com/octokit/octokit.js), [GraphQL docs](https://graphql.org/learn/).  
 
 ## Telemetry
 
