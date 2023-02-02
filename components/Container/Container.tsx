@@ -1,8 +1,8 @@
-import { FC, HTMLAttributes, ReactNode } from "react";
+import { FC, HTMLAttributes, ReactNode } from 'react'
 
-import { Typography } from "components";
+import { Typography } from 'components'
 
-import * as S from "./Container.styled";
+import * as S from './Container.styled'
 
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -19,7 +19,7 @@ const Container: FC<ContainerProps> = ({ children, title }) => {
       )}
       <S.Container>{children}</S.Container>
     </>
-  );
-};
+  )
+}
 
-export default Container;
+export default Container

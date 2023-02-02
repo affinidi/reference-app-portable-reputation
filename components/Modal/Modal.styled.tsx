@@ -1,12 +1,12 @@
-import React from "react";
-import { Modal as ReactModal } from "react-responsive-modal";
-import styled, { css } from "styled-components";
+import React from 'react'
+import { Modal as ReactModal } from 'react-responsive-modal'
+import styled, { css } from 'styled-components'
 
-import { pxToRem } from "utils";
+import { pxToRem } from 'utils'
 
-import Box from "../Box/Box";
+import Box from '../Box/Box'
 
-import { ModalProps } from "./Modal";
+import { ModalProps } from './Modal'
 
 const slideFromRightKeyframe = css`
   @keyframes slideFromRightIn {
@@ -26,7 +26,7 @@ const slideFromRightKeyframe = css`
       transform: translateX(100%);
     }
   }
-`;
+`
 
 const zoomInKeyframe = css`
   @keyframes zoomIn {
@@ -50,7 +50,7 @@ const zoomInKeyframe = css`
       opacity: 0;
     }
   }
-`;
+`
 
 export const Modal = styled(({ classNames, className, $position, ...rest }) => (
   <ReactModal
@@ -58,7 +58,7 @@ export const Modal = styled(({ classNames, className, $position, ...rest }) => (
     classNames={{ ...classNames, root: `${className} ${classNames.root}` }}
   />
 ))<{
-  $useRelativePosition: ModalProps["useRelativePosition"];
+  $useRelativePosition: ModalProps['useRelativePosition'];
 }>`
   &.root {
     position: fixed;
@@ -83,9 +83,9 @@ export const Modal = styled(({ classNames, className, $position, ...rest }) => (
   .react-responsive-modal-container {
     display: flex;
     justify-content: ${({ $position }) =>
-      $position === "rightSide" ? "flex-end" : "center"};
+      $position === 'rightSide' ? 'flex-end' : 'center'};
     align-items: ${({ $position }) =>
-      $position === "rightSide" ? "normal" : "center"};
+      $position === 'rightSide' ? 'normal' : 'center'};
     height: 100%;
   }
 
@@ -115,11 +115,11 @@ export const Modal = styled(({ classNames, className, $position, ...rest }) => (
   }
 
   ${({ $position }) => {
-    if ($position === "rightSide") {
-      return slideFromRightKeyframe;
+    if ($position === 'rightSide') {
+      return slideFromRightKeyframe
     }
 
-    return zoomInKeyframe;
+    return zoomInKeyframe
   }}
   .modal {
     display: flex;
@@ -127,14 +127,14 @@ export const Modal = styled(({ classNames, className, $position, ...rest }) => (
     justify-content: space-between;
     height: 100%;
     max-width: 100%;
-    background: ${(props) => props.theme.colors.brand.primary["100"]};
+    background: ${(props) => props.theme.colors.brand.primary['100']};
 
     ${({ $position }) => {
-      if ($position === "rightSide") {
+      if ($position === 'rightSide') {
         return css`
           width: ${pxToRem(524)};
           height: 100%;
-        `;
+        `
       }
 
       return css`
@@ -145,14 +145,14 @@ export const Modal = styled(({ classNames, className, $position, ...rest }) => (
         @media (max-width: 576px) {
           width: ${pxToRem(328)};
         }
-      `;
+      `
     }}
   }
-`;
+`
 
 export const Title = styled(Box)`
   padding: ${pxToRem(12)} ${pxToRem(28)};
-`;
+`
 
 export const CloseButton = styled.div`
   position: absolute;
@@ -163,11 +163,11 @@ export const CloseButton = styled.div`
   @media (max-width: 1024px) {
     right: ${pxToRem(24)};
   }
-`;
+`
 
 export const Content = styled(Box)`
   overflow-y: auto;
-`;
+`
 
 export const Footer = styled(Box)`
   width: 100%;
@@ -177,4 +177,4 @@ export const Footer = styled(Box)`
     margin-top: 0;
     cursor: pointer;
   }
-`;
+`

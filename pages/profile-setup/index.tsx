@@ -1,34 +1,34 @@
-import { FC, useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import { FC, useEffect, useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
-import { Button, Container, Header, Spinner } from "components";
-import GithubConnectorCard from "./components/connectors/GithubConnectorCard";
+import { Button, Container, Header, Spinner } from 'components'
+import GithubConnectorCard from './components/connectors/GithubConnectorCard'
 
-import { ROUTES } from "utils";
+import { ROUTES } from 'utils'
 
-import * as S from "./ProfileSetup.styled";
-import useVcProfiles from "hooks/useVcProfiles";
+import * as S from './ProfileSetup.styled'
+import useVcProfiles from 'hooks/useVcProfiles'
 
 const ProfileSetup: FC = () => {
   const [isGithubConnectorChecked, setIsGithubConnectorChecked] =
-    useState(false);
+    useState(false)
 
   const connectToGithub = async () => {
-    await signIn('github', { callbackUrl: ROUTES.githubCallback });
-  };
+    await signIn('github', { callbackUrl: ROUTES.githubCallback })
+  }
 
-  const { push } = useRouter();
-  const vcs = useVcProfiles();
+  const { push } = useRouter()
+  const vcs = useVcProfiles()
 
   useEffect(() => {
     if (vcs?.github) {
-      push(ROUTES.github);
+      push(ROUTES.github)
     }
-  }, [push, vcs]);
+  }, [push, vcs])
 
   if (!vcs || vcs.github) {
-    return <Spinner />;
+    return <Spinner />
   }
 
   return (
@@ -61,7 +61,7 @@ const ProfileSetup: FC = () => {
         </div>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default ProfileSetup;
+export default ProfileSetup

@@ -1,8 +1,8 @@
 // TODO: replace with client-sdk
 
-import axios from "axios";
-import { VerifiableCredential } from "types/vc";
-import { apiKeyHash, cloudWalletApiUrl } from "../env";
+import axios from 'axios'
+import { VerifiableCredential } from 'types/vc'
+import { apiKeyHash, cloudWalletApiUrl } from '../env'
 
 type Options = {
   accessToken: string;
@@ -15,15 +15,15 @@ export const cloudWalletClient = {
     const { data: token } = await axios<string>(
       `${cloudWalletApiUrl}/v1/users/sign-in-passwordless`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Api-Key": apiKeyHash,
+          'Api-Key': apiKeyHash,
         },
         data: input,
       }
-    );
+    )
 
-    return { token };
+    return { token }
   },
   confirmSignInPasswordless: async (input: {
     token: string;
@@ -34,50 +34,50 @@ export const cloudWalletClient = {
     } = await axios<{ accessToken: string }>(
       `${cloudWalletApiUrl}/v1/users/sign-in-passwordless/confirm`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Api-Key": apiKeyHash,
+          'Api-Key': apiKeyHash,
         },
         data: input,
       }
-    );
+    )
 
-    return { accessToken };
+    return { accessToken }
   },
   getDid: async (options: Options): Promise<{ did: string }> => {
     const { data: did } = await axios<string>(
       `${cloudWalletApiUrl}/v1/users/get-did`,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Api-Key": apiKeyHash,
+          'Api-Key': apiKeyHash,
           Authorization: options.accessToken,
         },
       }
-    );
+    )
 
-    return { did };
+    return { did }
   },
   logout: async (options: Options): Promise<void> => {
     await axios<void>(`${cloudWalletApiUrl}/v1/users/logout`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Api-Key": apiKeyHash,
+        'Api-Key': apiKeyHash,
         Authorization: options.accessToken,
       },
-    });
+    })
   },
   getCredentials: async (input: {}, options: Options): Promise<{ vcs: VerifiableCredential[] }> => {
     const { data: vcs } = await axios<VerifiableCredential[]>(
       `${cloudWalletApiUrl}/v1/wallet/credentials`,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Api-Key": apiKeyHash,
+          'Api-Key': apiKeyHash,
           Authorization: options.accessToken,
         },
       }
-    );
+    )
 
     return { vcs }
   },
@@ -87,16 +87,16 @@ export const cloudWalletClient = {
     } = await axios<{ signedCredential: VerifiableCredential }>(
       `${cloudWalletApiUrl}/v1/wallet/sign-credential`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Api-Key": apiKeyHash,
+          'Api-Key': apiKeyHash,
           Authorization: options.accessToken,
         },
         data: {
           unsignedCredential: input.vc,
         },
       }
-    );
+    )
 
     return { vc }
   },
@@ -105,14 +105,14 @@ export const cloudWalletClient = {
     options: Options
   ): Promise<void> => {
     await axios<void>(`${cloudWalletApiUrl}/v1/wallet/credentials`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Api-Key": apiKeyHash,
+        'Api-Key': apiKeyHash,
         Authorization: options.accessToken,
       },
       data: {
         data: input.vcs,
       },
-    });
+    })
   },
-};
+}

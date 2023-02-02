@@ -1,17 +1,17 @@
-import Link from "next/link";
-import { FC } from "react";
+import Link from 'next/link'
+import { FC } from 'react'
 
-import { ROUTES } from "utils";
-import { LogoMainIcon, MenuIcon } from "components/icons";
+import { ROUTES } from 'utils'
+import { LogoMainIcon, MenuIcon } from 'components/icons'
 
-import Modal from "../Modal/Modal";
-import Typography from "../Typography/Typography";
+import Modal from '../Modal/Modal'
+import Typography from '../Typography/Typography'
 
-import { useNavBar } from "./useNavBar";
-import * as S from "./NavBar.styled";
+import { useNavBar } from './useNavBar'
+import * as S from './NavBar.styled'
 
 const NavBar: FC = () => {
-  const { isMenuOpen, setIsMenuOpen, isAuthorized, handleLogOut } = useNavBar();
+  const { isMenuOpen, setIsMenuOpen, isAuthorized, handleLogOut } = useNavBar()
 
   return (
     <>
@@ -50,7 +50,7 @@ const NavBar: FC = () => {
         </Modal>
       )}
     </>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar

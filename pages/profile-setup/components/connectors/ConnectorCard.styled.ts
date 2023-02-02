@@ -1,17 +1,17 @@
-import { Box } from "components";
-import { theme } from "components/utils/theme";
-import styled from "styled-components";
-import { pxToRem } from "utils";
+import { Box } from 'components'
+import { theme } from 'components/utils/theme'
+import styled from 'styled-components'
+import { pxToRem } from 'utils'
 
 export const CardHeader = styled(Box)`
   gap: ${pxToRem(16)};
   margin-bottom: ${pxToRem(16)};
-`;
+`
 
 export const CardIcon = styled(Box)`
   width: ${pxToRem(36)};
   height: ${pxToRem(36)};
-`;
+`
 
 export const CardCheckboxContainer = styled(Box)`
   width: 100%;
@@ -30,4 +30,4 @@ export const CardCheckboxContainer = styled(Box)`
     outline: ${pxToRem(4)} solid ${theme.colors.brand.secondary[100]};
     box-shadow: 0 0 0 ${pxToRem(2)} ${theme.colors.brand.secondary[100]} inset;
   }
-`;
+`

@@ -1,7 +1,7 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-import * as S from "./Header.styled";
-import { Container } from "components";
+import * as S from './Header.styled'
+import { Container } from 'components'
 
 export type HeaderProps = {
   title: string;
@@ -15,6 +15,6 @@ const Header: FC<HeaderProps> = ({ title, icon, path }) => (
       <S.Title variant="h4">{title}</S.Title>
     </Container>
   </S.Container>
-);
+)
 
-export default Header;
+export default Header

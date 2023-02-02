@@ -1,7 +1,7 @@
-import { ZodError } from "zod"
-import { Middleware } from "next-api-middleware";
-import { ApiError } from '../api-error';
-import { logger } from '../logger';
+import { ZodError } from 'zod'
+import { Middleware } from 'next-api-middleware'
+import { ApiError } from '../api-error'
+import { logger } from '../logger'
 
 export const errorHandler: Middleware = async (req, res, next) => {
   try {

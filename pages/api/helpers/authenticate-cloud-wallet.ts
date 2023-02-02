@@ -1,8 +1,8 @@
-import { NextApiRequest } from 'next';
-import { ApiError } from '../api-error';
+import { NextApiRequest } from 'next'
+import { ApiError } from '../api-error'
 
 export function authenticateCloudWallet(req: NextApiRequest): string {
-  const cloudWalletAccessToken = req.headers["authorization"];
+  const cloudWalletAccessToken = req.headers['authorization']
 
   if (!cloudWalletAccessToken) {
     throw new ApiError({

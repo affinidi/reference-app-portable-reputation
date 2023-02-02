@@ -1,7 +1,7 @@
 // TODO: replace with client-sdk
 
-import axios from 'axios';
-import { affinidiIamApiUrl, apiKeyHash } from '../env';
+import axios from 'axios'
+import { affinidiIamApiUrl, apiKeyHash } from '../env'
 
 export const iamClient = {
   authenticateCloudWallet: async (input: {
@@ -14,13 +14,13 @@ export const iamClient = {
     } = await axios<{ wallet: { accessToken: string } }>(
       `${affinidiIamApiUrl}/v1/cloud-wallet/${input.did}/authenticate`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Api-Key": apiKeyHash,
+          'Api-Key': apiKeyHash,
         },
       }
-    );
+    )
 
     return { wallet: { accessToken } }
   },
-};
+}

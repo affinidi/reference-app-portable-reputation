@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import { ConfirmSignInForm } from "./ConfirmSignInForm/ConfirmSignInForm";
+import { ConfirmSignInForm } from './ConfirmSignInForm/ConfirmSignInForm'
 
-import { useConfirmSignIn } from "./useConfirmSignIn";
+import { useConfirmSignIn } from './useConfirmSignIn'
 
 const ConfirmSignIn: FC = () => {
   const {
@@ -12,7 +12,7 @@ const ConfirmSignIn: FC = () => {
     isButtonDisabled,
     handleResendCode,
     isLoading,
-  } = useConfirmSignIn();
+  } = useConfirmSignIn()
 
   return (
     <ConfirmSignInForm
@@ -23,6 +23,6 @@ const ConfirmSignIn: FC = () => {
       handleResendCode={handleResendCode}
       isLoading={isLoading}
     />
-  );
-};
-export default ConfirmSignIn;
+  )
+}
+export default ConfirmSignIn
