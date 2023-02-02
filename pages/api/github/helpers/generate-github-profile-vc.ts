@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
-import { GithubProfileCredentialSubject } from 'types/github';
-import { VerifiableCredential } from 'types/vc';
+import { GithubProfileCredentialSubject } from 'types/github'
+import { VerifiableCredential } from 'types/vc'
 
 const VC_JSON_SCHEMA_URL = 'https://schema.affinidi.com/GithubProfileV1-0.json'
 const VC_JSON_LD_CONTEXT_URL = 'https://schema.affinidi.com/GithubProfileV1-0.jsonld'

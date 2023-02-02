@@ -1,7 +1,7 @@
-import { Middleware } from "next-api-middleware";
-import { ApiError } from '../api-error';
+import { Middleware } from 'next-api-middleware'
+import { ApiError } from '../api-error'
 
-type HttpMethod = "GET" | "POST";
+type HttpMethod = 'GET' | 'POST';
 
 export const allowedHttpMethods =
   (...methods: HttpMethod[]): Middleware =>
@@ -10,8 +10,8 @@ export const allowedHttpMethods =
       throw new ApiError({
         code: 'HTTP_METHOD_NOT_ALLOWED',
         httpStatusCode: 405,
-      });
+      })
     }
 
-    return next();
-  };
+    return next()
+  }

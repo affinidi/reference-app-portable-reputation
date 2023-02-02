@@ -1,8 +1,8 @@
-import { Dispatch, FC, FormEvent, SetStateAction } from "react";
+import { Dispatch, FC, FormEvent, SetStateAction } from 'react'
 
-import { Container, ContainerForm, Header, Input } from "components";
+import { Container, ContainerForm, Header, Input } from 'components'
 
-import * as S from "./SigninForm.styled";
+import * as S from './SigninForm.styled'
 
 type SignInFormProps = {
   handleSignIn(e: FormEvent): void;
@@ -25,11 +25,11 @@ export const SignInForm: FC<SignInFormProps> = ({
 }) => {
   const handleChange = (value: string) => {
     if (inputError) {
-      setInputError(null);
+      setInputError(null)
     }
 
-    setUsername(value);
-  };
+    setUsername(value)
+  }
 
   return (
     <>
@@ -66,5 +66,5 @@ export const SignInForm: FC<SignInFormProps> = ({
         </div>
       </Container>
     </>
-  );
-};
+  )
+}

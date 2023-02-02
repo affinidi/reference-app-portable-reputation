@@ -1,10 +1,10 @@
-import { NextApiRequest } from 'next';
-import { getSession } from 'next-auth/react';
-import { ApiError } from '../api-error';
+import { NextApiRequest } from 'next'
+import { getSession } from 'next-auth/react'
+import { ApiError } from '../api-error'
 
 export async function authenticateGithub(req: NextApiRequest): Promise<string> {
   const session = await getSession({ req })
-  const githubAccessToken = session?.githubAccessToken;
+  const githubAccessToken = session?.githubAccessToken
 
   if (!githubAccessToken) {
     throw new ApiError({

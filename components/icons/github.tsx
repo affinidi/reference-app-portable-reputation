@@ -1,4 +1,4 @@
-import { SVGAttributes } from "react";
+import { SVGAttributes } from 'react'
 
 // eslint-disable-next-line react/display-name,import/no-anonymous-default-export
 export default (props: SVGAttributes<SVGElement>) => (
@@ -17,4 +17,4 @@ export default (props: SVGAttributes<SVGElement>) => (
       fill="#fff"
     />
   </svg>
-);
+)

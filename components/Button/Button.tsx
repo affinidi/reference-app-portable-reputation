@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-import { LoadingIcon } from "components/icons";
+import { LoadingIcon } from 'components/icons'
 
-import { ButtonColor, ButtonSize, ButtonVariant } from "./Button.themes";
-import * as S from "./Button.styled";
+import { ButtonColor, ButtonSize, ButtonVariant } from './Button.themes'
+import * as S from './Button.styled'
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -19,9 +19,9 @@ export interface ButtonProps
 const Button: React.FC<ButtonProps> = ({
   children,
   disabled,
-  color = "primary",
-  variant = "solid",
-  size = "m",
+  color = 'primary',
+  variant = 'solid',
+  size = 'm',
   loading = false,
   iconButton = false,
   fullWidth = false,
@@ -53,6 +53,6 @@ const Button: React.FC<ButtonProps> = ({
       </S.Content>
     )}
   </S.Button>
-);
+)
 
-export default Button;
+export default Button
