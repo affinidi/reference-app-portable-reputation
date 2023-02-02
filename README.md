@@ -103,19 +103,19 @@ sequenceDiagram
 ## Tools & frameworks
 
 This project is built with **NextJS** framework, which allows you to quickly build applications using TypeScript and **React**. NextJS has built-in router, server-side rendering, backend support and useful extensions like Next Auth for authenticating via Github and other data providers.  
-- Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html)  
+Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html)  
 
 We also use **Styled Components**, **Tailwind CSS** and Bootstrap Grid to build the UI.  
-- Read [Styled Components docs](https://styled-components.com/docs), [TailWind CSS docs](https://tailwindcss.com/docs/installation)  
+Read [Styled Components docs](https://styled-components.com/docs), [TailWind CSS docs](https://tailwindcss.com/docs/installation)  
 
-To make API requests, **axios** library is used. 
-- Read [axios docs]()  
+To make API requests, **axios** library is used.  
+Read [axios docs]()  
 
 Backend requests are validated with **zod** and logged with **pino**.  
-- Read [Zod docs](https://www.npmjs.com/package/zod), [pino docs](https://www.npmjs.com/package/pino)  
+Read [Zod docs](https://www.npmjs.com/package/zod), [pino docs](https://www.npmjs.com/package/pino)  
 
 Github profile data is fetched using **Octokit** and **GraphQL**.  
-- Read [Octokit docs](https://github.com/octokit/octokit.js), [GraphQL docs](https://graphql.org/learn/)  
+Read [Octokit docs](https://github.com/octokit/octokit.js), [GraphQL docs](https://graphql.org/learn/)  
 
 ## Telemetry
 
