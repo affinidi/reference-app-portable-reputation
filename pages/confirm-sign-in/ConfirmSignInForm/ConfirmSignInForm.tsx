@@ -1,8 +1,8 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode } from 'react'
 
-import { Box, Container, Header, Typography } from "components";
+import { Box, Container, Header, Typography } from 'components'
 
-import * as S from "./ConfirmSignInForm.styled";
+import * as S from './ConfirmSignInForm.styled'
 
 type ConfirmSignInFormProps = {
   error: Error | null;
@@ -54,7 +54,7 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
             </S.SignInButton>
 
             <Typography variant="p1">
-              Didn’t receive a code? Click{" "}
+              Didn’t receive a code? Click{' '}
               <Typography
                 variant="l1"
                 onClick={handleResendCode}
@@ -62,12 +62,12 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
                 tabIndex={0}
               >
                 here
-              </Typography>{" "}
+              </Typography>{' '}
               to send it again
             </Typography>
           </div>
         </S.Wrapper>
       </Container>
     </>
-  );
-};
+  )
+}

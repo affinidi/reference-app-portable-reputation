@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import { Card, Typography } from "components";
-import { GithubIcon } from "components/icons";
+import { Card, Typography } from 'components'
+import { GithubIcon } from 'components/icons'
 
-import * as S from "./ConnectorCard.styled";
+import * as S from './ConnectorCard.styled'
 
 interface Props {
   isChecked: boolean;
@@ -30,6 +30,6 @@ const GithubConnectorCard: FC<Props> = ({ isChecked, setIsChecked }) => (
       built-in security.
     </Typography>
   </Card>
-);
+)
 
-export default GithubConnectorCard;
+export default GithubConnectorCard

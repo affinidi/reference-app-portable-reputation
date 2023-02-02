@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import { SignInForm } from "./SignInForm";
+import { SignInForm } from './SignInForm'
 
-import { useSignIn } from "./useSignIn";
+import { useSignIn } from './useSignIn'
 
 const SignIn: FC = () => {
   const {
@@ -13,7 +13,7 @@ const SignIn: FC = () => {
     isLoading,
     inputError,
     setInputError,
-  } = useSignIn();
+  } = useSignIn()
 
   return (
     <SignInForm
@@ -25,7 +25,7 @@ const SignIn: FC = () => {
       inputError={inputError}
       setInputError={setInputError}
     />
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn

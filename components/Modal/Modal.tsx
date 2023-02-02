@@ -1,33 +1,33 @@
-import React from "react";
-import { ModalProps as ReactModalProps } from "react-responsive-modal";
+import React from 'react'
+import { ModalProps as ReactModalProps } from 'react-responsive-modal'
 
-import { CloseIcon } from "components/icons";
+import { CloseIcon } from 'components/icons'
 
-import Typography from "../Typography/Typography";
+import Typography from '../Typography/Typography'
 
-import * as S from "./Modal.styled";
+import * as S from './Modal.styled'
 
 export type ModalProps = {
   useLocalContainer?: boolean;
   useRelativePosition?: boolean;
   title?: string;
   footer?: React.ReactElement;
-  position?: "rightSide" | "center";
+  position?: 'rightSide' | 'center';
 } & ReactModalProps;
 
 const Modal: React.FC<ModalProps> = ({
   title,
   children,
   footer,
-  position = "center",
+  position = 'center',
   onClose,
   showCloseIcon = true,
   ...rest
 }) => {
   const modalAnimationIn =
-    position === "rightSide" ? "slideFromRightIn" : "zoomIn";
+    position === 'rightSide' ? 'slideFromRightIn' : 'zoomIn'
   const modalAnimationOut =
-    position === "rightSide" ? "slideFromRightOut" : "zoomOut";
+    position === 'rightSide' ? 'slideFromRightOut' : 'zoomOut'
 
   return (
     <S.Modal
@@ -37,10 +37,10 @@ const Modal: React.FC<ModalProps> = ({
       showCloseIcon={false}
       focusTrapped={false}
       classNames={{
-        root: "root",
-        overlay: "overlay",
-        modal: "modal",
-        container: "container",
+        root: 'root',
+        overlay: 'overlay',
+        modal: 'modal',
+        container: 'container',
         modalAnimationIn,
         modalAnimationOut,
       }}
@@ -79,7 +79,7 @@ const Modal: React.FC<ModalProps> = ({
         </>
       )}
     </S.Modal>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

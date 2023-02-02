@@ -1,10 +1,10 @@
-import { FC } from "react";
-import Image from "next/image";
+import { FC } from 'react'
+import Image from 'next/image'
 
-import { GithubProfileCredentialSubject } from "types/github";
-import { Box, MapOutlinedIcon, OfficeIcon, Typography } from "components";
+import { GithubProfileCredentialSubject } from 'types/github'
+import { Box, MapOutlinedIcon, OfficeIcon, Typography } from 'components'
 
-import * as S from "./GeneralInfo.styled";
+import * as S from './GeneralInfo.styled'
 
 type GeneralInfoProps = {
   info: GithubProfileCredentialSubject;
@@ -16,8 +16,8 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
       <div className="col-12 col-sm-4">
         <S.UserInfoContainer direction="row" gap={40}>
           <Image
-            src={info.profilePictureUrl || ""}
-            alt={info.username || ""}
+            src={info.profilePictureUrl || ''}
+            alt={info.username || ''}
             width={72}
             height={72}
           />
@@ -83,4 +83,4 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({ info }) => (
       </div>
     </S.Row>
   </div>
-);
+)

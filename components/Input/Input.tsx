@@ -1,9 +1,9 @@
-import React, { forwardRef, InputHTMLAttributes } from "react";
+import React, { forwardRef, InputHTMLAttributes } from 'react'
 
-import * as S from "./Input.styled";
+import * as S from './Input.styled'
 
 export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   label?: string;
   icon?: React.ReactElement;
   hasError?: boolean;
@@ -15,9 +15,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ onChange, hasError, helpText, label, icon, className, ...props }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (onChange) {
-        onChange(e.target.value);
+        onChange(e.target.value)
       }
-    };
+    }
 
     return (
       <S.Wrapper direction="column" gap={4} className={className}>
@@ -59,9 +59,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </S.HelpText>
         )}
       </S.Wrapper>
-    );
+    )
   }
-);
-Input.displayName = "Input";
+)
+Input.displayName = 'Input'
 
-export default Input;
+export default Input

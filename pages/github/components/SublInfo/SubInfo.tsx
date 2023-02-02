@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import { GithubProfileCredentialSubject } from "types/github";
-import { Card, Typography } from "components";
+import { GithubProfileCredentialSubject } from 'types/github'
+import { Card, Typography } from 'components'
 
-import * as S from "./SubInfo.styled";
+import * as S from './SubInfo.styled'
 
 type SubInfoProps = {
   info: GithubProfileCredentialSubject;
@@ -85,4 +85,4 @@ export const SubInfo: FC<SubInfoProps> = ({ info }) => (
       </div>
     </div>
   </div>
-);
+)

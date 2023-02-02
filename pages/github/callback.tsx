@@ -1,53 +1,53 @@
-import { FC, useEffect } from "react";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { FC, useEffect } from 'react'
+import axios from 'axios'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
-import { Spinner } from "components";
+import { Spinner } from 'components'
 
 import {
   createCloudWalletAuthenticationHeaders,
   getDid,
-} from "hooks/useAuthentication";
-import { VerifiableCredential } from "types/vc";
-import { ROUTES } from "utils";
-import { hostUrl } from "pages/env";
+} from 'hooks/useAuthentication'
+import { VerifiableCredential } from 'types/vc'
+import { ROUTES } from 'utils'
+import { hostUrl } from 'pages/env'
 
 const GithubCallback: FC = () => {
-  const { push } = useRouter();
-  const { status } = useSession();
+  const { push } = useRouter()
+  const { status } = useSession()
 
   useEffect(() => {
-    if (status === "loading") return;
+    if (status === 'loading') return
 
     async function issueVc() {
-      const holderDid = await getDid();
+      const holderDid = await getDid()
 
       const {
         data: { vc },
       } = await axios<{ vc: VerifiableCredential }>(
         `${hostUrl}/api/github/issue-vc`,
         {
-          method: "POST",
+          method: 'POST',
           data: {
             holderDid,
           },
         }
-      );
+      )
 
       await axios(`${hostUrl}/api/cloud-wallet/store-vc`, {
-        method: "POST",
+        method: 'POST',
         headers: createCloudWalletAuthenticationHeaders(),
         data: { vc },
-      });
+      })
 
-      await push(ROUTES.github);
+      await push(ROUTES.github)
     }
 
-    issueVc();
-  }, [push, status]);
+    issueVc()
+  }, [push, status])
 
-  return <Spinner />;
-};
+  return <Spinner />
+}
 
-export default GithubCallback;
+export default GithubCallback
