@@ -34,28 +34,26 @@ Setting up the reference app is easy, just follow these steps:
     ```
     App will be available locally on http://localhost:3000.
 
-## Use case
-
-### App flavours
+## App flavours
 
 We have created multiple variations of the same app for you to use.  
 These are called "flavours" and they're adapted for a specific industry.
 
-#### "Career profile" flavour
+### "Career profile" flavour
 
 Import your professional and career data.  
 For example: Github projects and languages, Medium articles and comments, LinkedIn courses and certificates, and more.
 
 Built-in data provider: Github.
 
-#### "Gaming profile" flavour (upcoming) 
+### "Gaming profile" flavour (upcoming) 
 
 Import your gaming statistics and account data.  
 For example: games owned, hours played, achievements unlocked, skins purchased, wins and losses, and more.
 
 Built-in data provider: _upcoming_.
 
-### Terminology
+## Terminology
 
 **Verifiable Credential (VC)** –  
 [W3C specification](https://www.w3.org/TR/vc-data-model/)
@@ -72,7 +70,7 @@ Built-in data provider: _upcoming_.
 
 Learn more about [VCs](https://academy.affinidi.com/what-are-verifiable-credentials-79f1846a7b9), [trust triangle](https://academy.affinidi.com/what-is-the-trust-triangle-9a9caf36b321), [Decentralized Identifiers (DIDs)](https://academy.affinidi.com/demystifying-decentralized-identifiers-dids-2dc6fc3148fd), and [selective disclosure](https://academy.affinidi.com/a-detailed-guide-on-selective-disclosure-87b89cea1602).
 
-### Overview diagram
+## Overview diagram
 
 ```mermaid
 sequenceDiagram
