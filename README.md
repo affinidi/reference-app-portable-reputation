@@ -55,20 +55,27 @@ Built-in data provider: _upcoming_.
 
 ## Terminology
 
-**Verifiable Credential (VC)** –  
-[W3C specification](https://www.w3.org/TR/vc-data-model/)
+**Verifiable Credential (VC)** – a tamper-evident credential that has authorship that can be cryptographically verified.  
+_In this application, user's imported profile data is the subject of the verifiable credential._  
+Read [W3C specification](https://www.w3.org/TR/vc-data-model/).
 
-**Issuer** –
+**Holder** – an entity that owns the verifiable credential. Usually, holder is the subject of a credential that they hold.  
+_A holder in the portable reputation application is the person whose data is imported from a data provider and who stores the issued VCs in their wallet._
 
-**Holder** –
+**Issuer** – an entity that issues the verifiable credential to the holder.  
+_Issuer in this application is the entity that owns the application itself._
 
-**Verifier** –
+**Verifier** – an entity that accepts verifiable credentials and verifies their validity and authorship.  
+_Verification functionality is not present in the portable reputation application._  
+_Check out our Certification & Verification reference application for VC verification functionality._
 
-**Wallet (Cloud Wallet)** –
+**Wallet (Cloud Wallet)** – a service that allows holder to store their credentials in the cloud.  
+_Portable reputation application uses the Affinidi Cloud Wallet API for authentication, holder credential storage and issuing the VCs._
 
-**Data provider** –
+**Data provider** – an external service, that contains some information about the holder. This information is then imported and used for generating the verifiable credential.  
+_A few examples: Github projects, Medium articles, Steam games and LinkedIn certificates._
 
-Learn more about [VCs](https://academy.affinidi.com/what-are-verifiable-credentials-79f1846a7b9), [trust triangle](https://academy.affinidi.com/what-is-the-trust-triangle-9a9caf36b321), [Decentralized Identifiers (DIDs)](https://academy.affinidi.com/demystifying-decentralized-identifiers-dids-2dc6fc3148fd), and [selective disclosure](https://academy.affinidi.com/a-detailed-guide-on-selective-disclosure-87b89cea1602).
+Learn more about [VCs](https://academy.affinidi.com/what-are-verifiable-credentials-79f1846a7b9), [trust triangle](https://academy.affinidi.com/what-is-the-trust-triangle-9a9caf36b321) and [Decentralized Identifiers (DIDs)](https://academy.affinidi.com/demystifying-decentralized-identifiers-dids-2dc6fc3148fd).
 
 ## Overview diagram
 
