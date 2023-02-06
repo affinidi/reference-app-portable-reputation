@@ -26,8 +26,8 @@ Setting up the reference app is easy, just follow these steps:
     ```
     $ cp .env.example .env
     ```
-    Please enter values for `PROJECT_ID`, `PROJECT_DID` and `API_KEY_HASH` from your project.  
-    You also need to [create a Github OAuth app](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app) and enter values for `GITHUB_APP_CLIENT_ID` and `GITHUB_APP_CLIENT_SECRET`.
+    Enter values for `PROJECT_ID`, `PROJECT_DID` and `API_KEY_HASH` from your Affinidi project properties.  
+    [Create a Github OAuth app](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app) and enter values for `GITHUB_APP_CLIENT_ID` and `GITHUB_APP_CLIENT_SECRET`.
 4. Launch the app:
     ```
     $ npm run dev
@@ -122,8 +122,8 @@ sequenceDiagram
 This project is built with **NextJS** framework, which allows you to quickly build apps using **TypeScript** and **React**. NextJS has built-in router, server-side rendering, backend support and useful extensions like Next Auth for authenticating via Github and other data providers.  
 Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html).  
 
-We also use **Styled Components**, **Tailwind CSS** and **Bootstrap Grid** to build the UI.  
-Read [Styled Components docs](https://styled-components.com/docs), [TailWind CSS docs](https://tailwindcss.com/docs/installation).  
+We also use **Styled Components** and **Bootstrap Grid** to build the UI.  
+Read [Styled Components docs](https://styled-components.com/docs).  
 
 To make API requests, **axios** library is used.  
 Read [axios docs](https://axios-http.com/docs/intro).  
