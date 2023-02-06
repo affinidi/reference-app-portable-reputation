@@ -26,12 +26,15 @@ Setting up the reference app is easy, just follow these steps:
     ```
     $ cp .env.example .env
     ```
-    Enter values for `PROJECT_ID`, `PROJECT_DID` and `API_KEY_HASH` from your Affinidi project properties.  
-    [Create a Github OAuth app](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app) and enter values for `GITHUB_APP_CLIENT_ID` and `GITHUB_APP_CLIENT_SECRET`.
+
+    **Enter values for `PROJECT_ID`, `PROJECT_DID` and `API_KEY_HASH` from your Affinidi project properties.**  
+    
+    **[Create a Github OAuth app](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app) and enter values for `GITHUB_APP_CLIENT_ID` and `GITHUB_APP_CLIENT_SECRET`.**
 4. Launch the app:
     ```
     $ npm run dev
     ```
+    
     App will be available locally on http://localhost:3000.
 
 ## App flavours
