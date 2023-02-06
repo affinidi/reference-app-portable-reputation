@@ -1,6 +1,6 @@
 # Portable reputation – an Affinidi reference app
 
-This is a ready-to-use reference app that showcases usage of Affinidi API for issuing, sharing and verifying credentials, as well as storing them in the wallet.
+This is a ready-to-use reference app that showcases usage of Affinidi API for issuing, sharing and storing verifiable credentials in the wallet.
 
 ## Introduction
 
@@ -8,7 +8,7 @@ This is a ready-to-use reference app that showcases usage of Affinidi API for is
 
 Portable reputation app allows you to import your data from data providers like Github, Steam, LinkedIn, Medium, etc. and store it as a verifiable credential in your wallet.
 
-You can then share this credential with anyone and they'll be able to verify its validity without ever accessing these data providers again.
+You can then share this credential with anyone, who can then verify its validity without ever accessing these data providers again.
 
 ## Getting started
 
@@ -59,18 +59,18 @@ Built-in data provider: _upcoming_.
 _In this app, user's imported profile data is the subject of the verifiable credential._  
 Read [W3C specification](https://www.w3.org/TR/vc-data-model/).
 
-**Holder** – an entity that owns the verifiable credential. Usually, holder is the subject of a credential that they hold.  
+**Holder** – an entity that owns the verifiable credential. Usually, a holder is the subject of the credential that they hold.  
 _A holder in the portable reputation app is the person whose data is imported from a data provider and who stores the issued VCs in their wallet._
 
 **Issuer** – an entity that issues the verifiable credential to the holder.  
-_Issuer in this app is the entity that owns the app itself._
+_Issuer in this app is the entity that owns the app itself and signs the credentials._
 
-**Verifier** – an entity that accepts verifiable credentials and verifies their validity and authorship.  
+**Verifier** – an entity that accepts verifiable credentials to verify their validity and authorship.  
 _Verification functionality is not present in the portable reputation app._  
-_Check out our Certification & Verification reference app for VC verification functionality._
+_Check out our Certification & Verification reference app for verification functionality._
 
-**Wallet (Cloud Wallet)** – a service that allows holder to store their credentials in the cloud.  
-_Portable reputation app uses the Affinidi Cloud Wallet API for authentication, holder credential storage and issuing the VCs._
+**Wallet (Cloud Wallet)** – a service that provides functionality to sign credentials (for issuers) and to store credentials in the wallet (for holders).   
+_Portable reputation app uses the Affinidi Cloud Wallet API for authentication, holder credential storage and credential issuance._
 
 **Data provider** – an external service, that contains some information about the holder. This information is then imported and used for generating the verifiable credential.  
 _A few examples: Github projects, Medium articles, Steam games and LinkedIn certificates._
@@ -78,6 +78,8 @@ _A few examples: Github projects, Medium articles, Steam games and LinkedIn cert
 Learn more about [VCs](https://academy.affinidi.com/what-are-verifiable-credentials-79f1846a7b9), [trust triangle](https://academy.affinidi.com/what-is-the-trust-triangle-9a9caf36b321) and [Decentralized Identifiers (DIDs)](https://academy.affinidi.com/demystifying-decentralized-identifiers-dids-2dc6fc3148fd).
 
 ## Overview diagram
+
+> We'll use Github as a data provider in this example.
 
 ```mermaid
 sequenceDiagram
@@ -117,10 +119,10 @@ sequenceDiagram
 
 ## Tools & frameworks
 
-This project is built with **NextJS** framework, which allows you to quickly build apps using TypeScript and **React**. NextJS has built-in router, server-side rendering, backend support and useful extensions like Next Auth for authenticating via Github and other data providers.  
+This project is built with **NextJS** framework, which allows you to quickly build apps using **TypeScript** and **React**. NextJS has built-in router, server-side rendering, backend support and useful extensions like Next Auth for authenticating via Github and other data providers.  
 Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html).  
 
-We also use **Styled Components**, **Tailwind CSS** and Bootstrap Grid to build the UI.  
+We also use **Styled Components**, **Tailwind CSS** and **Bootstrap Grid** to build the UI.  
 Read [Styled Components docs](https://styled-components.com/docs), [TailWind CSS docs](https://tailwindcss.com/docs/installation).  
 
 To make API requests, **axios** library is used.  
