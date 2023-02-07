@@ -37,19 +37,19 @@ Setting up the reference app is easy, just follow these steps:
     
     App will be available locally on http://localhost:3000.
 
-## App flavours
+## App flavors
 
 We have created multiple variations of the same app for you to use.  
-These are called "flavours" and they're adapted for a specific industry.
+These are called "flavors" and they're adapted for a specific industry.
 
-### "Career profile" flavour
+### "Career profile" flavor
 
 Import your professional and career data.  
 For example: Github projects and languages, Medium articles and comments, LinkedIn courses and certificates, and more.
 
 Built-in data provider: Github.
 
-### "Gaming profile" flavour (upcoming) 
+### "Gaming profile" flavor (upcoming) 
 
 Import your gaming statistics and account data.  
 For example: games owned, hours played, achievements unlocked, skins purchased, wins and losses, and more.
