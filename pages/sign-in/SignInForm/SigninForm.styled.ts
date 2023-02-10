@@ -14,3 +14,9 @@ export const Prompt = styled(Typography)`
 export const ButtonWrapper = styled(Button)`
   margin-top: ${pxToRem(16)};
 `
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`

@@ -1,11 +1,14 @@
 @import '@fontsource/nunito-sans/400.css';
 @import '@fontsource/nunito-sans/600.css';
+@import '@fontsource/nunito-sans/700.css';
 @import '@fontsource/montserrat/400.css';
 @import '@fontsource/montserrat/500.css';
 @import '@fontsource/montserrat/600.css';
 @import '@fontsource/montserrat/700.css';
-@import '../node_modules/normalize.css';
-@import './bootstrap-grid.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html {
   height: 100%;

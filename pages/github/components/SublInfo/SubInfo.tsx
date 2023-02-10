@@ -10,79 +10,75 @@ type SubInfoProps = {
 };
 
 export const SubInfo: FC<SubInfoProps> = ({ info }) => (
-  <div className="container">
-    <S.Row className="row">
-      <div className="col-6 col-sm-2">
-        <Card>
-          <S.GrayText variant="p2">Commits</S.GrayText>
+  <div className="grid grid-cols-12 lg:gap-16 gap-12">
+    <div className="lg:col-span-2 col-span-6">
+      <Card>
+        <S.GrayText variant="p2">Commits</S.GrayText>
 
-          <Typography variant="h5" tag="div">
-            {info.commits.total}
-          </Typography>
-        </Card>
-      </div>
+        <Typography variant="h5" tag="div">
+          {info.commits.total}
+        </Typography>
+      </Card>
+    </div>
 
-      <div className="col-6 col-sm-2">
-        <Card>
-          <S.GrayText variant="p2">Solved issues</S.GrayText>
+    <div className="lg:col-span-2 col-span-6">
+      <Card>
+        <S.GrayText variant="p2">Solved issues</S.GrayText>
 
-          <Typography variant="h5" tag="div">
-            {info.solvedIssues}
-          </Typography>
-        </Card>
-      </div>
+        <Typography variant="h5" tag="div">
+          {info.solvedIssues}
+        </Typography>
+      </Card>
+    </div>
 
-      <div className="col-6 col-sm-2">
-        <Card>
-          <S.GrayText variant="p2">Own repos</S.GrayText>
+    <div className="lg:col-span-2 col-span-6">
+      <Card>
+        <S.GrayText variant="p2">Own repos</S.GrayText>
 
-          <Typography variant="h5" tag="div">
-            {info.ownedRepositoriesList.count}
-          </Typography>
-        </Card>
-      </div>
+        <Typography variant="h5" tag="div">
+          {info.ownedRepositoriesList.count}
+        </Typography>
+      </Card>
+    </div>
 
-      <div className="col-6 col-sm-2">
-        <Card>
-          <S.GrayText variant="p2">Starred repos</S.GrayText>
+    <div className="lg:col-span-2 col-span-6">
+      <Card>
+        <S.GrayText variant="p2">Starred repos</S.GrayText>
 
-          <Typography variant="h5" tag="div">
-            {info.starredRepositories}
-          </Typography>
-        </Card>
-      </div>
+        <Typography variant="h5" tag="div">
+          {info.starredRepositories}
+        </Typography>
+      </Card>
+    </div>
 
-      <div className="col-6 col-sm-2">
-        <Card>
-          <S.GrayText variant="p2">Watched repos</S.GrayText>
+    <div className="lg:col-span-2 col-span-6">
+      <Card>
+        <S.GrayText variant="p2">Watched repos</S.GrayText>
 
-          <Typography variant="h5" tag="div">
-            {info.watchedRepositories}
-          </Typography>
-        </Card>
-      </div>
+        <Typography variant="h5" tag="div">
+          {info.watchedRepositories}
+        </Typography>
+      </Card>
+    </div>
 
-      <div className="col-6 col-sm-2">
-        <Card>
-          <S.GrayText variant="p2">Following</S.GrayText>
+    <div className="lg:col-span-2 col-span-6">
+      <Card>
+        <S.GrayText variant="p2">Following</S.GrayText>
 
-          <Typography variant="h5" tag="div">
-            {info.following}
-          </Typography>
-        </Card>
-      </div>
-    </S.Row>
+        <Typography variant="h5" tag="div">
+          {info.following}
+        </Typography>
+      </Card>
+    </div>
 
-    <div className="row">
-      <div className="col-6 col-sm-2">
-        <Card>
-          <S.GrayText variant="p2">Followers</S.GrayText>
+    <div className="lg:col-span-2 col-span-6">
+      <Card>
+        <S.GrayText variant="p2">Followers</S.GrayText>
 
-          <Typography variant="h5" tag="div">
-            {info.followers}
-          </Typography>
-        </Card>
-      </div>
+        <Typography variant="h5" tag="div">
+          {info.followers}
+        </Typography>
+      </Card>
     </div>
   </div>
 )

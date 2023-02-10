@@ -8,7 +8,7 @@ export type CardProps = {
   size?: 'default' | 'small';
 } & BoxProps;
 
-export const Card: FC<CardProps> = ({
+const Card: FC<CardProps> = ({
   children,
   size = 'default',
   ...rest
@@ -17,3 +17,5 @@ export const Card: FC<CardProps> = ({
     {children}
   </S.Card>
 )
+
+export default Card

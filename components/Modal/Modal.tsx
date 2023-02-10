@@ -1,8 +1,6 @@
 import React from 'react'
 import { ModalProps as ReactModalProps } from 'react-responsive-modal'
 
-import { CloseIcon } from 'components/icons'
-
 import Typography from '../Typography/Typography'
 
 import * as S from './Modal.styled'
@@ -21,7 +19,6 @@ const Modal: React.FC<ModalProps> = ({
   footer,
   position = 'center',
   onClose,
-  showCloseIcon = true,
   ...rest
 }) => {
   const modalAnimationIn =
@@ -57,12 +54,6 @@ const Modal: React.FC<ModalProps> = ({
                 <Typography variant="l1">{title}</Typography>
               </S.Title>
             </>
-          )}
-
-          {showCloseIcon && (
-            <S.CloseButton>
-              <CloseIcon onClick={onClose} />
-            </S.CloseButton>
           )}
 
           <S.Content>{children}</S.Content>

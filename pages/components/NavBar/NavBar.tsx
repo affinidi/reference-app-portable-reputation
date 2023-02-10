@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import { FC } from 'react'
+import Image from 'next/image'
 
 import { ROUTES } from 'utils'
-import { LogoMainIcon, MenuIcon } from 'components/icons'
+import logo from 'public/images/logo.svg'
+import closeIcon from 'public/images/icon-close.svg'
+import menuIcon from 'public/images/icon-menu.svg'
 
-import Modal from '../Modal/Modal'
-import Typography from '../Typography/Typography'
+import { Modal, Typography } from 'components'
 
 import { useNavBar } from './useNavBar'
 import * as S from './NavBar.styled'
@@ -15,15 +17,25 @@ const NavBar: FC = () => {
 
   return (
     <>
-      <S.Container>
+      <S.Container justifyContent="space-between" alignItems="center" direction="row">
         <S.Logo>
-          <LogoMainIcon />
+          <Link href="/">
+            <Image src={logo} alt="PortId" />
+          </Link>
         </S.Logo>
 
         {isAuthorized && (
-          <S.IconWrapper>
-            <MenuIcon onClick={() => setIsMenuOpen(true)} />
-          </S.IconWrapper>
+          <>
+            {isMenuOpen ? (
+              <S.IconWrapper>
+                <Image src={closeIcon} alt="Close menu" onClick={() => setIsMenuOpen(false)} aria-label="menu-close-icon" />
+              </S.IconWrapper>
+            ) : (
+              <S.IconWrapper>
+                <Image src={menuIcon} alt="Open menu" onClick={() => setIsMenuOpen(true)} aria-label="menu-open-icon" />
+              </S.IconWrapper>
+            )}
+          </>
         )}
       </S.Container>
 
