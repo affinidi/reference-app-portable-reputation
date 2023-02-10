@@ -6,8 +6,7 @@ import Box from '../Box/Box'
 import Typography from '../Typography/Typography'
 
 export const Container = styled(Box)`
-  background: #262c47;
-  position: relative;
+  background: ${props => props.theme.colors.brand.primary['90']};
   height: ${pxToRem(144)};
 `
 

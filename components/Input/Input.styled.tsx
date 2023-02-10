@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { pxToRem } from 'utils'
-import { Theme } from 'components/utils/theme'
+import { Theme } from 'utils/theme'
 
 import Box from '../Box/Box'
 import Typography from '../Typography/Typography'

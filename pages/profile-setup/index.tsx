@@ -2,13 +2,12 @@ import { FC, useEffect, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
-import { Button, Container, Header, Spinner } from 'components'
-import GithubConnectorCard from './components/connectors/GithubConnectorCard'
-
 import { ROUTES } from 'utils'
-
-import * as S from './ProfileSetup.styled'
 import useVcProfiles from 'hooks/useVcProfiles'
+import { Button, Container, Header, Spinner } from 'components'
+
+import GithubConnectorCard from './components/connectors/GithubConnectorCard'
+import * as S from './ProfileSetup.styled'
 
 const ProfileSetup: FC = () => {
   const [isGithubConnectorChecked, setIsGithubConnectorChecked] =
@@ -40,25 +39,19 @@ const ProfileSetup: FC = () => {
           Please select the service that you would like to connect
         </S.ServiceSelect>
 
-        <S.CardRow className="row">
-          <div className="col-12 col-sm-4">
-            <GithubConnectorCard
-              isChecked={isGithubConnectorChecked}
-              setIsChecked={setIsGithubConnectorChecked}
-            />
-          </div>
+        <S.CardRow className="grid lg:grid-cols-3 lg:gap-16">
+          <GithubConnectorCard
+            isChecked={isGithubConnectorChecked}
+            setIsChecked={setIsGithubConnectorChecked}
+          />
         </S.CardRow>
 
-        <div className="row">
-          <div className="col-12 col-sm-3">
-              <Button
-                disabled={!isGithubConnectorChecked}
-                onClick={connectToGithub}
-              >
-                Connect my Github profile
-              </Button>
-          </div>
-        </div>
+        <Button
+          disabled={!isGithubConnectorChecked}
+          onClick={connectToGithub}
+        >
+          Connect my Github profile
+        </Button>
       </Container>
     </>
   )

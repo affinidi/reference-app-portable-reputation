@@ -1,6 +1,6 @@
 import { Dispatch, FC, FormEvent, SetStateAction } from 'react'
 
-import { Container, ContainerForm, Header, Input } from 'components'
+import { Container, Header, Input } from 'components'
 
 import * as S from './SigninForm.styled'
 
@@ -36,33 +36,31 @@ export const SignInForm: FC<SignInFormProps> = ({
       <Header title="Sign in" />
 
       <Container>
-        <div className="row">
-          <div className="col-12 col-sm-4 offset-sm-4">
-            <ContainerForm onSubmit={handleSignIn}>
-              <S.Prompt variant="p1">
-                Please enter your email address to sign in.
-              </S.Prompt>
+        <div className="grid lg:grid-cols-3 lg:gap-16">
+          <S.Form className="lg:col-start-2" onSubmit={handleSignIn}>
+            <S.Prompt variant="p1">
+              Please enter your email address to sign in.
+            </S.Prompt>
 
-              <Input
-                id="email"
-                type="email"
-                label="Email address"
-                placeholder="Enter your email address"
-                onChange={handleChange}
-                hasError={Boolean(inputError || error?.message)}
-                helpText={inputError || error?.message}
-              />
+            <Input
+              id="email"
+              type="email"
+              label="Email address"
+              placeholder="Enter your email address"
+              onChange={handleChange}
+              hasError={Boolean(inputError || error?.message)}
+              helpText={inputError || error?.message}
+            />
 
-              <S.ButtonWrapper
-                disabled={disabled}
-                type="submit"
-                loading={isLoading}
-                fullWidth
-              >
-                send verification code
-              </S.ButtonWrapper>
-            </ContainerForm>
-          </div>
+            <S.ButtonWrapper
+              disabled={disabled}
+              type="submit"
+              loading={isLoading}
+              fullWidth
+            >
+              send verification code
+            </S.ButtonWrapper>
+          </S.Form>
         </div>
       </Container>
     </>

@@ -1,12 +1,15 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from 'next-auth/react'
-import { NavBar } from '../components'
-import { AuthProvider } from '../contexts/AuthContext'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from 'styled-components'
-import { theme } from 'components/utils/theme'
-import AuthRedirect from 'components/AuthRedirect/AuthRedirect'
+
+import { theme } from 'utils/theme'
+import { AuthProvider } from 'contexts/AuthContext'
+
+import '../styles/globals.css'
+
+import AuthRedirect from './components/AuthRedirect/AuthRedirect'
+import NavBar from './components/NavBar/NavBar'
 
 export default function App({
   Component,

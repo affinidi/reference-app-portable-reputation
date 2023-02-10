@@ -1,20 +1,22 @@
 import { FC } from 'react'
+import Image from 'next/image'
 
 import { Card, Typography } from 'components'
-import { GithubIcon } from 'components/icons'
+import githubIcon from 'public/images/icon-github.svg'
 
 import * as S from './ConnectorCard.styled'
 
 interface Props {
   isChecked: boolean;
   setIsChecked: (isChecked: boolean) => void;
+  className?: string
 }
 
-const GithubConnectorCard: FC<Props> = ({ isChecked, setIsChecked }) => (
-  <Card>
+const GithubConnectorCard: FC<Props> = ({ isChecked, setIsChecked, className }) => (
+  <Card className={className}>
     <S.CardHeader direction="row" alignItems="center">
       <S.CardIcon>
-        <GithubIcon />
+        <Image src={githubIcon} alt="GitHub" />
       </S.CardIcon>
       <Typography variant="h6">Github</Typography>
       <S.CardCheckboxContainer justifyContent="flex-end" direction="row">
