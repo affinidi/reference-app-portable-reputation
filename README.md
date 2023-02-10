@@ -126,7 +126,7 @@ This project is built with **NextJS** framework, which allows you to quickly bui
 Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html).  
 
 We also use **Styled Components** and **Tailwind CSS** to build the UI.  
-Read [Styled Components docs](https://styled-components.com/docs).  
+Read [Styled Components docs](https://styled-components.com/docs), [Tailwind CSS docs](https://tailwindcss.com/docs/installation). 
 
 To make API requests, **axios** library is used.  
 Read [axios docs](https://axios-http.com/docs/intro).  
