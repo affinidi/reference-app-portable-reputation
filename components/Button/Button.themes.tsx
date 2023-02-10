@@ -1,5 +1,5 @@
 import { pxToRem } from 'utils'
-import { theme } from 'components/utils/theme'
+import { theme } from 'utils/theme'
 
 export type ButtonState =
   | 'default'

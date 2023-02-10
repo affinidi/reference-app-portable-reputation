@@ -26,8 +26,8 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
       <Header title="Sign in" />
 
       <Container>
-        <S.Wrapper className="row">
-          <div className="col-12 col-sm-4 offset-sm-4">
+        <div className="grid lg:grid-cols-3 lg:gap-16">
+          <S.Wrapper className="lg:col-start-2">
             <S.Prompt variant="p1">
               Please enter the verification code you received in your email.
             </S.Prompt>
@@ -65,8 +65,8 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
               </Typography>{' '}
               to send it again
             </Typography>
-          </div>
-        </S.Wrapper>
+          </S.Wrapper>
+        </div>
       </Container>
     </>
   )

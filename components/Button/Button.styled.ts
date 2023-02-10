@@ -40,7 +40,7 @@ export const SpinnerWrapper = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
 
-  svg {
+  img {
     display: block;
     animation: ${rotate} 1.5s linear infinite;
   }

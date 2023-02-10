@@ -1,20 +1,14 @@
 import styled from 'styled-components'
 
 import { pxToRem } from 'utils'
+import { Box } from 'components'
 
-import Box from '../Box/Box'
-
-export const Container = styled.div`
-  background: #0e1533;
-  padding: ${pxToRem(20)} ${pxToRem(24)};
+export const Container = styled(Box)`
+  padding: 0 ${pxToRem(24)};
   height: ${pxToRem(64)};
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
 
-  @media (min-width: ${pxToRem(500)}) {
-    padding: ${pxToRem(22)} ${pxToRem(100)};
+  @media (min-width: 1024px) {
+    padding: 0 ${pxToRem(100)};
     height: ${pxToRem(72)};
   }
 `
@@ -29,21 +23,30 @@ export const ButtonContainer = styled.div`
 `
 
 export const Logo = styled.div`
-  svg {
-    width: ${pxToRem(100)};
-    height: ${pxToRem(24)};
-  }
-
-  @media (max-width: ${pxToRem(1024)}) {
-    svg {
-      width: ${pxToRem(139)};
-      height: ${pxToRem(32)};
+  img {
+    cursor: pointer;
+    
+    @media (max-width: 1024px) {
+      width: ${pxToRem(80)};
     }
   }
+
 `
 
 export const IconWrapper = styled.div`
   cursor: pointer;
+  
+  img {
+    width: ${pxToRem(32)};
+    height: ${pxToRem(32)};
+
+    @media (max-width: 1024px) {
+      width: ${pxToRem(24)};
+      height: ${pxToRem(24)};
+    }
+  }
+  
+  
 `
 
 export const Content = styled(Box)`

@@ -18,12 +18,6 @@ export const UserInfoContainer = styled(Box)`
   }
 `
 
-export const Row = styled.div`
-  @media (max-width: 1024px) {
-    row-gap: ${pxToRem(24)};
-  }
-`
-
 export const Card = styled(Box)`
   padding: 0 ${pxToRem(24)};
 `

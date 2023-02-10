@@ -62,22 +62,30 @@ export const Modal = styled(({ classNames, className, $position, ...rest }) => (
 }>`
   &.root {
     position: fixed;
-    top: 0;
+    top: ${pxToRem(64)};
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+
+    @media (min-width: 1024px) {
+      top: ${pxToRem(72)};
+    }
   }
 
   .overlay {
     position: fixed;
-    top: 0;
+    top: ${pxToRem(64)};
     bottom: 0;
     left: 0;
     right: 0;
     z-index: -1;
-    background: #000;
+    background: ${(props) => props.theme.colors.brand.primary['100']};
     opacity: 0.5;
+
+    @media (min-width: 1024px) {
+      top: ${pxToRem(72)};
+    }
   }
 
   .react-responsive-modal-container {
