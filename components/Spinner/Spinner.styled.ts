@@ -15,8 +15,8 @@ export const Spinner = styled.div<{ $width: number; $height: number }>`
   width: ${({ $width }) => pxToRem($width)};
   height: ${({ $height }) => pxToRem($height)};
   animation: ${rotate} 1.5s linear infinite;
-  border: 10px solid ${props => props.theme.color.brand.primary['70']};
+  border: 10px solid ${props => props.theme.colors.brand.primary['70']};
   border-radius: 50%;
-  border-top: 10px solid ${props => props.theme.color.brand.secondary['100']};
+  border-top: 10px solid ${props => props.theme.colors.brand.secondary['100']};
   margin: ${pxToRem(40)} auto;
 `

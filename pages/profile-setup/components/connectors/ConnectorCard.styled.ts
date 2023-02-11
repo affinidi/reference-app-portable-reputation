@@ -1,10 +1,17 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { pxToRem } from 'utils'
-import { Box } from 'components'
+import { Box, Card } from 'components'
+
+export const CardWrapper = styled(Card)`
+  cursor: pointer;
+  
+  * {
+    cursor: pointer;
+  }
+`
 
 export const CardHeader = styled(Box)`
-  gap: ${pxToRem(16)};
   margin-bottom: ${pxToRem(16)};
 `
 
@@ -15,21 +22,10 @@ export const CardIcon = styled(Box)`
   }
 `
 
-export const CardCheckboxContainer = styled(Box)`
-  width: 100%;
-  height: ${pxToRem(24)};
-
-  input[type="checkbox"] {
-    width: ${pxToRem(20)};
-    height: ${pxToRem(20)};
-    outline: ${pxToRem(4)} solid ${props => props.theme.colors.neutral.primary[30]};
-    box-shadow: 0 0 0 ${pxToRem(20)} ${props => props.theme.colors.brand.primary[90]} inset;
-    cursor: pointer;
-  }
-
-  input[type="checkbox"]:checked {
-    accent-color: ${props => props.theme.colors.brand.secondary[100]};
-    outline: ${pxToRem(4)} solid ${props => props.theme.colors.brand.secondary[100]};
-    box-shadow: 0 0 0 ${pxToRem(2)} ${props => props.theme.colors.brand.secondary[100]} inset;
-  }
+export const Download = styled.div<{ isConnected: boolean }>`
+  ${props => props.isConnected && css`
+    path {
+      fill: ${props.theme.colors.brand.secondary['100']};
+    }
+  `}
 `
