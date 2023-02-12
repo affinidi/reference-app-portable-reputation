@@ -26,7 +26,7 @@ const ProfileSetup: FC = () => {
       <Header title="Setup your profile" />
 
       <Container>
-        {!vcs?.github ? (
+        {!vcs ? (
           <Spinner />
         ) : (
           <>
