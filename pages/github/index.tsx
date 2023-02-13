@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 
@@ -19,7 +19,7 @@ const Github: FC = () => {
   const { push } = useRouter()
   const { status } = useSession()
   const [vc, setVc] = useState<VerifiableCredential>()
-  const vcs = useVcProfiles()
+  const { vcs, importGithubProfile } = useVcProfiles()
 
   useEffect(() => {
     if (!vcs) return
@@ -30,10 +30,6 @@ const Github: FC = () => {
       push(ROUTES.profileSetup)
     }
   }, [push, vcs])
-
-  const handleRefreshVC = async () => {
-    await signIn('github', { callbackUrl: ROUTES.githubCallback })
-  }
 
   if (status === 'loading' || !vc) {
     return <Spinner />
@@ -52,7 +48,7 @@ const Github: FC = () => {
             </S.GrayText>
 
             <S.LoadingWrapper>
-              <LoadingIcon onClick={handleRefreshVC} />
+              <LoadingIcon onClick={importGithubProfile} />
             </S.LoadingWrapper>
           </S.LastUpdate>
 
