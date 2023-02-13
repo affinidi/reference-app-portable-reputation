@@ -15,7 +15,6 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
-  
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
