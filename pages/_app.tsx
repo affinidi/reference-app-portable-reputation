@@ -11,10 +11,14 @@ import '../styles/globals.css'
 import AuthRedirect from './components/AuthRedirect/AuthRedirect'
 import NavBar from './components/NavBar/NavBar'
 
+import { requireEnvs } from './api/env'
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
+  requireEnvs()
+  
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
