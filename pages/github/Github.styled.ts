@@ -18,3 +18,11 @@ export const LastUpdate = styled(Box)`
 export const GrayText = styled(Typography)`
   color: ${(props) => props.theme.colors.brand.primary['15']};
 `
+
+export const LoadingWrapper = styled.div`
+  cursor: pointer;
+
+  path {
+    fill: ${(props) => props.theme.colors.brand.secondary['100']};
+  }
+`
