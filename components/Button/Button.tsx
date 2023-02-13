@@ -1,7 +1,6 @@
 import React from 'react'
-import Image from 'next/image'
 
-import loadingIcon from 'public/images/icon-loading.svg'
+import { LoadingIcon } from 'assets'
 
 import { ButtonColor, ButtonSize, ButtonVariant } from './Button.themes'
 import * as S from './Button.styled'
@@ -42,7 +41,7 @@ const Button: React.FC<ButtonProps> = ({
   >
     {loading && (
       <S.SpinnerWrapper>
-        <Image src={loadingIcon} alt="Loading" />
+        <LoadingIcon />
       </S.SpinnerWrapper>
     )}
 

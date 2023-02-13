@@ -36,7 +36,7 @@ const Github: FC = () => {
 
   return (
     <>
-      <Header title="My GitHub profile" />
+      <Header title="My GitHub profile" hasBackIcon path={ROUTES.profileSetup} />
 
       <Container>
         <S.Wrapper>
