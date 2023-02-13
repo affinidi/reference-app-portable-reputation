@@ -5,11 +5,13 @@ import { ThemeProvider } from 'styled-components'
 
 import { theme } from 'utils/theme'
 import { AuthProvider } from 'contexts/AuthContext'
+import { ToastsContainer } from 'components'
 
 import '../styles/globals.css'
 
 import AuthRedirect from './components/AuthRedirect/AuthRedirect'
 import NavBar from './components/NavBar/NavBar'
+import GithubErrorNotification from './components/GitHubNotification/GithubErrorNotification'
 
 export default function App({
   Component,
@@ -34,6 +36,9 @@ export default function App({
             </AuthRedirect>
           </SessionProvider>
         </AuthProvider>
+
+        <GithubErrorNotification />
+        <ToastsContainer />
       </QueryClientProvider>
     </ThemeProvider>
   )

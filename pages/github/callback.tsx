@@ -3,12 +3,9 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
-import { Spinner } from 'components'
+import { Spinner, toast } from 'components'
 
-import {
-  createCloudWalletAuthenticationHeaders,
-  getDid,
-} from 'hooks/useAuthentication'
+import { createCloudWalletAuthenticationHeaders, getDid, } from 'hooks/useAuthentication'
 import { VerifiableCredential } from 'types/vc'
 import { ROUTES } from 'utils'
 import { hostUrl } from 'pages/env'
@@ -42,6 +39,11 @@ const GithubCallback: FC = () => {
       })
 
       await push(ROUTES.github)
+
+      toast('Your data has been successfully imported.', {
+        type: 'success',
+        autoClose: 10000
+      })
     }
 
     issueVc()
