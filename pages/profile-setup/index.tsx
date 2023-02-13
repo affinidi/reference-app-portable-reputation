@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
 import { ROUTES } from 'utils'
@@ -11,11 +10,11 @@ import * as S from './ProfileSetup.styled'
 
 const ProfileSetup: FC = () => {
   const { push } = useRouter()
-  const vcs = useVcProfiles()
+  const { vcs, importGithubProfile } = useVcProfiles()
 
   const connectToGithub = async () => {
     if (!vcs?.github) {
-      await signIn('github', { callbackUrl: ROUTES.githubCallback })
+      await importGithubProfile()
     } else {
       push(ROUTES.github)
     }
@@ -26,7 +25,7 @@ const ProfileSetup: FC = () => {
       <Header title="Setup your profile" />
 
       <Container>
-        {!vcs?.github ? (
+        {!vcs ? (
           <Spinner />
         ) : (
           <>
