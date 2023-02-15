@@ -1,23 +1,32 @@
 // backend-only envs
 
-export const cloudWalletApiUrl = require(process.env.CLOUD_WALLET_API_URL)
-export const affinidiIamApiUrl = require(process.env.AFFINIDI_IAM_API_URL)
-export const issuanceApiUrl = require(process.env.ISSUANCE_API_URL)
+(function requireEnvs() {
+  const names: string[] = [
+    'PROJECT_ID',
+    'PROJECT_DID',
+    'API_KEY_HASH',
+    'GITHUB_APP_CLIENT_ID',
+    'GITHUB_APP_CLIENT_SECRET',
+  ]
 
-export const projectId = require(process.env.PROJECT_ID)
-export const projectDid = require(process.env.PROJECT_DID)
-export const apiKeyHash = require(process.env.API_KEY_HASH)
+  const missingEnvs: string[] = names.filter((name) => !process.env[name])
+  if (missingEnvs.length !== 0) {
+    throw new Error(
+       `Required envs are not provided: ${missingEnvs.join(', ')}. Please check README file.`
+    )
+  }
+}) ()
 
-export const authJwtSecret = require(process.env.AUTH_JWT_SECRET)
-export const githubClientId = require(process.env.GITHUB_APP_CLIENT_ID)
-export const githubClientSecret = require(process.env.GITHUB_APP_CLIENT_SECRET)
+export const cloudWalletApiUrl = process.env.CLOUD_WALLET_API_URL
+export const affinidiIamApiUrl = process.env.AFFINIDI_IAM_API_URL
+export const issuanceApiUrl = process.env.ISSUANCE_API_URL
+
+export const projectId = process.env.PROJECT_ID
+export const projectDid = process.env.PROJECT_DID
+export const apiKeyHash = process.env.API_KEY_HASH
+
+export const authJwtSecret = process.env.AUTH_JWT_SECRET
+export const githubClientId = process.env.GITHUB_APP_CLIENT_ID
+export const githubClientSecret = process.env.GITHUB_APP_CLIENT_SECRET
 
 export const logLevel = process.env.LOG_LEVEL || 'info'
-
-function require<T>(value: T | undefined): T {
-  if (!value) {
-    throw new Error('Environment value is missing')
-  }
-
-  return value
-}
