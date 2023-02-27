@@ -9,6 +9,7 @@ import { LoadingIcon } from 'assets'
 import { Box, Container, Header, Spinner } from 'components'
 import { ErrorCodes } from 'utils/errorCodes'
 import { useAuthContext } from 'hooks/useAuthContext'
+import { showErrorToast } from 'utils/errorToast'
 
 import { GeneralInfo } from './components/GeneralInfo/GeneralInfo'
 import { SubInfo } from './components/SublInfo/SubInfo'
@@ -33,12 +34,16 @@ const Github: FC = () => {
   }, [push, data])
 
   useEffect(() => {
-    if (error?.response?.data?.error?.code === ErrorCodes.JWT_EXPIRED_ERROR) {
-      setAuthState((prevState) => ({
-        ...prevState,
-        authorized: false,
-      }))
-      push(ROUTES.singIn)
+    if (error) {
+      if (error?.response?.data?.error?.code === ErrorCodes.JWT_EXPIRED_ERROR) {
+        setAuthState((prevState) => ({
+          ...prevState,
+          authorized: false,
+        }))
+        push(ROUTES.singIn)
+      } else {
+        showErrorToast(error)
+      }
     }
   }, [error, push, setAuthState])
 

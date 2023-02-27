@@ -1,18 +1,20 @@
-import { FC , useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { ROUTES } from 'utils'
 import useVcProfiles from 'hooks/useVcProfiles'
 import { Container, Header, Spinner } from 'components'
+import { useAuthContext } from 'hooks/useAuthContext'
+import { ErrorCodes } from 'utils/errorCodes'
+import { showErrorToast } from 'utils/errorToast'
 
 import GithubConnectorCard from './components/connectors/GithubConnectorCard'
 import * as S from './ProfileSetup.styled'
-import { useAuthContext } from 'hooks/useAuthContext'
-import { ErrorCodes } from 'utils/errorCodes'
+
 
 const ProfileSetup: FC = () => {
   const { push } = useRouter()
-  const { data, error } = useVcProfiles()
+  const { data, error, isLoading } = useVcProfiles()
   const { setAuthState } = useAuthContext()
 
   const connectToGithub = async () => {
@@ -24,12 +26,16 @@ const ProfileSetup: FC = () => {
   }
 
   useEffect(() => {
-    if (error?.response?.data?.error?.code === ErrorCodes.JWT_EXPIRED_ERROR) {
-      setAuthState((prevState) => ({
-        ...prevState,
-        authorized: false,
-      }))
-      push(ROUTES.singIn)
+    if (error) {
+      if (error?.response?.data?.error?.code === ErrorCodes.JWT_EXPIRED_ERROR) {
+        setAuthState((prevState) => ({
+          ...prevState,
+          authorized: false,
+        }))
+        push(ROUTES.singIn)
+      } else {
+        showErrorToast(error)
+      }
     }
   }, [error, push, setAuthState])
 
@@ -38,7 +44,7 @@ const ProfileSetup: FC = () => {
       <Header title='Setup your profile' />
 
       <Container>
-        {!data?.vcs ? (
+        {isLoading ? (
           <Spinner />
         ) : (
           <>
@@ -48,7 +54,7 @@ const ProfileSetup: FC = () => {
 
             <S.CardRow className='grid lg:grid-cols-3 lg:gap-16'>
               <GithubConnectorCard
-                isConnected={Boolean(data.vcs?.github)}
+                isConnected={Boolean(data?.vcs?.github)}
                 handleConnect={connectToGithub}
               />
             </S.CardRow>
