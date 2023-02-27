@@ -1,4 +1,5 @@
 import { NextApiRequest } from 'next'
+import { ErrorCodes } from 'utils/errorCodes'
 import { ApiError } from '../api-error'
 
 export function authenticateCloudWallet(req: NextApiRequest): string {
@@ -6,7 +7,7 @@ export function authenticateCloudWallet(req: NextApiRequest): string {
 
   if (!cloudWalletAccessToken) {
     throw new ApiError({
-      code: 'CLOUD_WALLET_NOT_AUTHENTICATED',
+      code: ErrorCodes.CLOUD_WALLET_NOT_AUTHENTICATED,
       message: 'Cloud Wallet access token is not present in the "Authorization" header',
       httpStatusCode: 401,
     })

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { pxToRem } from 'utils'
 import { Box, Button, Input, Typography } from 'components'
@@ -38,4 +38,12 @@ export const SignInButton = styled(Button)`
   @media (max-width: 1024px) {
     margin-bottom: ${pxToRem(40)};
   }
+`
+
+export const Label = styled(Typography)<{ hasError: boolean }>`
+  ${(props) =>
+    props.hasError &&
+    css`
+      color: ${props.theme.colors.utility.danger['100']};
+    `}
 `
