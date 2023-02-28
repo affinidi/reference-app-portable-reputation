@@ -11,15 +11,14 @@ import { showErrorToast } from 'utils/errorToast'
 import GithubConnectorCard from './components/connectors/GithubConnectorCard'
 import * as S from './ProfileSetup.styled'
 
-
 const ProfileSetup: FC = () => {
   const { push } = useRouter()
-  const { data, error, isLoading } = useVcProfiles()
+  const { data, importGithubProfile, error, isLoading } = useVcProfiles()
   const { setAuthState } = useAuthContext()
 
   const connectToGithub = async () => {
     if (!data?.vcs?.github) {
-      await data?.importGithubProfile()
+      await importGithubProfile()
     } else {
       push(ROUTES.github)
     }

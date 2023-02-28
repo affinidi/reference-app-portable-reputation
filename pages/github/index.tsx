@@ -20,7 +20,7 @@ import * as S from './Github.styled'
 const Github: FC = () => {
   const { push } = useRouter()
   const [vc, setVc] = useState<VerifiableCredential>()
-  const { data, error, isLoading } = useVcProfiles()
+  const { data, importGithubProfile, error, isLoading } = useVcProfiles()
   const { setAuthState } = useAuthContext()
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const Github: FC = () => {
             </S.GrayText>
 
             <S.LoadingWrapper>
-              <LoadingIcon onClick={data?.importGithubProfile} />
+              <LoadingIcon onClick={importGithubProfile} />
             </S.LoadingWrapper>
           </S.LastUpdate>
 

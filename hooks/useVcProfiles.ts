@@ -13,26 +13,27 @@ type VcProfiles = {
 }
 
 const useVcProfiles = () => {
-  return useQuery<
-    { vcs: VcProfiles; importGithubProfile: () => Promise<void> },
-    ErrorResponse
-  >(['getVcs'], async () => {
-    const importGithubProfile = async () => {
-      await signIn('github', { callbackUrl: ROUTES.githubCallback })
-    }
+  const importGithubProfile = async () => {
+    await signIn('github', { callbackUrl: ROUTES.githubCallback })
+  }
+  const data = useQuery<{ vcs: VcProfiles }, ErrorResponse>(
+    ['getVcs'],
+    async () => {
+      const {
+        data: { vcs },
+      } = await axios(`${hostUrl}/api/profiles/get-vcs`, {
+        method: 'GET',
+        headers: createCloudWalletAuthenticationHeaders(),
+      })
 
-    const {
-      data: { vcs },
-    } = await axios(`${hostUrl}/api/profiles/get-vcs`, {
-      method: 'GET',
-      headers: createCloudWalletAuthenticationHeaders(),
-    })
+      return {
+        vcs,
+      }
+    },
+    { retry: false }
+  )
 
-    return {
-      vcs,
-      importGithubProfile,
-    }
-  })
+  return { ...data, importGithubProfile }
 }
 
 export default useVcProfiles
