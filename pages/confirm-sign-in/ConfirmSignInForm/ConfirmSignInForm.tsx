@@ -30,9 +30,9 @@ export const ConfirmSignInForm: FC<ConfirmSignInFormProps> = ({
     if (error) {
       if (error.response?.data?.error?.code === ErrorCodes.INVALID_OTP_CODE) {
         setErrorMessage('Code is incorrect, please try again.')
-        return
+      } else {
+        setErrorMessage(error?.message)
       }
-      setErrorMessage(error?.message)
     }
   }, [error])
   return (
