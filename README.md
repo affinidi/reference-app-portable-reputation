@@ -1,3 +1,21 @@
+# Repository Archived and Moved
+
+This repository has been archived and moved to a new location. This means that the repository is no longer actively maintained or updated. Please note the new location of the repository and update your references accordingly.
+
+## New Repository Location
+
+The repository has been moved to https://github.com/affinidi/reference-app-portable-rep
+
+## Archived Repository
+
+This repository will remain available in its current location for historical purposes. You may continue to use or reference the code, but please be aware that it is no longer being actively maintained or updated.
+
+## Issues and Pull Requests
+
+We will not be accepting any new issues or pull requests for this repository. If you encounter any issues with the code, please refer to the archived repository or the new repository location for potential solutions.
+
+---
+
 # Portable reputation – an Affinidi reference app
 
 This is a ready-to-use reference app that showcases usage of Affinidi API for issuing, sharing and storing verifiable credentials in the wallet.
