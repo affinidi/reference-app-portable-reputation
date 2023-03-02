@@ -8,7 +8,7 @@ import {
 
 import * as S from './ConfirmSignInForm.styled'
 
-type OTPCode = Record<number, string | null>;
+type OTPCode = Record<number, string | null>
 
 const CodeObjectToString = (objectCode: OTPCode) =>
   Object.values(objectCode).filter(Boolean).join('')
@@ -20,15 +20,17 @@ const FROM_ZERO_TO_NINE = Array(10)
   .fill(undefined)
   .map((_, idx) => idx.toString())
 
-export const useConfirmSignInForm = (message?: string) => {
-  const [verifyCode, setVerifyCode] = useState<OTPCode>({
-    0: null,
-    1: null,
-    2: null,
-    3: null,
-    4: null,
-    5: null,
-  })
+const EMPTY_CODE = {
+  0: null,
+  1: null,
+  2: null,
+  3: null,
+  4: null,
+  5: null,
+}
+
+export const useConfirmSignInForm = (error?: unknown) => {
+  const [verifyCode, setVerifyCode] = useState<OTPCode>(EMPTY_CODE)
 
   const computedCode = useMemo(
     () => CodeObjectToString(verifyCode),
@@ -88,7 +90,11 @@ export const useConfirmSignInForm = (message?: string) => {
     refInputs[firstSix.length - 1].current?.focus()
   }
 
-  const isButtonDisabled = computedCode.length < CODE_LENGTH
+  const isButtonDisabled = computedCode.length < CODE_LENGTH || Boolean(error)
+
+  const resetInputs = () => {
+    setVerifyCode(EMPTY_CODE)
+  }
 
   const inputs = Array.from({ length: INPUT_ELEMENTS_AMOUNT }, (_, index) => {
     return (
@@ -99,9 +105,9 @@ export const useConfirmSignInForm = (message?: string) => {
         key={index}
         className={index.toString()}
         autoFocus={index === 0}
-        type="text"
+        type='text'
         ref={refInputs[index]}
-        hasError={Boolean(message)}
+        hasError={Boolean(error)}
         maxLength={1}
         onKeyDown={onKeyDown(index)}
       />
@@ -111,6 +117,7 @@ export const useConfirmSignInForm = (message?: string) => {
   return {
     computedCode,
     inputs,
+    resetInputs,
     isButtonDisabled,
   }
 }

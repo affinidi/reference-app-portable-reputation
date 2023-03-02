@@ -1,43 +1,36 @@
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { useState } from "react";
-import { hostUrl } from "../pages/env";
-import { getItemFromSessionStorage } from "./useSessionStorage";
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
+import { useState } from 'react'
 
-export type ErrorResponse = {
-  name: string;
-  traceId: string;
-  message: string;
-  details: {
-    field: string;
-    issue: string;
-    location: string;
-  };
-};
+import { ErrorResponse } from 'types/error'
+
+import { hostUrl } from '../pages/env'
+
+import { getItemFromSessionStorage } from './useSessionStorage'
 
 export type SignInInput = {
-  username: string;
-};
+  username: string
+}
 
 export const signIn = async (input: SignInInput): Promise<string> => {
   const {
     data: { token },
   } = await axios<{ token: string }>(`${hostUrl}/api/cloud-wallet/sign-in`, {
-    method: "POST",
+    method: 'POST',
     data: input,
-  });
+  })
 
-  return token;
-};
+  return token
+}
 
 export type ConfirmSignInInput = {
-  token: string;
-  confirmationCode: string;
-};
+  token: string
+  confirmationCode: string
+}
 
 export type ConfirmSignInOutput = {
-  accessToken: string;
-};
+  accessToken: string
+}
 
 export const confirmSignIn = async (
   input: ConfirmSignInInput
@@ -47,46 +40,46 @@ export const confirmSignIn = async (
   } = await axios<{ accessToken: string }>(
     `${hostUrl}/api/cloud-wallet/confirm-sign-in`,
     {
-      method: "POST",
+      method: 'POST',
       data: input,
     }
-  );
+  )
 
-  return { accessToken };
-};
+  return { accessToken }
+}
 
 export const getDid = async (): Promise<string> => {
   const {
     data: { did },
   } = await axios<{ did: string }>(`${hostUrl}/api/cloud-wallet/get-did`, {
-    method: "GET",
+    method: 'GET',
     headers: createCloudWalletAuthenticationHeaders(),
-  });
+  })
 
-  return did;
-};
+  return did
+}
 
 export const logout = async () => {
   try {
     await axios<void>(`${hostUrl}/api/cloud-wallet/logout`, {
-      method: "POST",
+      method: 'POST',
       headers: createCloudWalletAuthenticationHeaders(),
-    });
+    })
   } catch (e) {}
-};
+}
 
 export const createCloudWalletAuthenticationHeaders = () => {
   const cloudWalletAccessToken = getItemFromSessionStorage(
-    "cloudWalletAccessToken"
-  );
+    'cloudWalletAccessToken'
+  )
   return {
     ...(cloudWalletAccessToken && { Authorization: cloudWalletAccessToken }),
-  };
-};
+  }
+}
 
 export const useSignInMutation = () => {
-  return useMutation<string, ErrorResponse, SignInInput, () => void>(signIn);
-};
+  return useMutation<string, ErrorResponse, SignInInput, () => void>(signIn)
+}
 
 export const useConfirmSignInMutation = () => {
   return useMutation<
@@ -94,39 +87,39 @@ export const useConfirmSignInMutation = () => {
     ErrorResponse,
     ConfirmSignInInput,
     () => void
-  >(confirmSignIn);
-};
+  >(confirmSignIn)
+}
 
 export type UserState = {
-  authorized: boolean;
-  loading: boolean;
-};
+  authorized: boolean
+  loading: boolean
+}
 
 const BASIC_STATE: UserState = {
   authorized: false,
   loading: true,
-};
+}
 
 export const useAuthentication = () => {
-  const [authState, setAuthState] = useState<UserState>(BASIC_STATE);
+  const [authState, setAuthState] = useState<UserState>(BASIC_STATE)
 
   const authenticate = async () => {
     try {
-      await getDid();
+      await getDid()
 
       setAuthState((prevState) => ({
         ...prevState,
         loading: false,
         authorized: true,
-      }));
+      }))
     } catch (error) {
       setAuthState((prevState) => ({
         ...prevState,
         loading: false,
         authorized: false,
-      }));
+      }))
     }
-  };
+  }
 
-  return { authState, setAuthState, authenticate };
-};
+  return { authState, setAuthState, authenticate }
+}

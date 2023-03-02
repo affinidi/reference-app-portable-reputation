@@ -1,28 +1,24 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
+import { useQuery } from '@tanstack/react-query'
 
 import { hostUrl } from 'pages/env'
 import { VerifiableCredential } from 'types/vc'
 import { createCloudWalletAuthenticationHeaders } from 'hooks/useAuthentication'
 import { ROUTES } from 'utils'
+import { ErrorResponse } from 'types/error'
 
 type VcProfiles = {
-  [profile: string]: VerifiableCredential | undefined;
-};
+  [profile: string]: VerifiableCredential | undefined
+}
 
 const useVcProfiles = () => {
-  const [vcs, setVcs] = useState<VcProfiles>()
-  const { status } = useSession()
-
   const importGithubProfile = async () => {
     await signIn('github', { callbackUrl: ROUTES.githubCallback })
   }
-
-  useEffect(() => {
-    if (status === 'loading') return
-
-    async function fetchVcProfiles() {
+  const data = useQuery<{ vcs: VcProfiles }, ErrorResponse>(
+    ['getVcs'],
+    async () => {
       const {
         data: { vcs },
       } = await axios(`${hostUrl}/api/profiles/get-vcs`, {
@@ -30,16 +26,14 @@ const useVcProfiles = () => {
         headers: createCloudWalletAuthenticationHeaders(),
       })
 
-      setVcs(vcs)
-    }
+      return {
+        vcs,
+      }
+    },
+    { retry: false }
+  )
 
-    fetchVcProfiles()
-  }, [status])
-
-  return {
-    vcs,
-    importGithubProfile,
-  }
+  return { ...data, importGithubProfile }
 }
 
 export default useVcProfiles

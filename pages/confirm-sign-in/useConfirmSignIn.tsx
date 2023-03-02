@@ -1,30 +1,37 @@
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { SyntheticEvent, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/useSessionStorage'
-import { useConfirmSignInForm } from './ConfirmSignInForm/useConfirmSignInForm'
+import { useAuthContext } from 'hooks/useAuthContext'
 import {
   useConfirmSignInMutation,
   useSignInMutation,
 } from 'hooks/useAuthentication'
-import { useAuthContext } from 'hooks/useAuthContext'
+
+import { useConfirmSignInForm } from './ConfirmSignInForm/useConfirmSignInForm'
 
 export const useConfirmSignIn = () => {
   const storage = useSessionStorage()
   const router = useRouter()
-  const { setAuthState } = useAuthContext()
-  const { data, error, mutateAsync } = useConfirmSignInMutation()
-  const { data: signInData, mutateAsync: signInMutateAsync } =
-    useSignInMutation()
-  const { computedCode, inputs, isButtonDisabled } = useConfirmSignInForm(
-    error?.message
+  const { setAuthState, authState } = useAuthContext()
+  const { data, error, mutate, reset, isLoading } = useConfirmSignInMutation()
+  const { data: signInData, mutate: signInMutateAsync } = useSignInMutation()
+  const { computedCode, inputs, isButtonDisabled, resetInputs } = useConfirmSignInForm(
+    error
   )
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (error && computedCode.length < inputs.length) {
+      reset()
+    }
+  }, [computedCode, error, inputs.length, reset])
 
   const handleResendCode = async () => {
+    reset()
+    resetInputs()
     const username = storage.getItem('signInUsername')
     if (username) {
-      await signInMutateAsync({ username })
+      signInMutateAsync({ username })
     } else {
       await router.push('/sign-in')
     }
@@ -32,16 +39,15 @@ export const useConfirmSignIn = () => {
 
   const onSubmit = async (e?: SyntheticEvent) => {
     e?.preventDefault()
-    setIsLoading(true)
 
-    await mutateAsync({
+    mutate({
       token: storage.getItem('signInToken') || '',
       confirmationCode: computedCode,
     })
   }
 
   useEffect(() => {
-    if (data) {
+    if (data && !authState.authorized) {
       storage.setItem('cloudWalletAccessToken', data.accessToken)
       setAuthState((prevState) => ({
         ...prevState,
@@ -49,7 +55,7 @@ export const useConfirmSignIn = () => {
         loading: false,
       }))
     }
-  }, [data, error, router, setAuthState])
+  }, [authState, data, error, router, setAuthState, storage])
 
   useEffect(() => {
     if (signInData) {
